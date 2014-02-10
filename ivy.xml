@@ -42,5 +42,7 @@
 			rev="&vaadin.version;" conf="widgetset-compile->default" />
 		<!-- lombok for setters and getters -->
 		<dependency org="org.projectlombok" name="lombok" rev="1.12.4" />
+		<!-- dc2f dstore for our data -->
+		<dependency org="com.dc2f" name="dstore-java" rev="0.0.1" />
 	</dependencies>
 </ivy-module>
