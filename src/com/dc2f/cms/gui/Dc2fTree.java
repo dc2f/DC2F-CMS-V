@@ -18,7 +18,9 @@ public class Dc2fTree extends Tree {
 	public Dc2fTree() {
 		dc2f = Dc2fSettings.get().initDc2f();
 		for (Project project : dc2f.getProjects()) {
-			addItem(new Dc2fTreeItem(project.getName(), project.getPath()));
+			Dc2fTreeItem projectItem = new Dc2fTreeItem(project.getName(), project.getPath());
+			addItem(projectItem);
+			setItemCaption(projectItem, project.getName());
 		}
 		addExpandListener(new Dc2fExpandListener());
 	}
@@ -49,6 +51,7 @@ public class Dc2fTree extends Tree {
 			for (Node child : dc2f.getChildren(item.path)) {
 				Dc2fTreeItem childItem = new Dc2fTreeItem(child);
 				addItem(childItem);
+				setItemCaption(childItem, child.getName());
 				setParent(childItem, item);
 				hasChildren = true;
 			}
