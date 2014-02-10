@@ -1,6 +1,8 @@
 package com.dc2f.cms;
 
 import com.dc2f.cms.dao.Dc2f;
+import com.dc2f.cms.dao.Project;
+import com.dc2f.cms.demo.DemoProject;
 import com.dc2f.dstore.storage.StorageBackend;
 import com.dc2f.dstore.storage.map.HashMapStorage;
 
@@ -39,6 +41,11 @@ public class Dc2fSettings {
 	}
 
 	public Dc2f initDc2f() {
-		return new Dc2f(storageImpl);
+		Dc2f dc2f = new Dc2f(storageImpl);
+		if(resetDemoProjectOnStartup) {
+			DemoProject.resetDemoProject(dc2f);
+		}
+		return dc2f;
 	}
+
 }
