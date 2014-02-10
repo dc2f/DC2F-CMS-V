@@ -46,7 +46,7 @@ public class Dc2f {
 		WorkingTreeNode root = workingTree.getRootNode();
 		for (WorkingTreeNode projectNode : root.getChildren()) {
 			if(MagicPropertyValues.NODE_TYPE_PROJECT.equals(projectNode.getProperty(PropertyNames.NODE_TYPE).toString())) {
-				projects.add(new Project(projectNode.getProperty(PropertyNames.NODE_TYPE).getString()));
+				projects.add(new Project(projectNode.getProperty(PropertyNames.NODE_NAME).getString()));
 			}
 		}
 		return projects;
