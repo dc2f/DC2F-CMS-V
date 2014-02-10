@@ -44,5 +44,7 @@
 		<dependency org="org.projectlombok" name="lombok" rev="1.12.4" />
 		<!-- dc2f dstore for our data -->
 		<dependency org="com.dc2f" name="dstore-java" rev="0.0.1" />
+		<!-- logging framework -->
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.2" />
 	</dependencies>
 </ivy-module>
