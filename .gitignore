@@ -2,4 +2,4 @@
 .classpath
 build
 .project
-WebContent/VAADIN/themes/dc2f/addon.scss
+WebContent/VAADIN/themes/dc2f/addons.scss
