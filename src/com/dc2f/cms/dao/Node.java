@@ -3,10 +3,27 @@ package com.dc2f.cms.dao;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 public class Node {
 	@Getter
-	private String name;
+	private final String name;
 	@Getter
-	private String path;
+	private final String path;
+
+	public Node(String name, String path) {
+		this.name = name;
+		this.path = path;
+	}
+	
+	private transient String parentPath;
+	
+	public String getParentPath() {
+		if (parentPath == null) {
+			synchronized(this) {
+				if (parentPath == null) {
+					parentPath = path.replaceAll("/[^/]+$", "");
+				}
+			}
+		}
+		return parentPath;
+	}
 }
