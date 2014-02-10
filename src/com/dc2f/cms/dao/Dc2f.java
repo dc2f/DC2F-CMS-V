@@ -21,4 +21,13 @@ public class Dc2f {
 		return projects;
 	}
 
+	public List<? extends Node> getChildren(String path) {
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		if("demo".equals(path)) {
+			nodes.add(new Node("A", "demo/A"));
+			nodes.add(new Node("B", "demo/B"));
+		}
+		return nodes;
+	}
+
 }
