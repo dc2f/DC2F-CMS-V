@@ -46,5 +46,8 @@
 		<dependency org="com.dc2f" name="dstore-java" rev="0.0.1" />
 		<!-- logging framework -->
 		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.2" />
+		<!-- frameworks for testing -->
+		<dependency org="junit" name="junit" rev="4.11" />
+		
 	</dependencies>
 </ivy-module>
