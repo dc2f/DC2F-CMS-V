@@ -70,7 +70,9 @@ public class Dc2f {
 		WorkingTreeNode parent = getNodeForPath(path);
 		for(WorkingTreeNode childNode : parent.getChildren()) {
 			T node = NodeType.getNode(childNode, nodeType, path);
-			nodes.add(node);
+			if (node != null) {
+				nodes.add(node);
+			}
 		}
 		return nodes;
 	}
