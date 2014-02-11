@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
+import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Project;
 import com.vaadin.ui.Tree;
@@ -13,6 +14,11 @@ import com.vaadin.ui.Tree;
 @Slf4j
 public class Dc2fTree extends Tree {
 
+	/**
+	 * unique serialization version id
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private final Dc2f dc2f;
 
 	public Dc2fTree() {
@@ -48,7 +54,7 @@ public class Dc2fTree extends Tree {
 			Dc2fTreeItem item = (Dc2fTreeItem) event.getItemId();
 			log.debug("Expand: {}", item);
 			boolean hasChildren = false;
-			for (Node child : dc2f.getChildren(item.path)) {
+			for (Folder child : dc2f.getChildren(item.path, Folder.class)) {
 				Dc2fTreeItem childItem = new Dc2fTreeItem(child);
 				addItem(childItem);
 				setItemCaption(childItem, child.getName());
