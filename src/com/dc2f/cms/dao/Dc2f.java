@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +25,6 @@ import com.dc2f.dstore.storage.StorageBackend;
 
 @Slf4j
 public class Dc2f {
-	/**
-	 * Possible node types for a node.
-	 */
-	private static final List<String> NODE_TYPES_NODE = Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_PROJECT, MagicPropertyValues.NODE_TYPE_FOLDER, MagicPropertyValues.NODE_TYPE_PAGE, MagicPropertyValues.NODE_TYPE_NODE, MagicPropertyValues.NODE_TYPE_FILE});
 	private final HierarchicalNodeStore nodeStore;
 	private WorkingTree workingTree;
 
@@ -58,29 +53,24 @@ public class Dc2f {
 		ArrayList<Project> projects = new ArrayList<Project>();
 		WorkingTreeNode root = workingTree.getRootNode();
 		for (WorkingTreeNode projectNode : root.getChildren()) {
-			if(isProject(projectNode)) {
-				projects.add(new Project(projectNode.getProperty(PropertyNames.NODE_NAME).getString()));
+			Project project = NodeType.getNode(projectNode, Project.class);
+			if (project != null) {
+				projects.add(project);
 			}
 		}
 		return projects;
 	}
 
-	private boolean isProject(WorkingTreeNode node) {
-		return MagicPropertyValues.NODE_TYPE_PROJECT.equals(node.getProperty(PropertyNames.NODE_TYPE).toString());
+	public List<Node> getChildren(String path) {
+		return getChildren(path, Node.class);
 	}
-	
-	private boolean isNode(WorkingTreeNode node) {
-		return NODE_TYPES_NODE.contains(node.getProperty(PropertyNames.NODE_TYPE).toString());
-	}
-
-	public List<? extends Node> getChildren(String path) {
-		ArrayList<Node> nodes = new ArrayList<Node>();
-		WorkingTreeNode node = getNodeForPath(path);
-		for(WorkingTreeNode childNode : node.getChildren()) {
-			if(isNode(childNode)) {
-				String name = childNode.getProperty(PropertyNames.NODE_NAME).getString();
-				nodes.add(new Node(name, path + "/" + name));
-			}
+		
+	public <T extends Node> List<T> getChildren(String path, Class<T> nodeType) {
+		ArrayList<T> nodes = new ArrayList<T>();
+		WorkingTreeNode parent = getNodeForPath(path);
+		for(WorkingTreeNode childNode : parent.getChildren()) {
+			T node = NodeType.getNode(childNode, nodeType, path);
+			nodes.add(node);
 		}
 		return nodes;
 	}

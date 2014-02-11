@@ -1,5 +1,7 @@
 package com.dc2f.cms.dao;
 
+import com.dc2f.cms.exceptions.Dc2fInvalidDataError;
+
 import lombok.Getter;
 
 public class Node {
@@ -9,16 +11,20 @@ public class Node {
 	private final String path;
 	
 	public Node(String name, Folder parent) {
-		this.name = name;
-		this.path = parent.getPath() + "/" + name;
+		this(name, parent.getPath() + "/" + name);
 	}
 	
 	public Node(String name, Folder parent, String relativePath) {
-		this.name = name;
-		this.path = parent.getPath() + "/" + relativePath;
+		this(name, parent.getPath() + "/" + relativePath);
 	}
 
 	public Node(String name, String path) {
+		if (name == null) {
+			throw new Dc2fInvalidDataError("Name for node cannot be null.", null);
+		}
+		if (path == null) {
+			throw new Dc2fInvalidDataError("Path for node cannot be null.", null);
+		}
 		this.name = name;
 		this.path = path;
 	}
@@ -35,4 +41,5 @@ public class Node {
 		}
 		return parentPath;
 	}
+
 }
