@@ -6,6 +6,6 @@ public class Folder extends Node {
 	}
 	
 	public Folder(String name, Folder parent, String relativePath) {
-		super(name, parent.getPath() + "/" + relativePath);
+		super(name, parent, relativePath);
 	}
 }

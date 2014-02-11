@@ -1,6 +1,5 @@
 package com.dc2f.cms.dao;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class Node {
@@ -8,6 +7,16 @@ public class Node {
 	private final String name;
 	@Getter
 	private final String path;
+	
+	public Node(String name, Folder parent) {
+		this.name = name;
+		this.path = parent.getPath() + "/" + name;
+	}
+	
+	public Node(String name, Folder parent, String relativePath) {
+		this.name = name;
+		this.path = parent.getPath() + "/" + relativePath;
+	}
 
 	public Node(String name, String path) {
 		this.name = name;

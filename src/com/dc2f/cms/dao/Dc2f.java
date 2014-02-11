@@ -1,11 +1,17 @@
 package com.dc2f.cms.dao;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.io.IOUtils;
 
 import com.dc2f.cms.dao.constants.MagicPropertyValues;
 import com.dc2f.cms.dao.constants.PropertyNames;
@@ -18,6 +24,7 @@ import com.dc2f.dstore.hierachynodestore.WorkingTreeNode;
 import com.dc2f.dstore.storage.Property;
 import com.dc2f.dstore.storage.StorageBackend;
 
+@Slf4j
 public class Dc2f {
 	/**
 	 * Possible node types for a node.
@@ -112,6 +119,21 @@ public class Dc2f {
 		WorkingTreeNode parent = getNodeForPath(folder.getParentPath());
 		WorkingTreeNode folderNode = parent.addChild(folder.getName());
 		folderNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FOLDER));
+	}
+
+	public boolean addFile(File file) {
+		WorkingTreeNode parent = getNodeForPath(file.getParentPath());
+		WorkingTreeNode fileNode = parent.addChild(file.getName());
+		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FILE));
+		try {
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			IOUtils.copy(file.getContent(false), os);
+			fileNode.setProperty(PropertyNames.CONTENT, new Property(os.toByteArray()));
+		} catch (IOException e) {
+			log.error("Error writing file {} contents into store.", new Object[]{file, e});
+			return false;
+		}
+		return true;
 	}
 
 }

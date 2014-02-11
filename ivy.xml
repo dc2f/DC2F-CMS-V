@@ -43,11 +43,12 @@
 		<!-- lombok for setters and getters -->
 		<dependency org="org.projectlombok" name="lombok" rev="1.12.4" />
 		<!-- dc2f dstore for our data -->
-		<dependency org="com.dc2f" name="dstore-java" rev="0.0.1" />
+		<dependency org="com.dc2f" name="dstore-java" rev="0.0.2" />
 		<!-- logging framework -->
 		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.2" />
 		<!-- frameworks for testing -->
 		<dependency org="junit" name="junit" rev="4.11" />
-		
+		<!-- utilities -->
+		<dependency org="commons-io" name="commons-io" rev="2.4" />
 	</dependencies>
 </ivy-module>

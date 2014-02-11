@@ -1,5 +1,7 @@
 package com.dc2f.cms.dao;
 
-public class Page {
-
+public class Page extends File {
+	public Page(String name, Folder parent) {
+		super(name, parent);
+	}
 }
