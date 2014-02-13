@@ -3,6 +3,8 @@ package com.dc2f.cms;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.demo.DemoProject;
+import com.dc2f.cms.rendering.Renderer;
+import com.dc2f.cms.rendering.SimpleDc2fRenderer;
 import com.dc2f.dstore.storage.StorageBackend;
 import com.dc2f.dstore.storage.map.HashMapStorage;
 
@@ -32,6 +34,12 @@ public class Dc2fSettings {
 	 */
 	@Getter @Setter
 	private Class<? extends StorageBackend> storageImpl = HashMapStorage.class;
+	
+	/**
+	 * Implementation of the renderer to use.
+	 */
+	@Getter @Setter
+	private Class<? extends Renderer> rendererImpl = SimpleDc2fRenderer.class;
 	
 	
 	private transient Dc2f dc2f;
@@ -67,7 +75,7 @@ public class Dc2fSettings {
 	}
 	
 	private Dc2f internalInitDc2f() {
-		Dc2f dc2f = new Dc2f(storageImpl);
+		Dc2f dc2f = new Dc2f(storageImpl, rendererImpl);
 		if(resetDemoProjectOnStartup) {
 			DemoProject.resetDemoProject(dc2f);
 		}

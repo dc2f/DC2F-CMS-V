@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.IOUtils;
@@ -17,6 +18,7 @@ import com.dc2f.cms.dao.constants.PropertyNames;
 import com.dc2f.cms.exceptions.Dc2fCmsError;
 import com.dc2f.cms.exceptions.Dc2fNotExistingPathError;
 import com.dc2f.cms.exceptions.Dc2fPathInconsistentError;
+import com.dc2f.cms.rendering.Renderer;
 import com.dc2f.dstore.hierachynodestore.HierarchicalNodeStore;
 import com.dc2f.dstore.hierachynodestore.WorkingTree;
 import com.dc2f.dstore.hierachynodestore.WorkingTreeNode;
@@ -27,11 +29,25 @@ import com.dc2f.dstore.storage.StorageBackend;
 public class Dc2f {
 	private final HierarchicalNodeStore nodeStore;
 	private WorkingTree workingTree;
+	
+	@Getter
+	private final Renderer renderer;
 
-	public Dc2f(Class<? extends StorageBackend> storageImpl) {
+	public Dc2f(Class<? extends StorageBackend> storageImpl, Class<? extends Renderer> rendererImpl) {
 		StorageBackend storageBackend = initStorageBackend(storageImpl);
 		nodeStore = new HierarchicalNodeStore(storageBackend);
 		workingTree = nodeStore.checkoutBranch("master");
+		renderer = initRenderer(rendererImpl);
+	}
+
+	private Renderer initRenderer(Class<? extends Renderer> rendererImpl) {
+		try {
+			return rendererImpl.getConstructor(this.getClass()).newInstance(this);
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			throw new Dc2fCmsError("Cannot initialize renderer.", e);
+		}
 	}
 
 	private String getTempBranchName() {
@@ -40,13 +56,11 @@ public class Dc2f {
 
 	private StorageBackend initStorageBackend(
 			Class<? extends StorageBackend> storageImpl) {
-		StorageBackend storageBackend;
 		try {
-			storageBackend = storageImpl.getConstructor().newInstance();
+			return storageImpl.getConstructor().newInstance();
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			throw new Dc2fCmsError("Cannot initialize the storage backend.", e);
 		}
-		return storageBackend;
 	}
 
 	public List<Project> getProjects() {
@@ -156,4 +170,5 @@ public class Dc2f {
 			return parent.addChild(file.getName());
 		}
 	}
+
 }

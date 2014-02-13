@@ -6,9 +6,12 @@ import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Node;
+import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.dc2f.cms.gui.dao.Dc2fFileProperty;
+import com.dc2f.cms.gui.dao.Dc2fRenderResource;
 import com.dc2f.cms.gui.dao.Dc2fResource;
+import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.TabSheet;
@@ -25,6 +28,8 @@ public class Dc2fEditor extends TabSheet {
 		source = new TextArea();
 		source.setSizeFull();
 		image = new Image();
+		frame = new BrowserFrame();
+		frame.setSizeFull();
 		tabs = new ArrayList<Tab>();
 	}
 	
@@ -33,6 +38,8 @@ public class Dc2fEditor extends TabSheet {
 	TextArea source;
 	
 	Image image;
+	
+	BrowserFrame frame;
 
 	public void openFile(Dc2fTreeItem treeItem) {
 		for(Tab tab : tabs) {
@@ -52,6 +59,10 @@ public class Dc2fEditor extends TabSheet {
 				addTab(image, "Preview");
 				image.setSource(new Dc2fResource(file));
 			}
+		}
+		if (node instanceof Page) {
+			addTab(frame, "Preview");
+			frame.setSource(new Dc2fRenderResource((Page) node));
 		}
 	}
 	
