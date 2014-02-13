@@ -67,7 +67,7 @@ public class Dc2f {
 		
 	public <T extends Node> List<T> getChildren(String path, Class<T> nodeType) {
 		ArrayList<T> nodes = new ArrayList<T>();
-		WorkingTreeNode parent = getNodeForPath(path);
+		WorkingTreeNode parent = internalGetNodeForPath(path);
 		for(WorkingTreeNode childNode : parent.getChildren()) {
 			T node = NodeType.getNode(childNode, nodeType, path);
 			if (node != null) {
@@ -77,9 +77,15 @@ public class Dc2f {
 		return nodes;
 	}
 
+	public Node getNodeForPath(String path) {
+		WorkingTreeNode node = internalGetNodeForPath(path);
+		if (node != null) {
+			return NodeType.getNode(node, Node.class, path.replaceAll("/[^/]+$", ""));
+		}
+		return null;
+	}
 
-
-	private WorkingTreeNode getNodeForPath(String path) {
+	private WorkingTreeNode internalGetNodeForPath(String path) {
 		WorkingTreeNode root = workingTree.getRootNode();
 		WorkingTreeNode node = root;
 		for(String pathElement : path.split("/")) {
@@ -108,13 +114,13 @@ public class Dc2f {
 	}
 
 	public void addFolder(Folder folder) {
-		WorkingTreeNode parent = getNodeForPath(folder.getParentPath());
+		WorkingTreeNode parent = internalGetNodeForPath(folder.getParentPath());
 		WorkingTreeNode folderNode = parent.addChild(folder.getName());
 		folderNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FOLDER));
 	}
 
 	public boolean addFile(File file) {
-		WorkingTreeNode parent = getNodeForPath(file.getParentPath());
+		WorkingTreeNode parent = internalGetNodeForPath(file.getParentPath());
 		WorkingTreeNode fileNode = parent.addChild(file.getName());
 		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FILE));
 		try {

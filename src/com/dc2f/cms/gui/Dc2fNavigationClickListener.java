@@ -23,9 +23,10 @@ public class Dc2fNavigationClickListener implements ItemClickListener {
 	@Override
 	public void itemClick(ItemClickEvent event) {
 		log.debug("Clicked: {}", event);
-		Object itemIdObject = event.getItemId();
-		if (itemIdObject instanceof Dc2fTreeItem) {
-			filelist.showChildren((Dc2fTreeItem) itemIdObject);
+		Object clickedOn = event.getItemId();
+		if (clickedOn instanceof Dc2fTreeItem) {
+			filelist.showChildren((Dc2fTreeItem) clickedOn);
+			tree.openFolder((Dc2fTreeItem) clickedOn);
 		}
 	}
 

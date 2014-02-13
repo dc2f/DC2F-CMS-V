@@ -1,6 +1,7 @@
 package com.dc2f.cms.gui;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Project;
+import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.vaadin.ui.Tree;
 
 @Slf4j
@@ -34,6 +36,7 @@ public class Dc2fTree extends Tree {
 	
 	@ToString(of={"name"})
 	@AllArgsConstructor
+	@EqualsAndHashCode
 	public static class Dc2fTreeItem {
 		public Dc2fTreeItem(Node node) {
 			name = node.getName();
@@ -43,6 +46,22 @@ public class Dc2fTree extends Tree {
 		private final String name;
 		@Getter
 		private final String path;
+	}
+	
+
+	public void openFolder(Dc2fTreeItem clickedOn) {
+		String[] path = clickedOn.getPath().split("/");
+		StringBuilder currentPath = new StringBuilder();
+		for (String pathElement : path) {
+			if (currentPath.length() > 0) {
+				currentPath.append("/");
+			}
+			currentPath.append(pathElement);
+			Node node = dc2f.getNodeForPath(currentPath.toString());
+			if (node != null) {
+				expandItem(new Dc2fTreeItem(node));
+			}
+		}
 	}
 	
 	private class Dc2fExpandListener implements ExpandListener {
@@ -69,4 +88,5 @@ public class Dc2fTree extends Tree {
 			}
 		}
 	}
+
 }
