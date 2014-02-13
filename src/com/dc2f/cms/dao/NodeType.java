@@ -20,7 +20,7 @@ public class NodeType {
 			synchronized (KNOWN_NODE_TYPES) {
 				if (KNOWN_NODE_TYPES.isEmpty()) {
 					//Possible node types for a node.
-					KNOWN_NODE_TYPES.put(Node.class, Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_PROJECT, MagicPropertyValues.NODE_TYPE_FOLDER, MagicPropertyValues.NODE_TYPE_PAGE, MagicPropertyValues.NODE_TYPE_NODE, MagicPropertyValues.NODE_TYPE_FILE}));
+					KNOWN_NODE_TYPES.put(Node.class, Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_NODE, MagicPropertyValues.NODE_TYPE_PROJECT, MagicPropertyValues.NODE_TYPE_FOLDER, MagicPropertyValues.NODE_TYPE_PAGE, MagicPropertyValues.NODE_TYPE_FILE}));
 					//Possible node types for a folder
 					KNOWN_NODE_TYPES.put(Folder.class, Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_FOLDER, MagicPropertyValues.NODE_TYPE_PROJECT}));
 					//Possible node types for a project
