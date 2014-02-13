@@ -10,4 +10,9 @@ public class Page extends File {
 		super(name, path);
 		setMimetype("text/html");
 	}
+
+	public Page(String name, Project parent, String relativePath) {
+		super(name, parent, relativePath); 
+		setMimetype("text/html");
+	}
 }

@@ -120,9 +120,21 @@ public class Dc2f {
 	}
 
 	public boolean addFile(File file) {
+		return addFile(file, MagicPropertyValues.NODE_TYPE_FILE);
+	}
+	
+	public boolean addTemplate(Template template) {
+		return addFile(template, MagicPropertyValues.NODE_TYPE_TEMPLATE);
+	}
+	
+	public boolean addPage(Page page) {
+		return addFile(page, MagicPropertyValues.NODE_TYPE_PAGE);
+	}
+		
+	public boolean addFile(File file, String nodeType) {
 		WorkingTreeNode fileNode = getOrCreateFile(file);
-		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FILE));
-		if(file.getMimetype() != null && !file.getMimetype().isEmpty()) {
+		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(nodeType));
+		if (file.getMimetype() != null && !file.getMimetype().isEmpty()) {
 			fileNode.setProperty(PropertyNames.MIMETYPE, new Property(file.getMimetype()));
 		}
 		try {

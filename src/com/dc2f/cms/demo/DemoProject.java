@@ -5,6 +5,7 @@ import java.io.InputStream;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Folder;
+import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.dao.Template;
 
@@ -19,20 +20,33 @@ public class DemoProject {
 		checkFolderHierarchy(demoProject, dc2f);
 		checkFiles(demoProject, dc2f);
 		checkTemplate(demoProject, dc2f);
+		checkPages(demoProject, dc2f);
 	}
 
 	private static void checkTemplate(Project demoProject, Dc2f dc2f) {
-		String[][] expectedFiles = new String[][]{
-				{"template.html", "template.html", Template.MIMETYPE},
+		String[][] expectedTemplates = new String[][]{
+				{"template.html"},
 			};
-		for(String[] fileDefinition : expectedFiles) {
-			InputStream stream = DemoProject.class.getResourceAsStream(fileDefinition[1]);
-			Template template = new Template(fileDefinition[1], demoProject);
+		for(String[] fileDefinition : expectedTemplates) {
+			InputStream stream = DemoProject.class.getResourceAsStream(fileDefinition[0]);
+			Template template = new Template(fileDefinition[0], demoProject);
 			template.setContent(stream);
-			template.setMimetype(fileDefinition[2]);
-			dc2f.addFile(template);
+			dc2f.addTemplate(template);
 		}
-		
+	}
+	
+	private static void checkPages(Project demoProject, Dc2f dc2f) {
+		String[][] expectedPages = new String[][]{
+				{"Home/About/about.html", "about.html"},
+				{"Home/Install/install.html", "install.html"},
+				{"Home/Download/download.html", "download.html"},
+			};
+		for(String[] fileDefinition : expectedPages) {
+			InputStream stream = DemoProject.class.getResourceAsStream(fileDefinition[1].replace(".html", ".json"));
+			Page page = new Page(fileDefinition[1], demoProject, fileDefinition[0]);
+			page.setContent(stream);
+			dc2f.addPage(page);
+		}
 	}
 
 	private static void checkFiles(Project demoProject, Dc2f dc2f) {
