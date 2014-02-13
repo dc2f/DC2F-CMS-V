@@ -39,4 +39,15 @@ public class NodeTypeTest {
 		EasyMock.replay(node);
 		return node;
 	}
+	
+	@Test
+	public void testGettingTypeNames() {
+		assertEquals("node", NodeType.getTypeName(new Node("test", "test")));
+		assertEquals("file", NodeType.getTypeName(new File("test", "test")));
+		assertEquals("page", NodeType.getTypeName(new Page("test", "test")));
+		assertEquals("template", NodeType.getTypeName(new Template("test", "test")));
+		assertEquals("folder", NodeType.getTypeName(new Folder("test", "test")));
+		assertEquals("project", NodeType.getTypeName(new Project("test")));
+		
+	}
 }
