@@ -6,6 +6,7 @@ import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Project;
+import com.dc2f.cms.dao.Template;
 
 public class DemoProject {
 	/**
@@ -17,6 +18,21 @@ public class DemoProject {
 		Project demoProject = retrieveOrCreateDemoProject(dc2f);
 		checkFolderHierarchy(demoProject, dc2f);
 		checkFiles(demoProject, dc2f);
+		checkTemplate(demoProject, dc2f);
+	}
+
+	private static void checkTemplate(Project demoProject, Dc2f dc2f) {
+		String[][] expectedFiles = new String[][]{
+				{"template.html", "template.html", Template.MIMETYPE},
+			};
+		for(String[] fileDefinition : expectedFiles) {
+			InputStream stream = DemoProject.class.getResourceAsStream(fileDefinition[1]);
+			Template template = new Template(fileDefinition[1], demoProject);
+			template.setContent(stream);
+			template.setMimetype(fileDefinition[2]);
+			dc2f.addFile(template);
+		}
+		
 	}
 
 	private static void checkFiles(Project demoProject, Dc2f dc2f) {

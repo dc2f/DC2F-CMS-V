@@ -28,6 +28,8 @@ public class NodeType {
 					KNOWN_NODE_TYPES.put(Project.class, Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_PROJECT}));
 					//Possible node types for a file
 					KNOWN_NODE_TYPES.put(File.class, Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_FILE, MagicPropertyValues.NODE_TYPE_PAGE}));
+					//Possible node types for a template
+					KNOWN_NODE_TYPES.put(Template.class, Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_TEMPLATE}));
 					//Possible node types for a page
 					KNOWN_NODE_TYPES.put(Page.class, Arrays.asList(new String[]{MagicPropertyValues.NODE_TYPE_PAGE}));
 				}
@@ -48,6 +50,10 @@ public class NodeType {
 	
 	public static boolean isFolder(WorkingTreeNode node) {
 		return isType(node, Folder.class);
+	}
+
+	public static boolean isTemplate(WorkingTreeNode node) {
+		return isType(node, Template.class);
 	}
 	
 	public static boolean isPage(WorkingTreeNode node) {
@@ -90,13 +96,28 @@ public class NodeType {
 			return (T) new Folder(name, parentPath + "/" + name);
 		} else if (nodeType.isAssignableFrom(File.class) && isFile(node)) {
 			File file = new File(name, parentPath + "/" + name);
-			file.setMimetype(node.getProperty(PropertyNames.MIMETYPE).toString());
-			file.setContent(new ByteArrayInputStream((byte[]) node.getProperty(PropertyNames.CONTENT).getObjectValue()));
+			applyFileProperties(node, file);
 			return (T) file;
+		} else if (nodeType.isAssignableFrom(Template.class) && isTemplate(node)) {
+			Template template = new Template(name, parentPath + "/" + name);
+			applyFileProperties(node, template);
+			return (T) template;
+		} else if (nodeType.isAssignableFrom(Page.class) && isPage(node)) {
+			Page page = new Page(name, parentPath + "/" + name);
+			applyFileProperties(node, page);
+			return (T) page;
 		} else if (nodeType.isAssignableFrom(Node.class) && isNode(node)) {
 			return (T) new Node(name, parentPath + "/" + name);
 		}
 		return null;
+	}
+
+
+
+	private static void applyFileProperties(WorkingTreeNode node,
+			File file) {
+		file.setMimetype(node.getProperty(PropertyNames.MIMETYPE).toString());
+		file.setContent(new ByteArrayInputStream((byte[]) node.getProperty(PropertyNames.CONTENT).getObjectValue()));
 	}
 
 
