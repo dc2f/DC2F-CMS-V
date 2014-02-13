@@ -1,6 +1,7 @@
 package com.dc2f.cms.gui;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +39,9 @@ public class Dc2fTree extends Tree {
 			name = node.getName();
 			path = node.getPath();
 		}
+		@Getter
 		private final String name;
+		@Getter
 		private final String path;
 	}
 	
@@ -65,6 +68,5 @@ public class Dc2fTree extends Tree {
 				setChildrenAllowed(item, false);
 			}
 		}
-		
 	}
 }

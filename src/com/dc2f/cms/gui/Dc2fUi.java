@@ -9,6 +9,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -33,11 +34,16 @@ public class Dc2fUi extends UI {
 		main.setSplitPosition(10, Unit.PERCENTAGE);
 		
 		final Dc2fTree tree = new Dc2fTree();
-		final Label filelist = new Label("filelist");
+		final Dc2fFileList filelist = new Dc2fFileList();
+		final Dc2fNavigationClickListener clickListener = new Dc2fNavigationClickListener(tree, filelist);
+		tree.addItemClickListener(clickListener);
+		filelist.addItemClickListener(clickListener);
+		filelist.setHeight(100, Unit.PERCENTAGE);
 		final Label editor = new Label("editor");
 		main.addComponent(tree);
 		final HorizontalLayout right = new HorizontalLayout();
 		main.addComponent(right);
+		right.setHeight(100, Unit.PERCENTAGE);
 		right.addComponent(filelist);
 		right.addComponent(editor);
 	}

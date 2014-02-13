@@ -92,4 +92,10 @@ public class NodeType {
 		}
 		return null;
 	}
+
+
+
+	public static String getTypeName(Node node) {
+		return KNOWN_NODE_TYPES.get(node.getClass()).get(0);
+	}
 }
