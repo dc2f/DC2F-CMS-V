@@ -30,6 +30,7 @@ public class Dc2fNavigationClickListener implements ItemClickListener {
 			if (Folder.class.isAssignableFrom(((Dc2fTreeItem) clickedOn).getType())) {
 				filelist.showChildren((Dc2fTreeItem) clickedOn);
 				tree.openFolder((Dc2fTreeItem) clickedOn);
+				tree.select(clickedOn);
 			}
 		}
 	}

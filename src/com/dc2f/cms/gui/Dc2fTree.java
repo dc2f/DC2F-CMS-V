@@ -32,6 +32,7 @@ public class Dc2fTree extends Tree {
 			setItemCaption(projectItem, project.getName());
 		}
 		addExpandListener(new Dc2fExpandListener());
+		setImmediate(true);
 	}
 	
 	@ToString(of={"name"})
@@ -61,7 +62,10 @@ public class Dc2fTree extends Tree {
 			currentPath.append(pathElement);
 			Node node = dc2f.getNodeForPath(currentPath.toString());
 			if (node != null) {
-				expandItem(new Dc2fTreeItem(node));
+				Dc2fTreeItem item = new Dc2fTreeItem(node);
+				if(!isExpanded(item)) {
+					expandItem(new Dc2fTreeItem(node));
+				}
 			}
 		}
 	}
