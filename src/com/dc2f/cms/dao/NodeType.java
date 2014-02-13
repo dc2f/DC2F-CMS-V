@@ -1,5 +1,6 @@
 package com.dc2f.cms.dao;
 
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -87,6 +88,11 @@ public class NodeType {
 			return (T) new Project(name);
 		} else if (nodeType.isAssignableFrom(Folder.class) && isFolder(node)) {
 			return (T) new Folder(name, parentPath + "/" + name);
+		} else if (nodeType.isAssignableFrom(File.class) && isFile(node)) {
+			File file = new File(name, parentPath + "/" + name);
+			file.setMimetype(node.getProperty(PropertyNames.MIMETYPE).toString());
+			file.setContent(new ByteArrayInputStream((byte[]) node.getProperty(PropertyNames.CONTENT).getObjectValue()));
+			return (T) file;
 		} else if (nodeType.isAssignableFrom(Node.class) && isNode(node)) {
 			return (T) new Node(name, parentPath + "/" + name);
 		}

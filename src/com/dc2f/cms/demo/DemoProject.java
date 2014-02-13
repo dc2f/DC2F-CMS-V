@@ -21,14 +21,15 @@ public class DemoProject {
 
 	private static void checkFiles(Project demoProject, Dc2f dc2f) {
 		String[][] expectedFiles = new String[][]{
-				{"resources/css/dc2f.css", "dc2f.css"},
-				{"resources/img/dc2f.png", "dc2f.png"},
-				{"resources/js/dc2f.js", "dc2f.js"},
+				{"resources/css/dc2f.css", "dc2f.css", "text/css"},
+				{"resources/img/dc2f.png", "dc2f.png", "image/png"},
+				{"resources/js/dc2f.js", "dc2f.js", "text/javascript"},
 			};
 		for(String[] fileDefinition : expectedFiles) {
 			InputStream stream = DemoProject.class.getResourceAsStream(fileDefinition[1]);
 			File file = new File(fileDefinition[1], demoProject, fileDefinition[0]);
 			file.setContent(stream);
+			file.setMimetype(fileDefinition[2]);
 			dc2f.addFile(file);
 		}
 	}

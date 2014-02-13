@@ -123,6 +123,9 @@ public class Dc2f {
 		WorkingTreeNode parent = internalGetNodeForPath(file.getParentPath());
 		WorkingTreeNode fileNode = parent.addChild(file.getName());
 		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FILE));
+		if(file.getMimetype() != null && !file.getMimetype().isEmpty()) {
+			fileNode.setProperty(PropertyNames.MIMETYPE, new Property(file.getMimetype()));
+		}
 		try {
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			IOUtils.copy(file.getContent(false), os);

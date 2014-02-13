@@ -35,17 +35,17 @@ public class Dc2fUi extends UI {
 		
 		final Dc2fTree tree = new Dc2fTree();
 		final Dc2fFileList filelist = new Dc2fFileList();
-		final Dc2fNavigationClickListener clickListener = new Dc2fNavigationClickListener(tree, filelist);
-		tree.addItemClickListener(clickListener);
-		filelist.addItemClickListener(clickListener);
 		filelist.setHeight(100, Unit.PERCENTAGE);
-		final Label editor = new Label("editor");
+		final Dc2fEditor editor = new Dc2fEditor();
 		main.addComponent(tree);
 		final HorizontalLayout right = new HorizontalLayout();
 		main.addComponent(right);
 		right.setHeight(100, Unit.PERCENTAGE);
+		right.setWidth(100, Unit.PERCENTAGE);
 		right.addComponent(filelist);
 		right.addComponent(editor);
+		
+		final Dc2fNavigationClickListener clickListener = new Dc2fNavigationClickListener(tree, filelist, editor);
 	}
 
 }

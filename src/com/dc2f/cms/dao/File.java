@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import lombok.Getter;
 import lombok.Setter;
 
 public class File extends Node {
@@ -14,6 +15,13 @@ public class File extends Node {
 	public File(String name, Folder parent, String relativePath) {
 		super(name, parent, relativePath);
 	}
+	
+	public File(String name, String path) {
+		super(name, path);
+	}
+	
+	@Setter @Getter
+	private String mimetype;
 	
 	@Setter
 	private InputStream content;
