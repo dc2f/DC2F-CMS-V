@@ -94,10 +94,6 @@ public class NodeType {
 			return (T) new Project(name);
 		} else if (nodeType.isAssignableFrom(Folder.class) && isFolder(node)) {
 			return (T) new Folder(name, parentPath + "/" + name);
-		} else if (nodeType.isAssignableFrom(File.class) && isFile(node)) {
-			File file = new File(name, parentPath + "/" + name);
-			applyFileProperties(node, file);
-			return (T) file;
 		} else if (nodeType.isAssignableFrom(Template.class) && isTemplate(node)) {
 			Template template = new Template(name, parentPath + "/" + name);
 			applyFileProperties(node, template);
@@ -106,6 +102,10 @@ public class NodeType {
 			Page page = new Page(name, parentPath + "/" + name);
 			applyFileProperties(node, page);
 			return (T) page;
+		} else if (nodeType.isAssignableFrom(File.class) && isFile(node)) {
+			File file = new File(name, parentPath + "/" + name);
+			applyFileProperties(node, file);
+			return (T) file;
 		} else if (nodeType.isAssignableFrom(Node.class) && isNode(node)) {
 			return (T) new Node(name, parentPath + "/" + name);
 		}

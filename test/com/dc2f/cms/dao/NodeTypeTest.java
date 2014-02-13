@@ -8,6 +8,7 @@ import org.easymock.EasyMock;
 import org.easymock.IAnswer;
 import org.junit.Test;
 
+import com.dc2f.cms.Dc2fConstants;
 import com.dc2f.dstore.hierachynodestore.WorkingTreeNode;
 import com.dc2f.dstore.storage.Property;
 
@@ -23,11 +24,19 @@ public class NodeTypeTest {
 		assertNotNull(project);
 		assertTrue(project instanceof Project);
 	}
+	
+	@Test
+	public void testRetrievingTemplate() {
+		WorkingTreeNode projectNode = newWorkingTreeNode(new Object[][]{{"nodeType", "template"}, {"name", "template"}, {"mimetype", "text/x-dc2f-template"}, {"content", "nothing".getBytes(Dc2fConstants.CHARSET)}});
+		Node node = NodeType.getNode(projectNode, Node.class);
+		assertNotNull(node);
+		assertTrue(node instanceof Template);
+	}
 
-	private WorkingTreeNode newWorkingTreeNode(final String[][] properties) {
+	private WorkingTreeNode newWorkingTreeNode(final Object[][] properties) {
 		final HashMap<String, Property> propertiesMap = new HashMap<String, Property>();
-		for (String[] property : properties) {
-			propertiesMap.put(property[0], new Property(property[1]));
+		for (Object[] property : properties) {
+			propertiesMap.put((String) property[0], new Property(property[1]));
 		}
 		WorkingTreeNode node = EasyMock.createMock(WorkingTreeNode.class);
 		EasyMock.expect(node.getProperty(EasyMock.anyString())).andAnswer(new IAnswer<Property>() {
