@@ -23,11 +23,17 @@ public class File extends Node {
 	@Setter @Getter
 	private String mimetype;
 	
-	@Setter
 	private InputStream content;
-
+	
 	private MultiReadInputStreamReader bufferedContent;
 
+	public void setContent(InputStream newContent) {
+		synchronized(this) {
+			bufferedContent = null;
+			content = newContent;
+		}
+	}
+	
 	public InputStream getContent(boolean exclusive) {
 		if (exclusive) {
 			if (content != null) {

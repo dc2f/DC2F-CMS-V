@@ -33,14 +33,40 @@ public class Dc2fSettings {
 	@Getter @Setter
 	private Class<? extends StorageBackend> storageImpl = HashMapStorage.class;
 	
+	
+	private transient Dc2f dc2f;
+	
+	private static Dc2fSettings instance;
+	
+	private final static Object LOCK = new Object();
+	
 	/**
 	 * @return the settings last used in this enviroment, or new settings if the old ones could not be loaded
 	 */
 	public static Dc2fSettings get() {
-		return new Dc2fSettings();
+		if (instance == null) {
+			synchronized (LOCK) {
+				if (instance == null) {
+					instance = new Dc2fSettings();
+				}
+			}
+		}
+		return instance;
 	}
 
 	public Dc2f initDc2f() {
+		if (dc2f == null) {
+			synchronized (this) {
+				if (dc2f == null) {
+					dc2f = internalInitDc2f();
+				}
+			}
+		}
+		return dc2f;
+		
+	}
+	
+	private Dc2f internalInitDc2f() {
 		Dc2f dc2f = new Dc2f(storageImpl);
 		if(resetDemoProjectOnStartup) {
 			DemoProject.resetDemoProject(dc2f);

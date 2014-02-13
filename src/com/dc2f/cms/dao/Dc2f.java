@@ -120,8 +120,7 @@ public class Dc2f {
 	}
 
 	public boolean addFile(File file) {
-		WorkingTreeNode parent = internalGetNodeForPath(file.getParentPath());
-		WorkingTreeNode fileNode = parent.addChild(file.getName());
+		WorkingTreeNode fileNode = getOrCreateFile(file);
 		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FILE));
 		if(file.getMimetype() != null && !file.getMimetype().isEmpty()) {
 			fileNode.setProperty(PropertyNames.MIMETYPE, new Property(file.getMimetype()));
@@ -137,4 +136,12 @@ public class Dc2f {
 		return true;
 	}
 
+	private WorkingTreeNode getOrCreateFile(File file) {
+		try {
+			return internalGetNodeForPath(file.getPath());
+		} catch(Dc2fNotExistingPathError e) {
+			WorkingTreeNode parent = internalGetNodeForPath(file.getParentPath());
+			return parent.addChild(file.getName());
+		}
+	}
 }

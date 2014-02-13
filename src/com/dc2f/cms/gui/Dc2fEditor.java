@@ -6,7 +6,6 @@ import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Node;
-import com.dc2f.cms.dao.constants.PropertyNames;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.dc2f.cms.gui.dao.Dc2fFileProperty;
 import com.dc2f.cms.gui.dao.Dc2fResource;
@@ -46,7 +45,9 @@ public class Dc2fEditor extends TabSheet {
 			File file = (File) node;
 			if(file.getMimetype().startsWith("text/")) {
 				addTab(source, "Source");
-				source.setPropertyDataSource(new Dc2fFileProperty(file));
+				Dc2fFileProperty property = new Dc2fFileProperty(file);
+				source.setPropertyDataSource(property);
+				source.addTextChangeListener(property);
 			} else if(file.getMimetype().startsWith("image/")) {
 				addTab(image, "Preview");
 				image.setSource(new Dc2fResource(file));
