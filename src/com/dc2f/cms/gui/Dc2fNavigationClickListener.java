@@ -3,6 +3,8 @@ package com.dc2f.cms.gui;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import com.dc2f.cms.dao.Folder;
+import com.dc2f.cms.dao.constants.MagicPropertyValues;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -25,8 +27,10 @@ public class Dc2fNavigationClickListener implements ItemClickListener {
 		log.debug("Clicked: {}", event);
 		Object clickedOn = event.getItemId();
 		if (clickedOn instanceof Dc2fTreeItem) {
-			filelist.showChildren((Dc2fTreeItem) clickedOn);
-			tree.openFolder((Dc2fTreeItem) clickedOn);
+			if (Folder.class.isAssignableFrom(((Dc2fTreeItem) clickedOn).getType())) {
+				filelist.showChildren((Dc2fTreeItem) clickedOn);
+				tree.openFolder((Dc2fTreeItem) clickedOn);
+			}
 		}
 	}
 

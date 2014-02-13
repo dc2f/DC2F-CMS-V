@@ -27,7 +27,7 @@ public class Dc2fTree extends Tree {
 	public Dc2fTree() {
 		dc2f = Dc2fSettings.get().initDc2f();
 		for (Project project : dc2f.getProjects()) {
-			Dc2fTreeItem projectItem = new Dc2fTreeItem(project.getName(), project.getPath());
+			Dc2fTreeItem projectItem = new Dc2fTreeItem(project);
 			addItem(projectItem);
 			setItemCaption(projectItem, project.getName());
 		}
@@ -35,17 +35,19 @@ public class Dc2fTree extends Tree {
 	}
 	
 	@ToString(of={"name"})
-	@AllArgsConstructor
 	@EqualsAndHashCode
 	public static class Dc2fTreeItem {
 		public Dc2fTreeItem(Node node) {
 			name = node.getName();
 			path = node.getPath();
+			type = node.getClass();
 		}
 		@Getter
 		private final String name;
 		@Getter
 		private final String path;
+		@Getter
+		private final Class<? extends Node> type;
 	}
 	
 
