@@ -24,7 +24,7 @@ public class File extends Node {
 	private String mimetype;
 	
 	@Setter @Getter
-	private long updatetimestamp;
+	private Long updatetimestamp;
 	
 	private InputStream content;
 	

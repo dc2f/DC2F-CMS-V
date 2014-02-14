@@ -1,14 +1,20 @@
 package com.dc2f.cms.rendering.simple;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.dc2f.cms.Dc2fConstants;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.dao.Template;
@@ -35,7 +41,7 @@ public class LatestNewsPlugin implements RenderPlugin {
 		String startPath = projectPath + "/" + renderDefinition[1];
 		int maxItems = Integer.parseInt(renderDefinition[2]);
 		ArrayList<TemplateChunk> chunks = new ArrayList<>();
-		for (Page page : dc2f.getAllChildren(startPath, Page.class)) {
+		for (Page page : sort(dc2f.getAllChildren(startPath, Page.class))) {
 			chunks.add(new LatestNewsTemplateChunk(linkTemplate, page));
 			if (chunks.size() >= maxItems) {
 				break;
@@ -44,6 +50,16 @@ public class LatestNewsPlugin implements RenderPlugin {
 		return new ListTemplateChunk(chunks);
 	}
 	
+	private List<Page> sort(List<Page> allChildren) {
+		Collections.sort(allChildren, new Comparator<Page>() {
+			@Override
+			public int compare(Page o1, Page o2) {
+				return o1.getUpdatetimestamp().compareTo(o2.getUpdatetimestamp());
+			}
+		});
+		return allChildren;
+	}
+
 	@AllArgsConstructor
 	private class LatestNewsTemplateChunk implements TemplateChunk {
 
@@ -53,19 +69,20 @@ public class LatestNewsPlugin implements RenderPlugin {
 		
 		@Override
 		public String toString(JSONObject pageProperties) {
-			String title = getSafe(pageProperties, "title");
-			String content = getSafe(pageProperties, "content");
+			String title = getSafe("title");
+			String content = getSafe("content");
 			return template.replaceAll("\\$name", page.getName())
 					.replaceAll("\\$link", RenderServlet.getEnvironment().getProperty(TemplateEnvironment.BASE_URL_PROPERTY) + "/" + page.getPath())
 					.replaceAll("\\$title", title)
 					.replaceAll("\\$content", content);
 		}
 
-		private String getSafe(JSONObject pageProperties, String string) {
+		private String getSafe(String property) {
 			try {
-				return pageProperties.getString(string);
-			} catch (JSONException e) {
-				log.debug("cannot get title for page " + page.getPath(), e);
+				JSONObject pageProperties = new JSONObject(IOUtils.toString(page.getContent(false), Dc2fConstants.CHARSET));
+				return pageProperties.getString(property);
+			} catch (JSONException | IOException e) {
+				log.debug("cannot get " + property + " for page " + page.getPath(), e);
 				return "";
 			}
 		}
