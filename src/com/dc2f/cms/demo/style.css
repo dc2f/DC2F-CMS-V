@@ -5,11 +5,6 @@
 }
 @font-face
 {
-	font-family: interstate-font;
-	src: url('fonts/Interstate Mono.ttf')
-}
-@font-face
-{
 	font-family: officiana;
 	src: url('fonts/48.ttf')
    
@@ -479,7 +474,7 @@ top: -1px;
  .txthead{
  	color:grey;
  	font-size: 1.2em;
- 	font-family: interstate-font;
+ 	font-family: arial;
  	padding: 19px 0px 12px;
  }
  .vote-question{
@@ -502,7 +497,7 @@ top: -1px;
 	border-bottom:3px solid #cfdcd3;
  }
  .green-button{
- 	font-family: interstate-font;
+ 	font-family: arial;
  	color: green;
 	font-weight: nor;
 	font-size: 1.10em;
