@@ -8,6 +8,7 @@ import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.dao.Template;
+import com.dc2f.cms.exceptions.Dc2fCmsError;
 
 public class DemoProject {
 	/**
@@ -51,12 +52,49 @@ public class DemoProject {
 
 	private static void checkFiles(Project demoProject, Dc2f dc2f) {
 		String[][] expectedFiles = new String[][]{
-				{"resources/css/dc2f.css", "dc2f.css", "text/css"},
-				{"resources/img/dc2f.png", "dc2f.png", "image/png"},
-				{"resources/js/dc2f.js", "dc2f.js", "text/javascript"},
+				{"resources/css/reset.css", "reset.css", "text/css"},
+				{"resources/css/style.css", "style.css", "text/css"},
+				{"resources/css/fonts/48.ttf", "48.ttf", "application/x-font-ttf"},
+				{"resources/css/fonts/Interstate Mono.ttf", "Interstate Mono.ttf", "application/x-font-ttf"},
+				{"resources/css/fonts/ITC Officina Sans LT Book Italic.ttf", "ITC Officina Sans LT Book Italic.ttf", "application/x-font-ttf"},
+				{"resources/css/fonts/OfficinaSans-Bold.otf", "OfficinaSans-Bold.otf", "application/x-font-opentype"},
+				{"resources/css/fonts/Roadway.ttf", "Roadway.ttf", "application/x-font-ttf"},
+				{"resources/images/arrow.png", "arrow.png", "image/png"},
+				{"resources/images/backgrnd.jpg", "backgrnd.jpg", "image/jpeg"},
+				{"resources/images/bottom-1.png", "bottom-1.png", "image/png"},
+				{"resources/images/bottom-2.png", "bottom-2.png", "image/png"},
+				{"resources/images/bunny-man.png", "bunny-man.png", "image/png"},
+				{"resources/images/center-bottom.png", "center-bottom.png", "image/png"},
+				{"resources/images/center-left.jpg", "center-left.jpg", "image/jpeg"},
+				{"resources/images/center-right.jpg", "center-right.jpg", "image/jpeg"},
+				{"resources/images/english.png", "english.png", "image/png"},
+				{"resources/images/fb-icon.png", "fb-icon.png", "image/png"},
+				{"resources/images/fb.png", "fb.png", "image/png"},
+				{"resources/images/img1.jpg", "img1.jpg", "image/jpeg"},
+				{"resources/images/img2.jpg", "img2.jpg", "image/jpeg"},
+				{"resources/images/img3.jpg", "img3.jpg", "image/jpeg"},
+				{"resources/images/img4.jpg", "img4.jpg", "image/jpeg"},
+				{"resources/images/img5.jpg", "img5.jpg", "image/jpeg"},
+				{"resources/images/img6.jpg", "img6.jpg", "image/jpeg"},
+				{"resources/images/kid.png", "kid.png", "image/png"},
+				{"resources/images/lady.png", "lady.png", "image/png"},
+				{"resources/images/message.jpg", "message.jpg", "image/jpeg"},
+				{"resources/images/rss.png", "rss.png", "image/png"},
+				{"resources/images/rssfeed.png", "rssfeed.png", "image/png"},
+				{"resources/images/search.png", "search.png", "image/png"},
+				{"resources/images/spanish.png", "spanish.png", "image/png"},
+				{"resources/images/thelatest.jpg", "thelatest.jpg", "image/jpeg"},
+				{"resources/images/twitter.png", "twitter.png", "image/png"},
+				{"resources/images/twitter1.png", "twitter1.png", "image/png"},
+				{"resources/js/jquery-1.8.2.js", "jquery-1.8.2.js", "text/javascript"},
+				{"resources/js/jquery.cycle.all.js", "jquery.cycle.all.js", "text/javascript"},
+				{"resources/js/main.js", "main.js", "text/javascript"}
 			};
 		for(String[] fileDefinition : expectedFiles) {
 			InputStream stream = DemoProject.class.getResourceAsStream(fileDefinition[1]);
+			if (stream == null) {
+				throw new Dc2fCmsError("Cannot find file " + fileDefinition[1], null);
+			}
 			File file = new File(fileDefinition[1], demoProject, fileDefinition[0]);
 			file.setContent(stream);
 			file.setMimetype(fileDefinition[2]);
@@ -73,7 +111,8 @@ public class DemoProject {
 				{"Home/Download", "Download"},
 				{"resources", "resources"},
 				{"resources/css", "css"},
-				{"resources/img", "img"},
+				{"resources/css/fonts", "fonts"},
+				{"resources/images", "images"},
 				{"resources/js", "js"}};
 		for(String[] folderDefinition : expectedFolders) {
 			dc2f.addFolder(new Folder(folderDefinition[1], demoProject, folderDefinition[0]));
