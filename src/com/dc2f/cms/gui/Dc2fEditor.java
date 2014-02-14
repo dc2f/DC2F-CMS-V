@@ -11,6 +11,9 @@ import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.dc2f.cms.gui.dao.Dc2fFileProperty;
 import com.dc2f.cms.gui.dao.Dc2fRenderResource;
 import com.dc2f.cms.gui.dao.Dc2fResource;
+import com.dc2f.cms.rendering.RenderServlet;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Image;
@@ -62,7 +65,8 @@ public class Dc2fEditor extends TabSheet {
 		}
 		if (node instanceof Page) {
 			addTab(frame, "Preview");
-			frame.setSource(new Dc2fRenderResource((Page) node));
+			String contextPath = VaadinServlet.getCurrent().getServletContext().getContextPath();
+			frame.setSource(new ExternalResource(contextPath + RenderServlet.SERVLET_PATH + node.getPath()));
 		}
 	}
 	

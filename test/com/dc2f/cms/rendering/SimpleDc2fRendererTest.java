@@ -15,6 +15,10 @@ import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.dao.Template;
+import com.dc2f.cms.rendering.simple.RenderPlugin;
+import com.dc2f.cms.rendering.simple.SimpleDc2fRenderer;
+import com.dc2f.cms.rendering.simple.StringTemplateChunk;
+import com.dc2f.cms.rendering.simple.TemplateChunk;
 
 public class SimpleDc2fRendererTest {
 	@Test
@@ -41,6 +45,31 @@ public class SimpleDc2fRendererTest {
 	@Test
 	public void testVariableReplacementAtEnd() throws IOException {
 		SimpleDc2fRenderer renderer = new SimpleDc2fRenderer(getDc2fMockup("This is my test template{point}"));
+		String renderedPage = IOUtils.toString(renderer.render(getPageMockup()), Dc2fConstants.CHARSET);
+		assertEquals("This is my test template.", renderedPage);
+	}
+	
+	
+	@Test
+	public void testPlugins() throws IOException {
+		SimpleDc2fRenderer renderer = new SimpleDc2fRenderer(getDc2fMockup("This is my {plugin:plugin} test {plugin:template}."));
+		renderer.registerPlugin(new RenderPlugin() {
+			@Override
+			public String getDefaultKey() {
+				return "plugin";
+			}
+			@Override
+			public TemplateChunk generateTemplateChunkFor(Template template, String renderDefinition) {
+				return new StringTemplateChunk(renderDefinition.replaceAll("^.*?:", ""));
+			}
+		});
+		String renderedPage = IOUtils.toString(renderer.render(getPageMockup()), Dc2fConstants.CHARSET);
+		assertEquals("This is my plugin test template.", renderedPage);
+	}
+	
+	@Test
+	public void testMissingPlugin() throws IOException {
+		SimpleDc2fRenderer renderer = new SimpleDc2fRenderer(getDc2fMockup("This is my {notexistentplugin:plugin}test template."));
 		String renderedPage = IOUtils.toString(renderer.render(getPageMockup()), Dc2fConstants.CHARSET);
 		assertEquals("This is my test template.", renderedPage);
 	}

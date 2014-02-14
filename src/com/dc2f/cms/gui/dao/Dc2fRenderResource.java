@@ -24,7 +24,7 @@ public class Dc2fRenderResource extends Dc2fResource {
 	public DownloadStream getStream() {
 		InputStream renderedPage = Dc2fSettings.get().initDc2f().getRenderer().render(page);
 		DownloadStream ds = new DownloadStream(renderedPage, getMIMEType(), getFilename());
-		ds.setCacheTime(DownloadStream.DEFAULT_CACHETIME);
+		ds.setCacheTime(5000);
 		ds.setBufferSize(0);
 		return ds;
 	}

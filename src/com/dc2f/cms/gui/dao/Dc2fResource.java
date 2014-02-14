@@ -24,7 +24,7 @@ public class Dc2fResource implements ConnectorResource {
 	@Override
 	public DownloadStream getStream() {
 		DownloadStream ds = new DownloadStream(file.getContent(false), getMIMEType(), getFilename());
-		ds.setCacheTime(30 * 1000);
+		ds.setCacheTime(5000);
 		ds.setBufferSize(0);
 		return ds;
 	}

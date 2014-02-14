@@ -1,9 +1,10 @@
-package com.dc2f.cms.rendering;
+package com.dc2f.cms.rendering.simple;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,7 @@ import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.dao.Template;
 import com.dc2f.cms.exceptions.Dc2fCmsError;
+import com.dc2f.cms.rendering.Renderer;
 import com.google.gwt.uibinder.client.UiBinderUtil.TempAttachment;
 
 
@@ -28,6 +30,8 @@ import com.google.gwt.uibinder.client.UiBinderUtil.TempAttachment;
 public class SimpleDc2fRenderer implements Renderer {
 
 	private final Dc2f dc2f;
+	
+	private HashMap<String, RenderPlugin> plugins = new HashMap<String, RenderPlugin>();
 	
 	public SimpleDc2fRenderer(Dc2f dc2fDao) {
 		dc2f = dc2fDao;
@@ -49,7 +53,7 @@ public class SimpleDc2fRenderer implements Renderer {
 		String projectPath = page.getPath().replaceAll("/.*$", "");
 		Node node = dc2f.getNodeForPath(projectPath + "/template.html");
 		if(node instanceof Template) {
-			return new RenderableTemplate(((Template) node).getContent(false));
+			return new RenderableTemplate((Template) node);
 		}
 		return null;
 	}
@@ -58,17 +62,26 @@ public class SimpleDc2fRenderer implements Renderer {
 		
 		private ArrayList<TemplateChunk> chunks = new ArrayList<TemplateChunk>();
 		
-		private RenderableTemplate(InputStream source) {
+		private RenderableTemplate(Template template) {
 			try {
+				InputStream source = template.getContent(false);
 				String templateSource = IOUtils.toString(source, Dc2fConstants.CHARSET);
-				Matcher templateVariableMatcher = Pattern.compile("\\{(.*?)\\}").matcher(templateSource);
+				Matcher templateVariableMatcher = Pattern.compile("\\{((?:(.*?):)?.*?)\\}").matcher(templateSource);
 				int lastEnd = 0;
 				while(templateVariableMatcher.find()) {
 					int start = templateVariableMatcher.start();
 					if(lastEnd != start) {
 						chunks.add(new StringTemplateChunk(templateSource.substring(lastEnd, start)));
 					}
-					chunks.add(new VariableTemplateChunk(templateVariableMatcher.group(1)));
+					String pluginName = templateVariableMatcher.group(2);
+					if (pluginName != null) { //renderplugin
+						RenderPlugin plugin = plugins.get(pluginName);
+						if (plugin != null) {
+							chunks.add(plugin.generateTemplateChunkFor(template, templateVariableMatcher.group(1)));
+						}
+					} else {
+						chunks.add(new VariableTemplateChunk(templateVariableMatcher.group(1)));
+					}
 					lastEnd = templateVariableMatcher.end();
 				}
 				if(lastEnd != templateSource.length()) {
@@ -117,19 +130,6 @@ public class SimpleDc2fRenderer implements Renderer {
 		
 	}
 	
-	private interface TemplateChunk {
-		public String toString(JSONObject pageProperties);
-	}
-	
-	@AllArgsConstructor
-	private class StringTemplateChunk implements TemplateChunk {
-		private final String content;
-		
-		public String toString(JSONObject pageProperties) {
-			return content;
-		}
-	}
-	
 	@AllArgsConstructor
 	private class VariableTemplateChunk implements TemplateChunk {
 		private final String variableName;
@@ -142,5 +142,11 @@ public class SimpleDc2fRenderer implements Renderer {
 				return "";
 			}
 		}
+	}
+
+	@Override
+	public void registerPlugin(RenderPlugin plugin) {
+		plugins.put(plugin.getDefaultKey(), plugin);
+		
 	}
 }
