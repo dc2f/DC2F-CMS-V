@@ -56,7 +56,6 @@ public class DemoProject {
 				{"resources/css/reset.css", "reset.css", "text/css"},
 				{"resources/css/style.css", "style.css", "text/css"},
 				{"resources/css/fonts/48.ttf", "48.ttf", "application/x-font-ttf"},
-				{"resources/css/fonts/Interstate Mono.ttf", "Interstate Mono.ttf", "application/x-font-ttf"},
 				{"resources/css/fonts/ITC Officina Sans LT Book Italic.ttf", "ITC Officina Sans LT Book Italic.ttf", "application/x-font-ttf"},
 				{"resources/css/fonts/OfficinaSans-Bold.otf", "OfficinaSans-Bold.otf", "application/x-font-opentype"},
 				{"resources/css/fonts/Roadway.ttf", "Roadway.ttf", "application/x-font-ttf"},
