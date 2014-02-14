@@ -44,7 +44,7 @@ public class Dc2fUi extends UI {
 		final Dc2fEditor editor = new Dc2fEditor();
 		right.addComponent(editor);
 		
-		final Dc2fNavigationClickListener clickListener = new Dc2fNavigationClickListener(tree, filelist, editor);
+		new Dc2fNavigationClickListener(tree, filelist, editor);
 	}
 
 }

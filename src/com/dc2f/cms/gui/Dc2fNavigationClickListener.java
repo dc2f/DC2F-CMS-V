@@ -1,11 +1,9 @@
 package com.dc2f.cms.gui;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Folder;
-import com.dc2f.cms.dao.constants.MagicPropertyValues;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;

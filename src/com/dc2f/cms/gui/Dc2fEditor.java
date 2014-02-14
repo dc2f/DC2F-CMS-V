@@ -9,7 +9,6 @@ import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.dc2f.cms.gui.dao.Dc2fFileProperty;
-import com.dc2f.cms.gui.dao.Dc2fRenderResource;
 import com.dc2f.cms.gui.dao.Dc2fResource;
 import com.dc2f.cms.rendering.RenderServlet;
 import com.vaadin.server.ExternalResource;

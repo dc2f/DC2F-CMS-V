@@ -1,6 +1,5 @@
 package com.dc2f.cms.gui;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -11,7 +10,6 @@ import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Project;
-import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.vaadin.ui.Tree;
 
 @Slf4j

@@ -2,14 +2,12 @@ package com.dc2f.cms.rendering.simple;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import lombok.AllArgsConstructor;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.IOUtils;
@@ -23,7 +21,6 @@ import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.dao.Template;
 import com.dc2f.cms.exceptions.Dc2fCmsError;
 import com.dc2f.cms.rendering.Renderer;
-import com.google.gwt.uibinder.client.UiBinderUtil.TempAttachment;
 
 
 @Slf4j

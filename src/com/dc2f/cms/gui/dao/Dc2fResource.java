@@ -2,7 +2,6 @@ package com.dc2f.cms.gui.dao;
 
 import lombok.AllArgsConstructor;
 
-import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.File;
 import com.vaadin.server.ConnectorResource;
 import com.vaadin.server.DownloadStream;
