@@ -56,7 +56,10 @@ public class SimpleDc2fRenderer implements Renderer {
 		return null;
 	}
 
+	private static final Pattern TEMPLATE_VARIABLE_PATTERN = Pattern.compile("\\{((?:([^}]*?):)?[^}]*?)\\}", Pattern.DOTALL);
+	
 	private class RenderableTemplate {
+		
 		
 		private ArrayList<TemplateChunk> chunks = new ArrayList<TemplateChunk>();
 		
@@ -64,7 +67,7 @@ public class SimpleDc2fRenderer implements Renderer {
 			try {
 				InputStream source = template.getContent(false);
 				String templateSource = IOUtils.toString(source, Dc2fConstants.CHARSET);
-				Matcher templateVariableMatcher = Pattern.compile("\\{((?:(.*?):)?.*?)\\}").matcher(templateSource);
+				Matcher templateVariableMatcher = TEMPLATE_VARIABLE_PATTERN.matcher(templateSource);
 				int lastEnd = 0;
 				while(templateVariableMatcher.find()) {
 					int start = templateVariableMatcher.start();

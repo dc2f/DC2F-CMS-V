@@ -49,6 +49,19 @@ public class SimpleDc2fRendererTest {
 		assertEquals("This is my test template.", renderedPage);
 	}
 	
+	@Test
+	public void testMultiplinePluginDefinition() throws IOException {
+		SimpleDc2fRenderer renderer = new SimpleDc2fRenderer(getDc2fMockup("This is my {remove:\nmulitline}test template."));
+		String renderedPage = IOUtils.toString(renderer.render(getPageMockup()), Dc2fConstants.CHARSET);
+		assertEquals("This is my test template.", renderedPage);
+	}
+	
+	@Test
+	public void testPluginsMixedWithVariables() throws IOException {
+		SimpleDc2fRenderer renderer = new SimpleDc2fRenderer(getDc2fMockup("This is {my} {remove:\nmulitline}test template."));
+		String renderedPage = IOUtils.toString(renderer.render(getPageMockup()), Dc2fConstants.CHARSET);
+		assertEquals("This is our test template.", renderedPage);
+	}
 	
 	@Test
 	public void testPlugins() throws IOException {
