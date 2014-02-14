@@ -38,6 +38,7 @@ public class DemoProject {
 	
 	private static void checkPages(Project demoProject, Dc2f dc2f) {
 		String[][] expectedPages = new String[][]{
+				{"Home/About/imprint.html", "imprint.html"},
 				{"Home/About/about.html", "about.html"},
 				{"Home/Install/install.html", "install.html"},
 				{"Home/Download/download.html", "download.html"},
@@ -70,6 +71,7 @@ public class DemoProject {
 				{"resources/images/english.png", "english.png", "image/png"},
 				{"resources/images/fb-icon.png", "fb-icon.png", "image/png"},
 				{"resources/images/fb.png", "fb.png", "image/png"},
+				{"resources/images/GitHub-Mark-16px.png", "GitHub-Mark-16px.png", "image/png"},
 				{"resources/images/img1.jpg", "img1.jpg", "image/jpeg"},
 				{"resources/images/img2.jpg", "img2.jpg", "image/jpeg"},
 				{"resources/images/img3.jpg", "img3.jpg", "image/jpeg"},

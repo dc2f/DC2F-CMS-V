@@ -57,14 +57,14 @@ body{
 	margin: 15px 23px 0px 0px;	
 }
 .bar img{
-padding: 13px 10px 0 0;
+margin: 13px 10px 0 0;
 float: left
 
 }
 .bar p{
-     padding: 13px 10px 0 0;
-     font-family: arial;
-     font-weight: bold;
+	padding: 13px 10px 0 0;
+	font-family: arial;
+	font-weight: bold;
 	color: white;
 }
 .bar{
@@ -680,4 +680,10 @@ top: -1px;
 }
 .footer-link a{
 	color: #fff;
+}
+/* Added by @bigbear3001 */
+.white-background-logo {
+	background-color: #FFFFFF;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
