@@ -21,6 +21,7 @@ import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.rendering.Renderer;
+import com.dc2f.cms.rendering.simple.LatestNewsPlugin;
 import com.dc2f.cms.rendering.simple.TopNavigationPlugin;
 
 @WebServlet(value = RenderServlet.SERVLET_PATH + "*", asyncSupported = true)
@@ -44,6 +45,8 @@ public class RenderServlet extends HttpServlet {
 		renderer = dc2f.getRenderer();
 		renderer.registerPlugin(new ServletLinkPlugin());
 		renderer.registerPlugin(new TopNavigationPlugin(dc2f));
+		renderer.registerPlugin(new LatestNewsPlugin(dc2f));
+		
 	}
 	
 	public static Properties getEnvironment() {

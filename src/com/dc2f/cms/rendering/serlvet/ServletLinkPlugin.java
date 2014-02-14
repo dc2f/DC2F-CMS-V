@@ -19,8 +19,8 @@ class ServletLinkPlugin implements RenderPlugin {
 	}
 
 	@Override
-	public TemplateChunk generateTemplateChunkFor(Template template, String renderDefinition) {
-		String linkPath = renderDefinition.replaceAll("^.*?:", "");
+	public TemplateChunk generateTemplateChunkFor(Template template, String ... renderDefinition) {
+		String linkPath = renderDefinition[1];
 		return new LinkPluginTemplateChunk(template.getParentPath() + "/" + linkPath);
 	}
 	

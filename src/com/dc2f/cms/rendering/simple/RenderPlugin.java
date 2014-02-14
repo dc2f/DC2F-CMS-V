@@ -6,5 +6,5 @@ public interface RenderPlugin {
 
 	String getDefaultKey();
 
-	TemplateChunk generateTemplateChunkFor(Template template, String renderDefinition);
+	TemplateChunk generateTemplateChunkFor(Template template, String ... renderDefinition);
 }

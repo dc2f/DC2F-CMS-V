@@ -27,4 +27,9 @@ public class PropertyNames {
 	 * Property where the mimetype of files is stored in.
 	 */
 	public static final String MIMETYPE = "mimetype";
+	
+	/**
+	 * Timestamp when the item was last updated (put into storage backend).
+	 */
+	public static final String UPDATETIMESTAMP = "updatetimestamp";
 }

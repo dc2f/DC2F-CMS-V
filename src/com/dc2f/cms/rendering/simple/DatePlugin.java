@@ -18,8 +18,8 @@ public class DatePlugin implements RenderPlugin {
 
 	@Override
 	public TemplateChunk generateTemplateChunkFor(Template template,
-			String renderDefinition) {
-		String dateFormatString = renderDefinition.replaceFirst("^.*?:", "");
+			String ... renderDefinition) {
+		String dateFormatString = renderDefinition[1];
 		return new DateTemplateChunk(dateFormatString);
 	}
 

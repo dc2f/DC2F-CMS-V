@@ -23,9 +23,6 @@
 					<nav>
 						<ul>
 							{nav:Home:<li><a href="$link">$name</a></li>}
-							{remove:<li><a href="#">Dead Zone</a></li> 
-							<li><a href="#">Rack Snatch</a></li> 
-							<li><a href="#">Tagger Watch</a></li>}
 						</ul>	
 					</nav>
 					<a href="https://github.com/dc2f/" title="DC²F on GitHub"><img src="{link:resources/images/GitHub-Mark-16px.png}" height="16px" width="16px" class="white-background-logo"/></a>
@@ -36,18 +33,12 @@
 				<div class="left-body">
 				<div class="the-latest">					
 					<div class="txthead">THE LATEST</div>
-					{remove:<a href="#">
-						<div class="img"><img src="images/thelatest.jpg"></div>
-						<p class="calvin-klein-watches">Calvin Klein Watches</p>
+					{latest:Home:1:<a href="#">
+						<!-- div class="img"><img src="images/thelatest.jpg"></div-->
+						<p>$title</p>
 					</a>
-					<p>Earlier this summer, the announcement that the John Barrett Salon inside Bergdorf Goodman</p>
-					<div class="border"></div>
-					<div class="description">
-						<p>	by <a href ="#"><span class="green-text">Sergio La Puerta</span></a></p>
-						<p> on Jun 4,2011 <a href="#"><span class="green-text">24 comments</span></a></p>
-					</div>
-					<div class="green-border"></div>
-					<div class="green-button"><p>MORE OFFERS </p></div>}
+					<p>$content</p>
+					<div class="green-border"></div>}
 			</div>
 		</div>
 		<div class="center">

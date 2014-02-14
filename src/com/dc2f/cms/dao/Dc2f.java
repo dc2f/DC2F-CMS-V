@@ -78,7 +78,13 @@ public class Dc2f {
 	public List<Node> getChildren(String path) {
 		return getChildren(path, Node.class);
 	}
-		
+	
+	/**
+	 * Retrieve the children of the node with the given path.
+	 * @param path - path of the node to get the children from
+	 * @param nodeType - type of children to retrieve
+	 * @return list of children from the given node
+	 */
 	public <T extends Node> List<T> getChildren(String path, Class<T> nodeType) {
 		ArrayList<T> nodes = new ArrayList<T>();
 		WorkingTreeNode parent = internalGetNodeForPath(path);
@@ -86,6 +92,30 @@ public class Dc2f {
 			T node = NodeType.getNode(childNode, nodeType, path);
 			if (node != null) {
 				nodes.add(node);
+			}
+		}
+		return nodes;
+	}
+	
+	/**
+	 * Retrieve all children recursively
+	 * @param path - path of the node to get the children from
+	 * @param nodeType - type of children to retrieve
+	 * @return list of children from the given node
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends Node> List<T> getAllChildren(String path, Class<T> nodeType) {
+		ArrayList<T> nodes = new ArrayList<T>();
+		WorkingTreeNode parent = internalGetNodeForPath(path);
+		for(WorkingTreeNode childNode : parent.getChildren()) {
+			Node node = NodeType.getNode(childNode, Node.class, path);
+			if (node != null) {
+				if (nodeType.isInstance(node)) {
+					nodes.add((T) node);
+				}
+				if (node instanceof Folder) {
+					nodes.addAll(getAllChildren(node.getPath(), nodeType));
+				}
 			}
 		}
 		return nodes;
@@ -148,6 +178,7 @@ public class Dc2f {
 	public boolean addFile(File file, String nodeType) {
 		WorkingTreeNode fileNode = getOrCreateFile(file);
 		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(nodeType));
+		fileNode.setProperty(PropertyNames.UPDATETIMESTAMP, new Property(new Date().getTime()));
 		if (file.getMimetype() != null && !file.getMimetype().isEmpty()) {
 			fileNode.setProperty(PropertyNames.MIMETYPE, new Property(file.getMimetype()));
 		}

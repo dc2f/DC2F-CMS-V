@@ -78,7 +78,7 @@ public class SimpleDc2fRenderer implements Renderer {
 					if (pluginName != null) { //renderplugin
 						RenderPlugin plugin = plugins.get(pluginName);
 						if (plugin != null) {
-							chunks.add(plugin.generateTemplateChunkFor(template, templateVariableMatcher.group(1)));
+							chunks.add(plugin.generateTemplateChunkFor(template, templateVariableMatcher.group(1).split(":")));
 						}
 					} else {
 						chunks.add(new VariableTemplateChunk(templateVariableMatcher.group(1)));

@@ -23,6 +23,9 @@ public class File extends Node {
 	@Setter @Getter
 	private String mimetype;
 	
+	@Setter @Getter
+	private long updatetimestamp;
+	
 	private InputStream content;
 	
 	private MultiReadInputStreamReader bufferedContent;

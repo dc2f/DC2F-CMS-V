@@ -118,6 +118,7 @@ public class NodeType {
 			File file) {
 		file.setMimetype(node.getProperty(PropertyNames.MIMETYPE).toString());
 		file.setContent(new ByteArrayInputStream((byte[]) node.getProperty(PropertyNames.CONTENT).getObjectValue()));
+		file.setUpdatetimestamp(node.getProperty(PropertyNames.UPDATETIMESTAMP).getLong());
 	}
 
 

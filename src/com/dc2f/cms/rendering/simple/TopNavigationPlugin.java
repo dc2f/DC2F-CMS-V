@@ -26,11 +26,10 @@ public class TopNavigationPlugin implements RenderPlugin {
 
 	@Override
 	public TemplateChunk generateTemplateChunkFor(Template template,
-			String renderDefinition) {
-		String linkTemplate = renderDefinition.replaceFirst("^.*?:", "");
+			String ... renderDefinition) {
+		String linkTemplate = renderDefinition[2];
 		String projectPath = template.getParentPath();
-		String homePath = projectPath + "/" + linkTemplate.replaceAll(":.*", "");
-		linkTemplate = linkTemplate.replaceFirst("^.*?:", "");
+		String homePath = projectPath + "/" + renderDefinition[1];
 		ArrayList<TemplateChunk> chunks = new ArrayList<>();
 		for(Folder folder : dc2f.getChildren(homePath, Folder.class)) {
 			chunks.add(new NavigationTemplateChunk(linkTemplate, folder));
