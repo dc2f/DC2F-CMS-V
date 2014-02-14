@@ -72,8 +72,8 @@ public class SimpleDc2fRendererTest {
 				return "plugin";
 			}
 			@Override
-			public TemplateChunk generateTemplateChunkFor(Template template, String renderDefinition) {
-				return new StringTemplateChunk(renderDefinition.replaceAll("^.*?:", ""));
+			public TemplateChunk generateTemplateChunkFor(Template template, String ... renderDefinition) {
+				return new StringTemplateChunk(renderDefinition[1]);
 			}
 		});
 		String renderedPage = IOUtils.toString(renderer.render(getPageMockup()), Dc2fConstants.CHARSET);
