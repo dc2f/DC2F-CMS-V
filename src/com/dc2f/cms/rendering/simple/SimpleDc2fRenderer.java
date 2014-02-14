@@ -32,6 +32,7 @@ public class SimpleDc2fRenderer implements Renderer {
 	
 	public SimpleDc2fRenderer(Dc2f dc2fDao) {
 		dc2f = dc2fDao;
+		registerPlugin(new DatePlugin());
 	}
 
 	@Override
