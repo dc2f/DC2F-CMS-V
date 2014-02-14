@@ -1,4 +1,4 @@
-package com.dc2f.cms.rendering;
+package com.dc2f.cms.rendering.serlvet;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,20 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.AllArgsConstructor;
-
 import org.apache.commons.io.IOUtils;
-import org.json.JSONObject;
 
 import com.dc2f.cms.Dc2fConstants;
 import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
+import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Page;
-import com.dc2f.cms.dao.Template;
-import com.dc2f.cms.rendering.simple.RenderPlugin;
-import com.dc2f.cms.rendering.simple.TemplateChunk;
+import com.dc2f.cms.rendering.Renderer;
+import com.dc2f.cms.rendering.simple.TopNavigationPlugin;
 
 @WebServlet(value = RenderServlet.SERVLET_PATH + "*", asyncSupported = true)
 public class RenderServlet extends HttpServlet {
@@ -40,12 +37,17 @@ public class RenderServlet extends HttpServlet {
 	
 	private Renderer renderer;
 	
-	private static TemplateEnvironment environment = new TemplateEnvironment();
+	static TemplateEnvironment environment = new TemplateEnvironment();
 	
 	public RenderServlet() {
 		dc2f = Dc2fSettings.get().initDc2f();
 		renderer = dc2f.getRenderer();
 		renderer.registerPlugin(new ServletLinkPlugin());
+		renderer.registerPlugin(new TopNavigationPlugin(dc2f));
+	}
+	
+	public static Properties getEnvironment() {
+		return environment.get();
 	}
 	
 	@Override
@@ -73,51 +75,20 @@ public class RenderServlet extends HttpServlet {
 			}
 			resp.setHeader("Content-Type", mimetype);
 			IOUtils.copy(((File) node).getContent(false), resp.getOutputStream());
+		} else if (node instanceof Folder) {
+			Page startpage = null;
+			for (Page page : dc2f.getChildren(node.getPath(), Page.class)) {
+				if ("index.html".equals(page.getName())) {
+					startpage = page;
+					break;
+				} else if(startpage == null) {
+					startpage = page;
+				}
+			}
+			if (startpage != null) {
+				resp.sendRedirect(baseURL + "/" + startpage.getPath());
+			}
 		}
-	}
-	
-	private static class TemplateEnvironment extends ThreadLocal<Properties> {
-		
-		public static final String BASE_URL_PROPERTY = "baseURL";
-		
-		public static final String PAGE_PATH_PROPERTY = "pagePath";
-
-		public static void init(String baseURL, String path) {
-			Properties properties = new Properties();
-			properties.setProperty(BASE_URL_PROPERTY, baseURL);
-			properties.setProperty(PAGE_PATH_PROPERTY, path);
-			environment.set(properties);
-		}
-		
-	}
-	
-	private class ServletLinkPlugin implements RenderPlugin {
-
-		public ServletLinkPlugin() {
-		}
-		
-		@Override
-		public String getDefaultKey() {
-			return "link";
-		}
-
-		@Override
-		public TemplateChunk generateTemplateChunkFor(Template template, String renderDefinition) {
-			String linkPath = renderDefinition.replaceAll("^.*?:", "");
-			return new LinkPluginTemplateChunk(template.getParentPath() + "/" + linkPath);
-		}
-	}
-
-	@AllArgsConstructor
-	private class LinkPluginTemplateChunk implements TemplateChunk {
-
-		private final String path;
-
-		@Override
-		public String toString(JSONObject pageProperties) {
-			return environment.get().getProperty(TemplateEnvironment.BASE_URL_PROPERTY) + "/" + path;
-		}
-		
 	}
 	
 }

@@ -10,7 +10,7 @@ import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.dc2f.cms.gui.dao.Dc2fFileProperty;
 import com.dc2f.cms.gui.dao.Dc2fResource;
-import com.dc2f.cms.rendering.RenderServlet;
+import com.dc2f.cms.rendering.serlvet.RenderServlet;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.BrowserFrame;
