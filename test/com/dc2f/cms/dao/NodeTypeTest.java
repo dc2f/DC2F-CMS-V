@@ -27,7 +27,7 @@ public class NodeTypeTest {
 	
 	@Test
 	public void testRetrievingTemplate() {
-		WorkingTreeNode projectNode = newWorkingTreeNode(new Object[][]{{"nodeType", "template"}, {"name", "template"}, {"mimetype", "text/x-dc2f-template"}, {"content", "nothing".getBytes(Dc2fConstants.CHARSET)}});
+		WorkingTreeNode projectNode = newWorkingTreeNode(new Object[][]{{"nodeType", "template"}, {"name", "template"}, {"mimetype", "text/x-dc2f-template"}, {"content", "nothing".getBytes(Dc2fConstants.CHARSET)}, {"updatetimestamp", 0L}});
 		Node node = NodeType.getNode(projectNode, Node.class);
 		assertNotNull(node);
 		assertTrue(node instanceof Template);
