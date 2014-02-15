@@ -38,7 +38,7 @@ public class Dc2fFileProperty implements Property<String>, TextChangeListener {
 	public void setValue(String newValue)
 			throws com.vaadin.data.Property.ReadOnlyException {
 		file.setContent(new ByteArrayInputStream(newValue.getBytes(Dc2fConstants.CHARSET)));
-		Dc2fSettings.get().initDc2f().addFile(file);
+		Dc2fSettings.get().initDc2f().addFile(file, file.getNodeType());
 		
 	}
 

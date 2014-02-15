@@ -1,5 +1,6 @@
 package com.dc2f.cms.dao;
 
+import com.dc2f.cms.dao.constants.MagicPropertyValues;
 import com.dc2f.cms.exceptions.Dc2fInvalidDataError;
 
 import lombok.ToString;
@@ -17,6 +18,10 @@ public class Project extends Folder {
 		if(name.contains("/")) {
 			throw new Dc2fInvalidDataError("Projectname must not contain a slash (/)", null);
 		}
+	}
+	
+	public String getNodeType() {
+		return MagicPropertyValues.NODE_TYPE_PROJECT;
 	}
 
 }

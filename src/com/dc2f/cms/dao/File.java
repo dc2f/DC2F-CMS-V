@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import com.dc2f.cms.dao.constants.MagicPropertyValues;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +20,10 @@ public class File extends Node {
 	
 	public File(String name, String path) {
 		super(name, path);
+	}
+	
+	public String getNodeType() {
+		return MagicPropertyValues.NODE_TYPE_FILE;
 	}
 	
 	@Setter @Getter

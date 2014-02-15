@@ -1,5 +1,6 @@
 package com.dc2f.cms.dao;
 
+import com.dc2f.cms.dao.constants.MagicPropertyValues;
 import com.dc2f.cms.exceptions.Dc2fInvalidDataError;
 
 import lombok.Getter;
@@ -27,6 +28,10 @@ public class Node {
 		}
 		this.name = name;
 		this.path = path;
+	}
+	
+	public String getNodeType() {
+		return MagicPropertyValues.NODE_TYPE_NODE;
 	}
 	
 	private transient String parentPath;
