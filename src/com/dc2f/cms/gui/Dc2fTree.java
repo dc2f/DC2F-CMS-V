@@ -61,7 +61,7 @@ public class Dc2fTree extends Tree {
 			Node node = dc2f.getNodeForPath(currentPath.toString());
 			if (node != null) {
 				Dc2fTreeItem item = new Dc2fTreeItem(node);
-				if(!isExpanded(item)) {
+				if (!isExpanded(item)) {
 					expandItem(new Dc2fTreeItem(node));
 				}
 			}
