@@ -2,11 +2,17 @@ package com.dc2f.cms.gui;
 
 import java.util.ArrayList;
 
+import lombok.extern.slf4j.Slf4j;
+
+import org.mortbay.log.Log;
+
 import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Page;
+import com.dc2f.cms.dao.Settings;
+import com.dc2f.cms.exceptions.Dc2fNotExistingPathError;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.dc2f.cms.gui.dao.Dc2fFileProperty;
 import com.dc2f.cms.gui.dao.Dc2fResource;
@@ -19,6 +25,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextArea;
 
+@Slf4j
 public class Dc2fEditor extends TabSheet {
 	/**
 	 * unqiue serialization version id.
@@ -33,6 +40,8 @@ public class Dc2fEditor extends TabSheet {
 		frame = new BrowserFrame();
 		frame.setSizeFull();
 		tabs = new ArrayList<Tab>();
+		properties = new Dc2fPropertiesEditor();
+		properties.setSizeFull();
 	}
 	
 	ArrayList<Tab> tabs;
@@ -42,6 +51,8 @@ public class Dc2fEditor extends TabSheet {
 	Image image;
 	
 	BrowserFrame frame;
+	
+	Dc2fPropertiesEditor properties;
 
 	public void openFile(Dc2fTreeItem treeItem) {
 		for(Tab tab : tabs) {
@@ -49,7 +60,12 @@ public class Dc2fEditor extends TabSheet {
 		}
 		tabs.clear();
 		Dc2f dc2f = Dc2fSettings.get().initDc2f();
-		Node node = dc2f.getNodeForPath(treeItem.getPath());
+		Node node = null;
+		try {
+			node = dc2f.getNodeForPath(treeItem.getPath());
+		} catch (Dc2fNotExistingPathError e) {
+			log.debug("Cannot load node for path \"{}\" maybe it is a system settings node.", new Object[]{treeItem.getPath(), e});
+		}
 		if (node instanceof File) {
 			File file = (File) node;
 			if(file.getMimetype().startsWith("text/")) {
@@ -66,6 +82,9 @@ public class Dc2fEditor extends TabSheet {
 			addTab(frame, "Preview");
 			String contextPath = VaadinServlet.getCurrent().getServletContext().getContextPath();
 			frame.setSource(new ExternalResource(contextPath + RenderServlet.SERVLET_PATH + node.getPath()));
+		}
+		if (Settings.class.isAssignableFrom(treeItem.getType())) {
+			addTab(properties, "Settings");
 		}
 	}
 	
