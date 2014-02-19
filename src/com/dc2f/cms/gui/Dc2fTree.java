@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.Folder;
+import com.dc2f.cms.dao.Main;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Project;
+import com.dc2f.cms.dao.Settings;
 import com.vaadin.ui.Tree;
 
 @Slf4j
@@ -24,13 +26,29 @@ public class Dc2fTree extends Tree {
 
 	public Dc2fTree() {
 		dc2f = Dc2fSettings.get().initDc2f();
+		Dc2fTreeItem main = initSystemSettingsNodes();
+		
 		for (Project project : dc2f.getProjects()) {
 			Dc2fTreeItem projectItem = new Dc2fTreeItem(project);
 			addItem(projectItem);
 			setItemCaption(projectItem, project.getName());
+			setParent(projectItem, main);
 		}
 		addExpandListener(new Dc2fExpandListener());
 		setImmediate(true);
+	}
+
+	private Dc2fTreeItem initSystemSettingsNodes() {
+		Dc2fTreeItem main = new Dc2fTreeItem(new Main("DC²F"));
+		addItem(main);
+		setItemCaption(main, "DC²F");
+		
+		Dc2fTreeItem settings = new Dc2fTreeItem(new Settings("Settings"));
+		addItem(settings);
+		setItemCaption(settings, "Settings");
+		setParent(settings, main);
+		setChildrenAllowed(settings, false);
+		return main;
 	}
 	
 	@ToString(of={"name"})
