@@ -6,6 +6,11 @@ package com.dc2f.cms.exceptions;
  *
  */
 public class Dc2fPathInconsistentError extends Dc2fDataInconsistentError {
+	/**
+	 * unique serialization version id.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Dc2fPathInconsistentError(String message, Throwable cause) {
 		super(message, cause);
 	}

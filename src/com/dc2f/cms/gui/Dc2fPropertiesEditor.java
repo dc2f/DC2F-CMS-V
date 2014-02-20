@@ -6,7 +6,10 @@ import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.Dc2fSettings;
+import com.dc2f.cms.Dc2fSettingsHelper;
+import com.dc2f.cms.Dc2fSettingsHelper.Property;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextField;
 
 @Slf4j
 public class Dc2fPropertiesEditor extends Table {
@@ -18,19 +21,18 @@ public class Dc2fPropertiesEditor extends Table {
 	
 	public Dc2fPropertiesEditor() {
 		addContainerProperty("name", String.class, "");
-		addContainerProperty("value", String.class, "");
+		addContainerProperty("value", TextField.class, "");
 		addContainerProperty("help", String.class, "");
-		for(Method method : Dc2fSettings.class.getDeclaredMethods()) {
-			if (method.getName().startsWith("get")) {
-				String propertyName = method.getName().substring(3);
-				Object propertyValue = null;
-				try {
-					propertyValue = method.invoke(Dc2fSettings.get());
-				} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					log.debug("Cannot get value for {} from {}", new Object[]{propertyName, Dc2fSettings.get()});
-				}
-				addItem(new String[]{propertyName, propertyValue.toString(), "-"}, propertyName);
+		for(Property property : Dc2fSettingsHelper.getProperties()) {
+			Object propertyValue = property.getValue();
+			TextField field = new TextField();
+			field.setValue(propertyValue.toString());
+			if (!property.isWriteable()) {
+				field.setReadOnly(true);
 			}
+			field.addValueChangeListener(property);
+			field.setSizeFull();
+			addItem(new Object[]{property.getName(), field, "-"}, property);
 		}
 	}
 
