@@ -91,6 +91,12 @@ public class TestConverterFactory {
 		assertNull("Converter Factory should not return a converter for a class that has no valid paths.", aToE);	
 	}
 	
+	@Test
+	public void testUselessConversion() {
+		Converter<A, A> useless = factory.createConverter(A.class, A.class);
+		assertNull("There shouldn't be any converters delievered if no conversion is needed.", useless);
+	}
+	
 	private static class A {
 		
 	}

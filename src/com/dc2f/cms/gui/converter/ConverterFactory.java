@@ -42,6 +42,9 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 	@Override
 	public <PRESENTATION, MODEL> Converter<PRESENTATION, MODEL> createConverter(
 			Class<PRESENTATION> presentationType, Class<MODEL> modelType) {
+		if (presentationType == modelType) {
+			return null;
+		}
 		return findConverterForPath(presentationType, modelType);
 	}
 
