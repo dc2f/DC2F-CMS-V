@@ -1,5 +1,6 @@
 package com.dc2f.cms.gui.converter;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -48,8 +49,10 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 	@SuppressWarnings("unchecked")
 	private <PRESENTATION, MODEL> Converter<PRESENTATION, MODEL> findConverterForPath(
 			Class<PRESENTATION> presentationType, Class<MODEL> modelType, Class<?> ... intermediateClasses) {
-		log.debug("Find converter: {}  => {} intermediate(s) {}",
-				new Object[]{presentationType.getSimpleName(), modelType.getSimpleName(), intermediateClasses});
+		if(log.isDebugEnabled()) {
+			log.debug("Find converter: {}  => {} intermediate(s) {}",
+					new Object[]{presentationType.getSimpleName(), modelType.getSimpleName(), Arrays.toString(intermediateClasses)});
+		}
 		Map<Class<?>, Converter<?, ?>> possibleConverters = converters.get(presentationType);
 		if (possibleConverters != null) {
 			if (possibleConverters.containsKey(modelType)) {
