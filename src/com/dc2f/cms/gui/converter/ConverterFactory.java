@@ -7,9 +7,7 @@ import java.util.Map.Entry;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import org.apache.catalina.tribes.util.Arrays;
-
+import lombok.extern.slf4j.Slf4j;
 import sun.misc.Service;
 
 import com.vaadin.data.util.converter.Converter;
@@ -20,6 +18,7 @@ import com.vaadin.data.util.converter.ReverseConverter;
  * @author bigbear3001
  *
  */
+@Slf4j
 public class ConverterFactory implements com.vaadin.data.util.converter.ConverterFactory {
 
 	/**
@@ -29,7 +28,11 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 
 	private final Object LOCK = new Object();
 	
-	public Map<Class<?>, Map<Class<?>, Converter<Class<?>, Class<?>>>> converters = discoverConverters();
+	/**
+	 * Converters available to this factory. Stored in the Format:
+	 * [PRESENTER => [MODEL => Converter]]
+	 */
+	public Map<Class<?>, Map<Class<?>, Converter<?, ?>>> converters = discoverConverters();
 
 	@Setter @Getter
 	private boolean registerPathConverters = true;
@@ -45,21 +48,23 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 	@SuppressWarnings("unchecked")
 	private <PRESENTATION, MODEL> Converter<PRESENTATION, MODEL> findConverterForPath(
 			Class<PRESENTATION> presentationType, Class<MODEL> modelType, Class<?> ... intermediateClasses) {
-		System.out.println("Find converter: " + presentationType.getSimpleName() + " => " + modelType.getSimpleName() + " intermediate " + Arrays.toString(intermediateClasses));
-		Map<Class<?>, Converter<Class<?>, Class<?>>> possibleConverters = converters.get(presentationType);
+		log.debug("Find converter: {}  => {} intermediate(s) {}",
+				new Object[]{presentationType.getSimpleName(), modelType.getSimpleName(), intermediateClasses});
+		Map<Class<?>, Converter<?, ?>> possibleConverters = converters.get(presentationType);
 		if (possibleConverters != null) {
 			if (possibleConverters.containsKey(modelType)) {
 				return (Converter<PRESENTATION, MODEL>) possibleConverters.get(modelType);
 			}
-			for (Entry<Class<?>, Converter<Class<?>, Class<?>>> possibleConverter : possibleConverters.entrySet()) {
+			for (Entry<Class<?>, Converter<?, ?>> possibleConverter : possibleConverters.entrySet()) {
 				Class<?> intermediateClass = possibleConverter.getKey();
 				if(contains(intermediateClasses, intermediateClass)) {
+					//if the target class is already in the path we can skip this possible converter as intermediate
 					continue;
 				}
 				Converter<?, MODEL> possiblePath = findConverterForPath(possibleConverter.getKey(), modelType, expand(intermediateClasses, intermediateClass));
 				if (possiblePath != null) {
 					@SuppressWarnings("rawtypes")
-					PathConverter pathConverter = new PathConverter(possiblePath, possibleConverter.getValue(), intermediateClass);
+					PathConverter pathConverter = new PathConverter(possibleConverter.getValue(), possiblePath, intermediateClass);
 					if (registerPathConverters ) {
 						register(pathConverter);
 					}
@@ -93,7 +98,7 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 
 
 	@SuppressWarnings("unchecked")
-	private Map<Class<?>, Map<Class<?>, Converter<Class<?>, Class<?>>>> discoverConverters() {
+	private Map<Class<?>, Map<Class<?>, Converter<?, ?>>> discoverConverters() {
 		if (converters == null) {
 			synchronized(LOCK) {
 				if (converters == null) {
@@ -109,21 +114,20 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 		return converters;
 	}
 
-	@SuppressWarnings("unchecked")
 	public <PRESENTATION, MODEL> void register(Converter<PRESENTATION, MODEL> converter) {
-		Class<?> modelType = converter.getModelType();
-		if(!converters.containsKey(modelType)) {
+		Class<PRESENTATION> presentationType = converter.getPresentationType();
+		if(!converters.containsKey(presentationType)) {
 			synchronized(LOCK) {
-				if(!converters.containsKey(modelType)) {
-					converters.put(modelType, new HashMap<Class<?>, Converter<Class<?>, Class<?>>>());
+				if(!converters.containsKey(presentationType)) {
+					converters.put(presentationType, new HashMap<Class<?>, Converter<?, ?>>());
 				}
 			}
 		}
-		Class<?> presentationType = converter.getPresentationType();
-		if(!converters.get(modelType).containsKey(presentationType)) {
+		Class<MODEL> modelType = converter.getModelType();
+		if(!converters.get(presentationType).containsKey(modelType)) {
 			synchronized(LOCK) {
-				if(!converters.get(modelType).containsKey(presentationType)) {
-					converters.get(modelType).put(presentationType, (Converter<Class<?>, Class<?>>) converter);
+				if(!converters.get(presentationType).containsKey(modelType)) {
+					converters.get(presentationType).put(modelType, converter);
 				}
 			}
 		}

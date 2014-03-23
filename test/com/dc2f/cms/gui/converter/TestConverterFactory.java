@@ -1,5 +1,6 @@
 package com.dc2f.cms.gui.converter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -20,25 +21,45 @@ public class TestConverterFactory {
 	@Before
 	public void setup() {
 		factory = new ConverterFactory();
-		factory.register(new AtoBConverter());
-		factory.register(new BtoDConverter());
+		factory.register(new BtoAConverter());
+		factory.register(new DtoBConverter());
 	}
 	
 	@Test
 	public void testSimplePath() {
-		Converter<A, B> aToB = factory.createConverter(A.class, B.class);
-		assertNotNull("Converter Factory failed to find direct path from a to b", aToB);
-		assertSame("Converter Factory failed to find direct path from a to b", A.class, aToB.getModelType());
-		assertSame("Converter Factory failed to find direct path from a to b", B.class, aToB.getPresentationType());
+		Converter<B, A> bToA = factory.createConverter(B.class, A.class);
+		assertNotNull("Converter Factory failed to find direct path from b to a", bToA);
+		assertSame("Converter Factory failed to find direct path from b to a", B.class, bToA.getPresentationType());
+		assertSame("Converter Factory failed to find direct path from b to a", A.class, bToA.getModelType());
 	}
 	
 	@Test
 	public void testReverseSimplePath() {
-		Converter<B, A> bToA = factory.createConverter(B.class, A.class);
-		assertNotNull("Converter Factory failed to find direct path from b to a with ReverseConverter", bToA);
-		assertSame("Converter Factory failed to find direct path from b to a with ReverseConverter", B.class, bToA.getModelType());
-		assertSame("Converter Factory failed to find direct path from b to a with ReverseCOnverter", A.class, bToA.getPresentationType());
-		assertTrue("Converter Factory failed to find direct path from b to a with ReverseCOnverter", bToA instanceof ReverseConverter);
+		Converter<A, B> aToB = factory.createConverter(A.class, B.class);
+		assertNotNull("Converter Factory failed to find direct path from a to b with ReverseConverter", aToB);
+		assertSame("Converter Factory failed to find direct path from a to b with ReverseConverter", A.class, aToB.getPresentationType());
+		assertSame("Converter Factory failed to find direct path from a to b with ReverseConverter", B.class, aToB.getModelType());
+		assertTrue("Converter Factory failed to find direct path from a to b with ReverseConverter", aToB instanceof ReverseConverter);
+	}
+	
+	@Test
+	public void testReverseConversion() {
+		factory.clear();
+		factory.register(new StringToClassConverter());
+		@SuppressWarnings("rawtypes")
+		Converter<String, Class> stringToClass = factory.createConverter(String.class, Class.class);
+		Class<?> clazz = stringToClass.convertToModel("com.dc2f.cms.gui.converter.TestConverterFactory", Class.class, null);
+		assertSame("conversion from string to class via reverse converter didn't work with the factory.", TestConverterFactory.class, clazz);
+		
+	}
+	
+	@Test
+	public void testReverseConverter() {
+		StringToClassConverter converter = new StringToClassConverter();
+		assertSame(TestConverterFactory.class, converter.convertToModel("com.dc2f.cms.gui.converter.TestConverterFactory", Class.class, null));
+		assertEquals("com.dc2f.cms.gui.converter.TestConverterFactory", converter.convertToPresentation(TestConverterFactory.class, String.class, null));
+		assertEquals("com.dc2f.cms.gui.converter.TestConverterFactory", new ReverseConverter<>(converter).convertToModel(TestConverterFactory.class, String.class, null));
+		assertSame(TestConverterFactory.class, new ReverseConverter<>(converter).convertToPresentation("com.dc2f.cms.gui.converter.TestConverterFactory", Class.class, null));
 	}
 	
 	@Test
@@ -49,11 +70,19 @@ public class TestConverterFactory {
 	}
 	
 	@Test
-	public void testIndirectPath() {
+	public void testIndirectReversePath() {
 		Converter<A, D> aToD = factory.createConverter(A.class, D.class);
 		assertNotNull("Converter Factory failed to find direct path from a to d with indirect path", aToD);
-		assertSame("Converter Factory failed to find direct path from a to d with indirect path", A.class, aToD.getModelType());
-		assertSame("Converter Factory failed to find direct path from a to d with indirect path", D.class, aToD.getPresentationType());
+		assertSame("Converter Factory failed to find direct path from a to d with indirect path", A.class, aToD.getPresentationType());
+		assertSame("Converter Factory failed to find direct path from a to d with indirect path", D.class, aToD.getModelType());
+	}
+	
+	@Test
+	public void testIndirectPath() {
+		Converter<D, A> dToA = factory.createConverter(D.class, A.class);
+		assertNotNull("Converter Factory failed to find direct path from d to a with indirect path", dToA);
+		assertSame("Converter Factory failed to find direct path from d to a with indirect path", D.class, dToA.getPresentationType());
+		assertSame("Converter Factory failed to find direct path from d to a with indirect path", A.class, dToA.getModelType());
 	}
 	
 	@Test
@@ -82,7 +111,7 @@ public class TestConverterFactory {
 		
 	}
 	
-	private static class AtoBConverter implements Converter<B, A> {
+	private static class BtoAConverter implements Converter<B, A> {
 
 		@Override
 		public A convertToModel(B value, Class<? extends A> targetType,
@@ -112,7 +141,7 @@ public class TestConverterFactory {
 
 	}
 	
-	private static class BtoDConverter implements Converter<D, B> {
+	private static class DtoBConverter implements Converter<D, B> {
 
 		@Override
 		public B convertToModel(D value, Class<? extends B> targetType,
