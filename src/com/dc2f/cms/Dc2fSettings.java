@@ -1,15 +1,14 @@
 package com.dc2f.cms;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import com.dc2f.cms.dao.Dc2f;
-import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.demo.DemoProject;
 import com.dc2f.cms.rendering.Renderer;
 import com.dc2f.cms.rendering.simple.SimpleDc2fRenderer;
 import com.dc2f.dstore.storage.StorageBackend;
 import com.dc2f.dstore.storage.map.HashMapStorage;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * This class holds all settings relevant for initializing DC2F at startup.

@@ -6,8 +6,11 @@ import java.util.ArrayList;
 
 import lombok.Getter;
 
+import com.dc2f.cms.Dc2fSettingsHelper.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.TextField;
 
 public class Dc2fSettingsHelper {
 	public static ArrayList<Property> getProperties() {
@@ -20,7 +23,7 @@ public class Dc2fSettingsHelper {
 		return properties;
 	}
 	
-	public static class Property implements ValueChangeListener {
+	public static class Property implements ValueChangeListener, com.vaadin.data.Property {
 		@Getter
 		public final String name;
 		
@@ -43,6 +46,10 @@ public class Dc2fSettingsHelper {
 			}
 			writeable = hasSetter;
 		}
+		
+		public Object[] getPossibleValues() {
+			return null;
+		}
 
 		public Object getValue() {
 			if (getter != null) {
@@ -59,8 +66,38 @@ public class Dc2fSettingsHelper {
 
 		@Override
 		public void valueChange(ValueChangeEvent event) {
+			
+		}
+
+		@Override
+		public void setValue(Object newValue) throws ReadOnlyException {
+			try {
+				setter.invoke(Dc2fSettings.get(), newValue);
+			} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public Class getType() {
+			return getter.getReturnType();
+		}
+
+		@Override
+		public boolean isReadOnly() {
+			return false;
+		}
+
+		@Override
+		public void setReadOnly(boolean newStatus) {
 			// TODO Auto-generated method stub
 			
 		}
+	}
+
+	public static AbstractField<?> getFieldForProperty(Property property) {
+		AbstractField<String> field = new TextField();
+		field.setPropertyDataSource(property);
+		return field;
 	}
 }

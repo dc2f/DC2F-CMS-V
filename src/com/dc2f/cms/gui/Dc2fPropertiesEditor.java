@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.Dc2fSettingsHelper;
 import com.dc2f.cms.Dc2fSettingsHelper.Property;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 
@@ -24,16 +25,12 @@ public class Dc2fPropertiesEditor extends Table {
 		addContainerProperty("value", TextField.class, "");
 		addContainerProperty("help", String.class, "");
 		for(Property property : Dc2fSettingsHelper.getProperties()) {
-			Object propertyValue = property.getValue();
-			TextField field = new TextField();
-			field.setValue(propertyValue.toString());
-			if (!property.isWriteable()) {
-				field.setReadOnly(true);
-			}
-			field.addValueChangeListener(property);
+			AbstractField<?> field = Dc2fSettingsHelper.getFieldForProperty(property);
 			field.setSizeFull();
+			field.setImmediate(true);
 			addItem(new Object[]{property.getName(), field, "-"}, property);
 		}
+		setImmediate(true);
 	}
 
 }
