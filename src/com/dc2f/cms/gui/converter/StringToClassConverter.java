@@ -10,11 +10,12 @@ public class StringToClassConverter implements Converter<String, Class> {
 	public Class convertToModel(String value,
 			Class<? extends Class> targetType, Locale locale)
 			throws com.vaadin.data.util.converter.Converter.ConversionException {
-		try {
-			return Class.forName(value);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(value != null) {
+			try {
+				return Class.forName(value);
+			} catch (ClassNotFoundException e) {
+				throw new ConversionException("Cannot find class " + value, e);
+			}
 		}
 		return null;
 	}
@@ -23,7 +24,10 @@ public class StringToClassConverter implements Converter<String, Class> {
 	public String convertToPresentation(Class value,
 			Class<? extends String> targetType, Locale locale)
 			throws com.vaadin.data.util.converter.Converter.ConversionException {
-		return value.getName();
+		if(value != null) {
+			return value.getName();
+		}
+		return null;
 	}
 
 	@Override
