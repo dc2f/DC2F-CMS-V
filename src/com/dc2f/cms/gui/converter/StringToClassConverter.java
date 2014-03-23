@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import com.vaadin.data.util.converter.Converter;
 
-public class ClassToStringConverter implements Converter<String, Class> {
+public class StringToClassConverter implements Converter<String, Class> {
 
 	@Override
 	public Class convertToModel(String value,
