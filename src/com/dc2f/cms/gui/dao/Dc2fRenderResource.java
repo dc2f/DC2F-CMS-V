@@ -2,8 +2,8 @@ package com.dc2f.cms.gui.dao;
 
 import java.io.InputStream;
 
-import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Page;
+import com.dc2f.cms.settings.Dc2fSettings;
 import com.vaadin.server.DownloadStream;
 
 public class Dc2fRenderResource extends Dc2fResource {

@@ -8,9 +8,9 @@ import org.apache.commons.io.IOUtils;
 import lombok.AllArgsConstructor;
 
 import com.dc2f.cms.Dc2fConstants;
-import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.exceptions.Dc2fCmsError;
+import com.dc2f.cms.settings.Dc2fSettings;
 import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;

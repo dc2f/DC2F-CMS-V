@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.mortbay.log.Log;
 
-import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Node;
@@ -17,6 +16,7 @@ import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
 import com.dc2f.cms.gui.dao.Dc2fFileProperty;
 import com.dc2f.cms.gui.dao.Dc2fResource;
 import com.dc2f.cms.rendering.serlvet.RenderServlet;
+import com.dc2f.cms.settings.Dc2fSettings;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.BrowserFrame;

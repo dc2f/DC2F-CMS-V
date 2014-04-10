@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 
 import com.dc2f.cms.Dc2fConstants;
-import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Folder;
@@ -23,6 +22,7 @@ import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.rendering.Renderer;
 import com.dc2f.cms.rendering.simple.LatestNewsPlugin;
 import com.dc2f.cms.rendering.simple.TopNavigationPlugin;
+import com.dc2f.cms.settings.Dc2fSettings;
 
 @WebServlet(value = RenderServlet.SERVLET_PATH + "*", asyncSupported = true)
 public class RenderServlet extends HttpServlet {

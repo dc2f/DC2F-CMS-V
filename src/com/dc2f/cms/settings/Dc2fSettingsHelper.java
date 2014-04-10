@@ -1,101 +1,66 @@
-package com.dc2f.cms;
+package com.dc2f.cms.settings;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
+import java.util.Collection;
 
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
-import com.dc2f.cms.Dc2fSettingsHelper.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.dc2f.cms.utils.ServiceLocator;
+import com.google.gwt.thirdparty.guava.common.collect.Lists;
+import com.vaadin.data.Container;
 import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.TextField;
 
+@Slf4j
 public class Dc2fSettingsHelper {
 	public static ArrayList<Property> getProperties() {
 		ArrayList<Property> properties = new ArrayList<Property>();
 		for (Method method : Dc2fSettings.class.getMethods()) {
 			if (method.getName().startsWith("get") && !"get".equals(method.getName())) {
-				properties.add(new Property(method.getName().substring(3)));
+				Collection<?> options = getValueSuggestionsForMethod(method);
+				Property property = null;
+				if(options.size() > 0) {
+					property = new SelectableProperty(method.getName().substring(3), options);
+				} else {
+					property = new Property(method.getName().substring(3));
+				}
+				properties.add(property);
 			}
 		}
 		return properties;
 	}
 	
-	public static class Property implements ValueChangeListener, com.vaadin.data.Property {
-		@Getter
-		public final String name;
-		
-		@Getter
-		public final boolean writeable;
-
-		private Method getter;
-
-		private Method setter;
-		
-		public Property(String propertyName) {
-			name = propertyName;
-			boolean hasSetter = false;
-			try {
-				getter = Dc2fSettings.class.getMethod("get" + name);
-				setter = Dc2fSettings.class.getMethod("set" + name, getter.getReturnType());
-				hasSetter = setter != null;
-			} catch (NoSuchMethodException e) {
-				
-			}
-			writeable = hasSetter;
-		}
-		
-		public Object[] getPossibleValues() {
-			return null;
-		}
-
-		public Object getValue() {
-			if (getter != null) {
-				try {
-					return getter.invoke(Dc2fSettings.get());
-				} catch (IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+	private static Collection<?> getValueSuggestionsForMethod(Method method) {
+		Type type = method.getGenericReturnType();
+		if(type instanceof ParameterizedType) {
+			Type typeParameter = ((ParameterizedType) type).getActualTypeArguments()[0];
+			if (typeParameter instanceof WildcardType) {
+				Type typeToExtend = ((WildcardType) typeParameter).getUpperBounds()[0];
+				if(typeToExtend != Class.class.getGenericSuperclass()) {
+					try {
+						Class<?> clazz = Class.forName(typeToExtend.toString().replaceFirst("(interface|class) ", ""));
+						return Lists.newArrayList(ServiceLocator.implementations(clazz));
+					} catch (ClassNotFoundException e) {
+						log.error("Cannot get class for type parameter {}", typeToExtend);
+					}
 				}
 			}
-			return null;
 		}
-
-		@Override
-		public void valueChange(ValueChangeEvent event) {
-			
-		}
-
-		@Override
-		public void setValue(Object newValue) throws ReadOnlyException {
-			try {
-				setter.invoke(Dc2fSettings.get(), newValue);
-			} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public Class getType() {
-			return getter.getReturnType();
-		}
-
-		@Override
-		public boolean isReadOnly() {
-			return false;
-		}
-
-		@Override
-		public void setReadOnly(boolean newStatus) {
-			// TODO Auto-generated method stub
-			
-		}
+		return new ArrayList<>();
 	}
-
+	
 	public static AbstractField<?> getFieldForProperty(Property property) {
+		if (property instanceof Container) {
+			ComboBox field = new ComboBox();
+			field.setContainerDataSource((Container) property);
+			field.setPropertyDataSource(property);
+			return field;
+		}
 		AbstractField<String> field = new TextField();
 		field.setPropertyDataSource(property);
 		return field;

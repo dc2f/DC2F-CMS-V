@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
+import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Folder;
 import com.dc2f.cms.dao.Main;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.dao.Settings;
+import com.dc2f.cms.settings.Dc2fSettings;
 import com.vaadin.ui.Tree;
 
 @Slf4j
@@ -58,6 +59,7 @@ public class Dc2fTree extends Tree {
 			name = node.getName();
 			path = node.getPath();
 			type = node.getClass();
+			expandable = !(node instanceof Settings || node instanceof File);
 		}
 		@Getter
 		private final String name;
@@ -65,6 +67,9 @@ public class Dc2fTree extends Tree {
 		private final String path;
 		@Getter
 		private final Class<? extends Node> type;
+		@Getter
+		private final boolean expandable;
+		
 	}
 	
 
@@ -79,7 +84,7 @@ public class Dc2fTree extends Tree {
 			Node node = dc2f.getNodeForPath(currentPath.toString());
 			if (node != null) {
 				Dc2fTreeItem item = new Dc2fTreeItem(node);
-				if (!isExpanded(item)) {
+				if (!isExpanded(item) && item.isExpandable()) {
 					expandItem(new Dc2fTreeItem(node));
 				}
 			}
@@ -96,17 +101,19 @@ public class Dc2fTree extends Tree {
 		@Override
 		public void nodeExpand(ExpandEvent event) {
 			Dc2fTreeItem item = (Dc2fTreeItem) event.getItemId();
-			log.debug("Expand: {}", item);
-			boolean hasChildren = false;
-			for (Folder child : dc2f.getChildren(item.path, Folder.class)) {
-				Dc2fTreeItem childItem = new Dc2fTreeItem(child);
-				addItem(childItem);
-				setItemCaption(childItem, child.getName());
-				setParent(childItem, item);
-				hasChildren = true;
-			}
-			if(!hasChildren) {
-				setChildrenAllowed(item, false);
+			if (!"".equals(item.path)) {
+				log.debug("Expand: {}", item);
+				boolean hasChildren = false;
+				for (Folder child : dc2f.getChildren(item.path, Folder.class)) {
+					Dc2fTreeItem childItem = new Dc2fTreeItem(child);
+					addItem(childItem);
+					setItemCaption(childItem, child.getName());
+					setParent(childItem, item);
+					hasChildren = true;
+				}
+				if(!hasChildren) {
+					setChildrenAllowed(item, false);
+				}
 			}
 		}
 	}

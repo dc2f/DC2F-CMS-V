@@ -1,10 +1,10 @@
 package com.dc2f.cms.gui;
 
-import com.dc2f.cms.Dc2fSettings;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.NodeType;
 import com.dc2f.cms.gui.Dc2fTree.Dc2fTreeItem;
+import com.dc2f.cms.settings.Dc2fSettings;
 import com.vaadin.ui.Table;
 
 public class Dc2fFileList extends Table {

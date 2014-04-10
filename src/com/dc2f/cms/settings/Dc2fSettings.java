@@ -1,4 +1,4 @@
-package com.dc2f.cms;
+package com.dc2f.cms.settings;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -79,6 +79,10 @@ public class Dc2fSettings {
 			DemoProject.resetDemoProject(dc2f);
 		}
 		return dc2f;
+	}
+
+	public void reload() {
+		dc2f = null;
 	}
 
 }
