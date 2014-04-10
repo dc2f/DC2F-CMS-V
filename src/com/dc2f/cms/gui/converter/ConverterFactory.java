@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import sun.misc.Service;
 
+import com.dc2f.cms.utils.ServiceLocator;
 import com.vaadin.data.util.converter.Converter;
 import com.vaadin.data.util.converter.ReverseConverter;
 
@@ -113,7 +114,7 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 			}
 		}
 		@SuppressWarnings("rawtypes")
-		Iterator<Converter> availableConverters = Service.providers(Converter.class);
+		Iterator<Converter> availableConverters = ServiceLocator.providers(Converter.class);
 		while (availableConverters.hasNext()) {
 			register(availableConverters.next());
 		}

@@ -25,29 +25,11 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("dc2f")
 public class Dc2fUi extends UI {
 
-	static ConverterFactory converterFactory;
+	static ConverterFactory converterFactory = new ConverterFactory();
 	
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = Dc2fUi.class)
 	public static class Servlet extends VaadinServlet {
-		@Override
-		public void init(ServletConfig servletConfig) throws ServletException {
-			super.init(servletConfig);
-			converterFactory = initConverters();
-		}
-
-		private ConverterFactory initConverters() {
-			ConverterFactory factory = new ConverterFactory();
-			factory.register(new StringToBooleanConverter());
-			factory.register(new StringToDateConverter());
-			factory.register(new StringToIntegerConverter());
-			factory.register(new StringToDoubleConverter());
-			factory.register(new StringToFloatConverter());
-			factory.register(new StringToClassConverter());
-			factory.register(new DateToLongConverter());
-			factory.register(new DateToSqlDateConverter());
-			return factory;
-		}
 	}
 
 	@Override
