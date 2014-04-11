@@ -24,6 +24,7 @@ import com.vaadin.data.util.converter.StringToDateConverter;
 import com.vaadin.data.util.converter.StringToDoubleConverter;
 import com.vaadin.data.util.converter.StringToFloatConverter;
 import com.vaadin.data.util.converter.StringToIntegerConverter;
+import com.vaadin.data.util.converter.StringToLongConverter;
 
 /**
  * Placeholder until we got a real service locator in place
@@ -93,6 +94,7 @@ public class ServiceLocator {
 				StringToBooleanConverter.class,
 				StringToDateConverter.class,
 				StringToIntegerConverter.class,
+				StringToLongConverter.class,
 				StringToDoubleConverter.class,
 				StringToFloatConverter.class,
 				StringToClassConverter.class,
