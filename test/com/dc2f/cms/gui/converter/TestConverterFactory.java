@@ -97,6 +97,17 @@ public class TestConverterFactory {
 		assertNull("There shouldn't be any converters delievered if no conversion is needed.", useless);
 	}
 	
+	@Test
+	public void testGuessingConverter() {
+		assertNull("There should be no convertion from string to string", factory.guessConverterFromString("abcdef"));
+		assertSame(Integer.class, factory.guessConverterFromString("0").getModelType());
+		assertSame(Long.class, factory.guessConverterFromString("0l").getModelType());
+		assertSame(Double.class, factory.guessConverterFromString("0.0").getModelType());
+		assertSame(Float.class, factory.guessConverterFromString("0.0f").getModelType());
+		
+	}
+	
+
 	private static class A {
 		
 	}

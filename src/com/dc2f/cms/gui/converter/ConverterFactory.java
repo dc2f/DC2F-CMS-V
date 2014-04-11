@@ -147,4 +147,9 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 		converters.clear();
 	}
 
+
+	public Converter<String, ? extends Object> guessConverterFromString(String value) {
+		return ConverterGuesser.fromString(this, value);
+	}
+
 }
