@@ -64,6 +64,10 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 			}
 			for (Entry<Class<?>, Converter<?, ?>> possibleConverter : possibleConverters.entrySet()) {
 				Class<?> intermediateClass = possibleConverter.getKey();
+				if (intermediateClass == String.class) {
+					//string is not a good intermediate class (e.g. Array => String => Integer wouldn't make any sense)
+					continue;
+				}
 				if(contains(intermediateClasses, intermediateClass)) {
 					//if the target class is already in the path we can skip this possible converter as intermediate
 					continue;
@@ -147,7 +151,12 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 		converters.clear();
 	}
 
-
+	
+	/**
+	 * Try guessing a suitable converter to convert the given string value into a object.
+	 * @param value - string value to convert into a object
+	 * @return converter suitable for this string. can be <code>null</code> in case no converter is found.
+	 */
 	public Converter<String, ? extends Object> guessConverterFromString(String value) {
 		return ConverterGuesser.fromString(this, value);
 	}

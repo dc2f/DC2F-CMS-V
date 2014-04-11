@@ -104,29 +104,25 @@ public class TestConverterFactory {
 		assertSame(Long.class, factory.guessConverterFromString("0l").getModelType());
 		assertSame(Double.class, factory.guessConverterFromString("0.0").getModelType());
 		assertSame(Float.class, factory.guessConverterFromString("0.0f").getModelType());
-		
+	}
+	
+	@Test
+	public void testAvoidingStringAsIntermediate() {
+		assertNull("String should be avoided as intermediate, as it doesn't make much sense.", factory.createConverter(B.class, F.class));
 	}
 	
 
-	private static class A {
-		
-	}
+	private static class A { }
 	
-	private static class B {
-		
-	}
+	private static class B { }
 	
-	private static class C {
-		
-	}
+	private static class C { }
 	
-	private static class D extends C {
-		
-	}
+	private static class D extends C { }
 	
-	private static class E {
-		
-	}
+	private static class E { }
+	
+	private static class F { }
 	
 	private static class BtoAConverter implements Converter<B, A> {
 
@@ -134,7 +130,6 @@ public class TestConverterFactory {
 		public A convertToModel(B value, Class<? extends A> targetType,
 				Locale locale)
 				throws com.vaadin.data.util.converter.Converter.ConversionException {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -142,7 +137,6 @@ public class TestConverterFactory {
 		public B convertToPresentation(A value, Class<? extends B> targetType,
 				Locale locale)
 				throws com.vaadin.data.util.converter.Converter.ConversionException {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -164,7 +158,6 @@ public class TestConverterFactory {
 		public B convertToModel(D value, Class<? extends B> targetType,
 				Locale locale)
 				throws com.vaadin.data.util.converter.Converter.ConversionException {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -172,7 +165,6 @@ public class TestConverterFactory {
 		public D convertToPresentation(B value, Class<? extends D> targetType,
 				Locale locale)
 				throws com.vaadin.data.util.converter.Converter.ConversionException {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -186,5 +178,59 @@ public class TestConverterFactory {
 			return D.class;
 		}
 		
+	}
+	
+	private static class StringToFConverter implements Converter<String, F> {
+
+		@Override
+		public F convertToModel(String value, Class<? extends F> targetType,
+				Locale locale)
+				throws com.vaadin.data.util.converter.Converter.ConversionException {
+			return null;
+		}
+
+		@Override
+		public String convertToPresentation(F value,
+				Class<? extends String> targetType, Locale locale)
+				throws com.vaadin.data.util.converter.Converter.ConversionException {
+			return null;
+		}
+
+		@Override
+		public Class<F> getModelType() {
+			return F.class;
+		}
+		
+		@Override
+		public Class<String> getPresentationType() {
+			return String.class;
+		}
+	}
+	
+	private static class StringToBConverter implements Converter<String, B> {
+
+		@Override
+		public B convertToModel(String value, Class<? extends B> targetType,
+				Locale locale)
+				throws com.vaadin.data.util.converter.Converter.ConversionException {
+			return null;
+		}
+
+		@Override
+		public String convertToPresentation(B value,
+				Class<? extends String> targetType, Locale locale)
+				throws com.vaadin.data.util.converter.Converter.ConversionException {
+			return null;
+		}
+
+		@Override
+		public Class<B> getModelType() {
+			return B.class;
+		}
+		
+		@Override
+		public Class<String> getPresentationType() {
+			return String.class;
+		}
 	}
 }
