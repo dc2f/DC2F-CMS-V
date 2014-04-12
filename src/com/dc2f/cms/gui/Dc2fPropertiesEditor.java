@@ -50,7 +50,7 @@ public class Dc2fPropertiesEditor extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Dc2fSettings.get().reload();
-				UI.getCurrent().markAsDirtyRecursive();
+				Dc2fUi.getCurrent().reload();
 			}
 		});
 		buttons.addComponent(apply);
