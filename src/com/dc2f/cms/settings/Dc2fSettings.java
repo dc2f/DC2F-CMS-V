@@ -7,6 +7,7 @@ import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.demo.DemoProject;
 import com.dc2f.cms.rendering.Renderer;
 import com.dc2f.cms.rendering.simple.SimpleDc2fRenderer;
+import com.dc2f.cms.utils.InitializationHelper.InitializationDefinition;
 import com.dc2f.dstore.storage.StorageBackend;
 import com.dc2f.dstore.storage.map.HashMapStorage;
 
@@ -33,6 +34,12 @@ public class Dc2fSettings {
 	 */
 	@Getter @Setter
 	private Class<? extends StorageBackend> storageImpl = HashMapStorage.class;
+	
+	/**
+	 * Arguments for the constructor of {@link #storageImpl}.
+	 */
+	@Getter @Setter
+	private Object[] storageImplArgs = new Object[0];
 	
 	/**
 	 * Implementation of the renderer to use.
@@ -74,7 +81,7 @@ public class Dc2fSettings {
 	}
 	
 	private Dc2f internalInitDc2f() {
-		Dc2f dc2f = new Dc2f(storageImpl, rendererImpl);
+		Dc2f dc2f = new Dc2f(new InitializationDefinition<>(storageImpl, storageImplArgs), rendererImpl);
 		if(resetDemoProjectOnStartup) {
 			DemoProject.resetDemoProject(dc2f);
 		}
