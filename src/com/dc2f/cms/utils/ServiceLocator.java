@@ -9,6 +9,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
+import com.dc2f.cms.gui.converter.StringToArrayConverter;
 import com.dc2f.cms.gui.converter.StringToClassConverter;
 import com.dc2f.cms.rendering.Renderer;
 import com.dc2f.cms.rendering.simple.SimpleDc2fRenderer;
@@ -99,7 +100,8 @@ public class ServiceLocator {
 				StringToFloatConverter.class,
 				StringToClassConverter.class,
 				DateToLongConverter.class,
-				DateToSqlDateConverter.class
+				DateToSqlDateConverter.class,
+				StringToArrayConverter.class
 		});
 	}
 
