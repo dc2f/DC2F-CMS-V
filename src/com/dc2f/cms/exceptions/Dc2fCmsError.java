@@ -6,6 +6,11 @@ package com.dc2f.cms.exceptions;
  *
  */
 public class Dc2fCmsError extends RuntimeException {
+	/**
+	 * unique serialization version id.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Dc2fCmsError(String message, Throwable cause) {
 		super(message, cause);
 	}

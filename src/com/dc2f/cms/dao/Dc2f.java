@@ -19,6 +19,8 @@ import com.dc2f.cms.exceptions.Dc2fCmsError;
 import com.dc2f.cms.exceptions.Dc2fNotExistingPathError;
 import com.dc2f.cms.exceptions.Dc2fPathInconsistentError;
 import com.dc2f.cms.rendering.Renderer;
+import com.dc2f.cms.utils.InitializationHelper;
+import com.dc2f.cms.utils.InitializationHelper.InitializationDefinition;
 import com.dc2f.dstore.hierachynodestore.HierarchicalNodeStore;
 import com.dc2f.dstore.hierachynodestore.WorkingTree;
 import com.dc2f.dstore.hierachynodestore.WorkingTreeNode;
@@ -33,7 +35,7 @@ public class Dc2f {
 	@Getter
 	private final Renderer renderer;
 
-	public Dc2f(Class<? extends StorageBackend> storageImpl, Class<? extends Renderer> rendererImpl) {
+	public Dc2f(InitializationDefinition<StorageBackend> storageImpl, Class<? extends Renderer> rendererImpl) {
 		StorageBackend storageBackend = initStorageBackend(storageImpl);
 		nodeStore = new HierarchicalNodeStore(storageBackend);
 		workingTree = nodeStore.checkoutBranch("master");
@@ -54,11 +56,10 @@ public class Dc2f {
 		return "work-started-at-" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
 	}
 
-	private StorageBackend initStorageBackend(
-			Class<? extends StorageBackend> storageImpl) {
+	private StorageBackend initStorageBackend(InitializationDefinition<StorageBackend> storageImpl) {
 		try {
-			return storageImpl.getConstructor().newInstance();
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			return InitializationHelper.initialize(storageImpl);
+		} catch (InstantiationException e) {
 			throw new Dc2fCmsError("Cannot initialize the storage backend.", e);
 		}
 	}
