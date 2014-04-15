@@ -203,4 +203,8 @@ public class Dc2f {
 		}
 	}
 
+	public void commit() {
+		workingTree.commit("Commited by DC2F CMS at " + new Date().toString());
+	}
+
 }

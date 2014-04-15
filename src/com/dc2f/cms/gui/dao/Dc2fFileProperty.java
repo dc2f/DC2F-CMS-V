@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import lombok.AllArgsConstructor;
 
 import com.dc2f.cms.Dc2fConstants;
+import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.exceptions.Dc2fCmsError;
 import com.dc2f.cms.settings.Dc2fSettings;
@@ -38,8 +39,9 @@ public class Dc2fFileProperty implements Property<String>, TextChangeListener {
 	public void setValue(String newValue)
 			throws com.vaadin.data.Property.ReadOnlyException {
 		file.setContent(new ByteArrayInputStream(newValue.getBytes(Dc2fConstants.CHARSET)));
-		Dc2fSettings.get().initDc2f().addFile(file, file.getNodeType());
-		
+		Dc2f dc2f = Dc2fSettings.get().initDc2f();
+		dc2f.addFile(file, file.getNodeType());
+		dc2f.commit();
 	}
 
 	@Override
