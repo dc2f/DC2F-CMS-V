@@ -52,5 +52,6 @@
 		<!-- utilities -->
 		<dependency org="commons-io" name="commons-io" rev="2.4" />
 		<dependency org="org.json" name="json" rev="20131018" />
+		<dependency org="com.google.guava" name="guava" rev="15.0" />
 	</dependencies>
 </ivy-module>
