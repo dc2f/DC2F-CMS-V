@@ -30,8 +30,12 @@ public class StringToArrayConverter implements Converter<String, Object[]> {
 			@SuppressWarnings("unchecked")
 			Converter<String, Object> converter = (Converter<String, Object>) converterFactory.guessConverterFromString(objectString);
 			if (converter != null) {
-				String suffix = ConverterGuesser.getSuffixID(converter);
-				objects[i] = converter.convertToModel(objectString.substring(0, objectString.length() - suffix.length()), Object.class, locale);
+				String stringValue = objectString;
+				String suffix = ConverterGuesser.getPossibleSuffixID(converter);
+				if (suffix.length() > 0 && stringValue.endsWith(suffix)) {
+					stringValue = objectString.substring(0, objectString.length() - suffix.length());
+				}
+				objects[i] = converter.convertToModel(stringValue, Object.class, locale);
 			} else {
 				objects[i] = objectString;
 			}
@@ -51,8 +55,9 @@ public class StringToArrayConverter implements Converter<String, Object[]> {
 			@SuppressWarnings("unchecked")
 			Converter<String, Object> converter = (Converter<String, Object>) converterFactory.createConverter(String.class, object.getClass());
 			if (converter != null) {
-				result.append(converter.convertToPresentation(object, String.class, locale));
-				result.append(ConverterGuesser.getSuffixID(converter));
+				String stringValue = converter.convertToPresentation(object, String.class, locale);
+				result.append(stringValue);
+				result.append(ConverterGuesser.getSuffixID(converter, stringValue));
 			} else {
 				result.append(object);
 			}

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.gui.converter.StringToArrayConverter;
 import com.dc2f.cms.gui.converter.StringToClassConverter;
+import com.dc2f.cms.gui.converter.StringToFileConverter;
 import com.dc2f.cms.rendering.Renderer;
 import com.dc2f.cms.rendering.simple.SimpleDc2fRenderer;
 import com.dc2f.dstore.storage.StorageBackend;
@@ -101,7 +102,8 @@ public class ServiceLocator {
 				StringToClassConverter.class,
 				DateToLongConverter.class,
 				DateToSqlDateConverter.class,
-				StringToArrayConverter.class
+				StringToArrayConverter.class,
+				StringToFileConverter.class
 		});
 	}
 

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.Locale;
 
 import org.junit.Before;
@@ -100,10 +101,23 @@ public class TestConverterFactory {
 	@Test
 	public void testGuessingConverter() {
 		assertNull("There should be no convertion from string to string", factory.guessConverterFromString("abcdef"));
-		assertSame(Integer.class, factory.guessConverterFromString("0").getModelType());
-		assertSame(Long.class, factory.guessConverterFromString("0l").getModelType());
-		assertSame(Double.class, factory.guessConverterFromString("0.0").getModelType());
-		assertSame(Float.class, factory.guessConverterFromString("0.0f").getModelType());
+		testGuessingFromString(Integer.class, "0");
+		testGuessingFromString(Long.class, "0l");
+		testGuessingFromString(Double.class, "0.0");
+		testGuessingFromString(Float.class, "0.0f");
+		testGuessingFromString(File.class, "C:\\");
+		testGuessingFromString(File.class, "PATH\\to\\my\\file");
+		testGuessingFromString(File.class, "C:\\PATH\\to\\my\\file");
+		testGuessingFromString(File.class, "/PATH/to/my/file");
+		testGuessingFromString(File.class, "PATH/to/my/file");
+		testGuessingFromString(File.class, "../PATH/to/my/file");
+		
+		
+	}
+	
+	private void testGuessingFromString(Class<?> clazz, String string) {
+		assertNotNull("Couldn't guess " + clazz.getSimpleName() + " from string \"" + string + "\".", factory.guessConverterFromString(string));
+		assertSame("Couldn't guess " + clazz.getSimpleName() + " from string \"" + string + "\" correctly.", clazz, factory.guessConverterFromString(string).getModelType());
 	}
 	
 	@Test
