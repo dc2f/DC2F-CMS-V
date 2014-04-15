@@ -1,10 +1,19 @@
 package com.dc2f.cms.settings;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.demo.DemoProject;
+import com.dc2f.cms.exceptions.Dc2fCmsError;
 import com.dc2f.cms.rendering.Renderer;
 import com.dc2f.cms.rendering.simple.SimpleDc2fRenderer;
 import com.dc2f.cms.utils.InitializationHelper.InitializationDefinition;
@@ -16,8 +25,16 @@ import com.dc2f.dstore.storage.map.HashMapStorage;
  * @author bigbear3001
  *
  */
-public class Dc2fSettings {
+@Slf4j
+public class Dc2fSettings implements Serializable {
 	
+	/**
+	 * unique serialization version id.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static final String SETTINGS_FILENAME = "settings.bin";
+
 	/**
 	 * private constructor to prevent direct initialization.
 	 */
@@ -61,6 +78,9 @@ public class Dc2fSettings {
 		if (instance == null) {
 			synchronized (LOCK) {
 				if (instance == null) {
+					instance = load();
+				}
+				if (instance == null) {
 					instance = new Dc2fSettings();
 				}
 			}
@@ -88,8 +108,38 @@ public class Dc2fSettings {
 		return dc2f;
 	}
 
+	private static Dc2fSettings load() {
+		try {
+			@Cleanup
+			FileInputStream fis = new FileInputStream(SETTINGS_FILENAME);
+			@Cleanup
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Object dc2f = ois.readObject();
+			if (dc2f instanceof Dc2fSettings) {
+				return (Dc2fSettings) dc2f;
+			}
+			throw new Dc2fCmsError("Cannot get saved settings from file " + SETTINGS_FILENAME, null);
+		} catch(Exception e) {
+			log.error("Cannot load settings from file " + SETTINGS_FILENAME, e);
+		}
+		return null;
+	}
+
 	public void reload() {
 		dc2f = null;
+	}
+
+	public void save() {
+		try {
+			@Cleanup
+			FileOutputStream fos = new FileOutputStream(SETTINGS_FILENAME);
+			@Cleanup
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this);
+		} catch (Exception e) {
+			throw new Dc2fCmsError("Cannot save settings to file " + SETTINGS_FILENAME, e);
+		}
+		
 	}
 
 }

@@ -51,6 +51,8 @@ public class Dc2fPropertiesEditor extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				Dc2fSettings.get().reload();
 				Dc2fUi.getCurrent().reload();
+				//After reloading worked store the settings permanently
+				Dc2fSettings.get().save();
 			}
 		});
 		buttons.addComponent(apply);
