@@ -121,6 +121,15 @@ public class Dc2f {
 		}
 		return nodes;
 	}
+	
+	public boolean hasNode(String path) {
+		try {
+			getNodeForPath(path);
+			return true;
+		} catch(Dc2fNotExistingPathError e) {
+			return false;
+		}
+	}
 
 	public Node getNodeForPath(String path) {
 		WorkingTreeNode node = internalGetNodeForPath(path);
@@ -153,31 +162,37 @@ public class Dc2f {
 	}
 
 	public void addProject(Project project) {
+		//TODO: rename method and refactor to saveProject
 		WorkingTreeNode root = workingTree.getRootNode();
 		WorkingTreeNode projectNode = root.addChild(project.getName());
 		projectNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_PROJECT));
 	}
 
 	public void addFolder(Folder folder) {
-		WorkingTreeNode parent = internalGetNodeForPath(folder.getParentPath());
-		WorkingTreeNode folderNode = parent.addChild(folder.getName());
+		//TODO: rename method and refactor to saveFolder
+		WorkingTreeNode folderNode = getOrCreateNode(folder);
 		folderNode.setProperty(PropertyNames.NODE_TYPE, new Property(MagicPropertyValues.NODE_TYPE_FOLDER));
+		folderNode.setProperty(PropertyNames.UPDATETIMESTAMP, new Property(new Date().getTime()));
 	}
 
 	public boolean addFile(File file) {
+		//TODO: rename method to saveFile
 		return addFile(file, MagicPropertyValues.NODE_TYPE_FILE);
 	}
 	
 	public boolean addTemplate(Template template) {
+		//TODO: rename method to saveTemplate
 		return addFile(template, MagicPropertyValues.NODE_TYPE_TEMPLATE);
 	}
 	
 	public boolean addPage(Page page) {
+		//TODO: rename method to savePage
 		return addFile(page, MagicPropertyValues.NODE_TYPE_PAGE);
 	}
 		
 	public boolean addFile(File file, String nodeType) {
-		WorkingTreeNode fileNode = getOrCreateFile(file);
+		//TODO: rename method to saveFile
+		WorkingTreeNode fileNode = getOrCreateNode(file);
 		fileNode.setProperty(PropertyNames.NODE_TYPE, new Property(nodeType));
 		fileNode.setProperty(PropertyNames.UPDATETIMESTAMP, new Property(new Date().getTime()));
 		if (file.getMimetype() != null && !file.getMimetype().isEmpty()) {
@@ -194,17 +209,29 @@ public class Dc2f {
 		return true;
 	}
 
-	private WorkingTreeNode getOrCreateFile(File file) {
+	private WorkingTreeNode getOrCreateNode(Node node) {
 		try {
-			return internalGetNodeForPath(file.getPath());
+			return internalGetNodeForPath(node.getPath());
 		} catch(Dc2fNotExistingPathError e) {
-			WorkingTreeNode parent = internalGetNodeForPath(file.getParentPath());
-			return parent.addChild(file.getName());
+			WorkingTreeNode parent = internalGetNodeForPath(node.getParentPath());
+			return parent.addChild(node.getName());
 		}
 	}
 
 	public void commit() {
 		workingTree.commit("Commited by DC2F CMS at " + new Date().toString());
+	}
+
+	/**
+	 * Remove the given node from the branch.
+	 * @param existing - node to remove
+	 */
+	public void remove(Node existing) {
+		if (hasNode(existing.getPath())) {
+			//remove by renaming file since a real delete is not yet implemented.
+			WorkingTreeNode existingNode = getOrCreateNode(existing);
+			existingNode.setProperty(Property.PROPERTY_NAME, new Property("_deleted_" + new SimpleDateFormat("yyyy.MM.dd_HH:mm:ss:SSS").format(new Date()) + "_" + existing.getName()));
+		}
 	}
 
 }

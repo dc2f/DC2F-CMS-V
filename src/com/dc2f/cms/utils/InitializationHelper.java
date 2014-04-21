@@ -28,10 +28,10 @@ public class InitializationHelper {
 		
 		private final Object[] constructorArguments;
 		
-		private final Class[] parameterTypes;
+		private final Class<?>[] parameterTypes;
 		
 		public InitializationDefinition(Class<? extends T> clazz,
-				Object[] constructorArguments) {
+				Object ... constructorArguments) {
 			this.clazz = clazz;
 			this.constructorArguments = constructorArguments;
 			parameterTypes = new Class[constructorArguments.length];

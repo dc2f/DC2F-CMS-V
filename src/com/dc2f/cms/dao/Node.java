@@ -15,6 +15,12 @@ public class Node {
 		this(name, parent.getPath() + "/" + name);
 	}
 	
+	/**
+	 * Initialize a new node with a name and a path.
+	 * @param name - name of the node to initialize
+	 * @param parent - parent node
+	 * @param relativePath - path relative to the parent node
+	 */
 	public Node(String name, Folder parent, String relativePath) {
 		this(name, parent.getPath() + "/" + relativePath);
 	}

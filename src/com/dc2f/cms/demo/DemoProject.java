@@ -5,6 +5,7 @@ import java.io.InputStream;
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Folder;
+import com.dc2f.cms.dao.Node;
 import com.dc2f.cms.dao.Page;
 import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.dao.Template;
@@ -92,8 +93,21 @@ public class DemoProject {
 				{"resources/css/fonts", "fonts"},
 				{"resources/images", "images"},
 				{"resources/js", "js"}};
-		for(String[] folderDefinition : expectedFolders) {
-			dc2f.addFolder(new Folder(folderDefinition[1], demoProject, folderDefinition[0]));
+		for (String[] folderDefinition : expectedFolders) {
+			String path = demoProject.getPath() + "/" + folderDefinition[0];
+			Folder folder = null;
+			if (dc2f.hasNode(path)) {
+				Node existingFolder = dc2f.getNodeForPath(path);
+				if (existingFolder instanceof Folder) {
+					folder = (Folder) existingFolder;
+				} else if (existingFolder != null) {
+					dc2f.remove(existingFolder);
+				}
+			}
+			if (folder == null) {
+				folder = new Folder(folderDefinition[1], demoProject, folderDefinition[0]);
+			}
+			dc2f.addFolder(folder);
 		}
 	}
 

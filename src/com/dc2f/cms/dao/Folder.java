@@ -7,6 +7,12 @@ public class Folder extends Node {
 		super(name, path);
 	}
 	
+	/**
+	 * Initialize a new folder with a name, a parent and a path
+	 * @param name - name of the folder
+	 * @param parent - parent node of the folder
+	 * @param relativePath - path relative to the parent nodes path
+	 */
 	public Folder(String name, Folder parent, String relativePath) {
 		super(name, parent, relativePath);
 	}
