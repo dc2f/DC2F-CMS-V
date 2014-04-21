@@ -119,7 +119,7 @@ public class SlowJsonFileStorageBackend implements StorageBackend {
 
 	@Override
 	public StoredFlatNode readNode(StorageId id) {
-		logger.debug("Reading node \\{{}\\}", new Object[]{id});
+		logger.debug("Reading node \\{{}}", new Object[]{id});
 		JSONObject obj = readFile(id, FILE_TYPE_NODE);
 		StorageId children = readStorageId(obj.optString("children", null));
 		StorageId properties = readStorageId(obj.optString("properties", null));
@@ -143,7 +143,7 @@ public class SlowJsonFileStorageBackend implements StorageBackend {
 	@Override
 	public StoredFlatNode writeNode(StoredFlatNode node) {
 		try {
-			logger.debug("Writing node \\{{}\\}", new Object[]{node.getStorageId()});
+			logger.debug("Writing node \\{{}}", new Object[]{node.getStorageId()});
 			JSONObject obj = new JSONObject();
 			obj.put("children", storeStorageId(node.getChildren()));
 			obj.put("properties", storeStorageId(node.getProperties()));
