@@ -113,11 +113,18 @@ public class NodeType {
 	}
 
 
-
+	/**
+	 * Apply the properties from the WorkingTreeNode to the File
+	 * @param node - node to get the properties from
+	 * @param file - file to apply the properties to
+	 */
 	private static void applyFileProperties(WorkingTreeNode node,
 			File file) {
 		file.setMimetype(node.getProperty(PropertyNames.MIMETYPE).toString());
-		file.setContent(new ByteArrayInputStream((byte[]) node.getProperty(PropertyNames.CONTENT).getObjectValue()));
+		Property contentProperty = node.getProperty(PropertyNames.CONTENT);
+		if (contentProperty != null) {
+			file.setContent(new ByteArrayInputStream((byte[]) contentProperty.getObjectValue()));
+		}
 		file.setUpdatetimestamp(node.getProperty(PropertyNames.UPDATETIMESTAMP).getLong());
 	}
 
