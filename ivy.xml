@@ -43,9 +43,9 @@
 		<!-- lombok for setters and getters -->
 		<dependency org="org.projectlombok" name="lombok" rev="1.12.4" />
 		<!-- dc2f dstore for our data -->
-		<dependency org="com.dc2f" name="dstore-java" rev="0.0.2" />
+		<dependency org="com.dc2f" name="dstore-java" rev="0.0.4" />
 		<!-- logging framework -->
-		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.2" />
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.5" />
 		<!-- frameworks for testing -->
 		<dependency org="junit" name="junit" rev="4.11" />
 		<dependency org="org.easymock" name="easymock" rev="3.2" />
