@@ -3,3 +3,5 @@
 build
 .project
 WebContent/VAADIN/themes/dc2f/addons.scss
+target
+tmpwd
