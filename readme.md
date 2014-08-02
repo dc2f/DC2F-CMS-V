@@ -27,6 +27,7 @@ With "Import" > "Existing Maven Projects" import the following projects from the
 * dc2f
 * dc2f-dstore
 * dc2f-vaadin
+* dc2f-api
 
 ### Tomcat 8 Target Runtime
 If you don't have an existing tomcat 8 target runtime please add it:

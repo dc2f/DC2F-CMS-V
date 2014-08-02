@@ -12,12 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import com.dc2f.cms.gui.converter.StringToArrayConverter;
 import com.dc2f.cms.gui.converter.StringToClassConverter;
 import com.dc2f.cms.gui.converter.StringToFileConverter;
-import com.dc2f.cms.rendering.Renderer;
-import com.dc2f.cms.rendering.simple.SimpleDc2fRenderer;
-import com.dc2f.dstore.storage.StorageBackend;
-import com.dc2f.dstore.storage.flatjsonfiles.SlowJsonFileStorageBackend;
-import com.dc2f.dstore.storage.map.HashMapStorage;
-import com.dc2f.dstore.storage.pgsql.PgStorageBackend;
 import com.vaadin.data.util.converter.Converter;
 import com.vaadin.data.util.converter.DateToLongConverter;
 import com.vaadin.data.util.converter.DateToSqlDateConverter;
@@ -34,7 +28,7 @@ import com.vaadin.data.util.converter.StringToLongConverter;
  *
  */
 @Slf4j
-public class ServiceLocator {
+public class ConverterServiceLocator extends ServiceLocator {
 
 	public static <T> Iterator<T> providers(Class<T> clazz) {
 		List<T> providers = new ArrayList<T>();
@@ -62,34 +56,12 @@ public class ServiceLocator {
 			for(Class<?> converter : getConverters()) {
 				classes.add((Class<? extends T>) converter);
 			}
-		} else if (clazz.equals(Renderer.class)) {
-			for(Class<?> renderer : getRenderers()) {
-				classes.add((Class<? extends T>) renderer);
-			}
-		} else if (clazz.equals(StorageBackend.class)) {
-			for(Class<?> storageBackend : getStorageBackends()) {
-				classes.add((Class<? extends T>) storageBackend);
-			}
+		} else {
+			return ServiceLocator.implementations(clazz);
 		}
 		return classes;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	private static List<Class> getStorageBackends() {
-		return Arrays.asList(new Class[]{
-				HashMapStorage.class,
-				SlowJsonFileStorageBackend.class,
-				PgStorageBackend.class
-		});
-	}
-
-	@SuppressWarnings("rawtypes")
-	private static List<Class> getRenderers() {
-		return Arrays.asList(new Class[]{
-				SimpleDc2fRenderer.class
-		});
-	}
-
 	@SuppressWarnings({ "rawtypes"})
 	private static final List<Class> getConverters() {
 		return Arrays.asList(new Class[]{

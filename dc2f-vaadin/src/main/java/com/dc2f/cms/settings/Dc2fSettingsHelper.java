@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.dc2f.cms.utils.ServiceLocator;
+import com.dc2f.cms.utils.ConverterServiceLocator;
 import com.google.gwt.thirdparty.guava.common.collect.Lists;
 import com.vaadin.data.Container;
 import com.vaadin.ui.AbstractField;
@@ -44,7 +44,7 @@ public class Dc2fSettingsHelper {
 				if(typeToExtend != Class.class.getGenericSuperclass()) {
 					try {
 						Class<?> clazz = Class.forName(typeToExtend.toString().replaceFirst("(interface|class) ", ""));
-						return Lists.newArrayList(ServiceLocator.implementations(clazz));
+						return Lists.newArrayList(ConverterServiceLocator.implementations(clazz));
 					} catch (ClassNotFoundException e) {
 						log.error("Cannot get class for type parameter {}", typeToExtend);
 					}
