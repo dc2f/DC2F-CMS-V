@@ -2,7 +2,7 @@
 
 UI based on vaadin
 
-## BUilding project
+## Building project
 
 This project is build with maven (you need to have maven installed to build it).
 
