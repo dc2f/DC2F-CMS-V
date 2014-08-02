@@ -1,8 +1,8 @@
 package com.dc2f.cms.gui.converter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
-import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +14,15 @@ import com.vaadin.ui.UI;
 public class StringToArrayConverterTest {
 	StringToArrayConverter converter = new StringToArrayConverter();
 	
+	
 	@Before
 	public void setup() {
-		final VaadinSession session = new VaadinSession(null);
+		final VaadinSession session = new VaadinSession(null) {
+			@Override
+			public boolean hasLock() {
+				return true;
+			}
+		};
 		UI.setCurrent(new UI() {
 			@Override
 			protected void init(VaadinRequest request) {}
