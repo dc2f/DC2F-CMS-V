@@ -32,6 +32,15 @@ If you don't have an existing tomcat 8 target runtime please add it:
 
 ### Tomcat 7 Server
 * Open the server view with Window > Show View > Other ...
-** Select Server > Server
+    * Select Server > Server
 * Create a new Tomcat 8 server
+    * Rightclick into server view
+        * New > Server
+    * Select Tomcat v8.0 Server
+    * Click Next
+    * Select dc2f-vaadin(DC2F) and click "Add >"
+    * Click fFinish
+* Now you can rightlick the server and start it
+
+DC2F now should be available at [localhost:8080](http://localhost:8080/dc2f-vaadin/)
 

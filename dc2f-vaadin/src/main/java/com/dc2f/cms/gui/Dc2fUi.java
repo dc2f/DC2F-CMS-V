@@ -6,7 +6,6 @@ import com.dc2f.cms.exceptions.UnknownUIError;
 import com.dc2f.cms.gui.converter.ConverterFactory;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.Container;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Component;
