@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+	<title>{title}</title>
+	<link rel="shortcut icon" href="{link:resources/images/dc2f.ico}">
+	<link rel="stylesheet" type="text/css" href="{link:resources/css/reset.css}" />
+	<link rel="stylesheet" type="text/css" href="{link:resources/css/style.css}" />
+	<script src="{link:resources/js/jquery-1.8.2.js}"></script>
+	<script src="{link:resources/js/jquery.cycle.all.js}"></script>
+	<script src="{link:resources/js/main.js}" ></script>
+</head>
+<body>
+	<div class="page-wrap">
+		<div class="top-menu">								
+			<input  type="text" placeholder="What are you looking for?"/>
+		</div>
+		<div class="clear"></div>
+		<div class="main-content">
+			<div class="bar">
+				<header>
+					<h1 class="header"><a href="http://www.dc2f.com">DC²F</a>
+					</h1>
+					<nav>
+						<ul>
+							{nav:Home:<li><a href="$link">$name</a></li>}
+						</ul>	
+					</nav>
+					<a href="https://github.com/dc2f/" title="DC²F on GitHub"><img src="{link:resources/images/GitHub-Mark-16px.png}" height="16px" width="16px" class="white-background-logo"/></a>
+				</header>
+			</div>	
+			<div class="clear"></div>
+			<div class="body-contents">
+				<div class="left-body">
+				<div class="the-latest">					
+					<div class="txthead">THE LATEST</div>
+					{latest:Home:1:<a href="#">
+						<!-- div class="img"><img src="images/thelatest.jpg"></div-->
+						<p>$title</p>
+					</a>
+					<p>$content</p>
+					<div class="green-border"></div>}
+			</div>
+		</div>
+		<div class="center">
+			<div class="txthead">{title}</div>
+			<p class="grey-text">{content}</p>
+		</div>
+		<div class="right">
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div><!-- eo .body-content -->
+	<footer>
+		<div class="footer">
+			<div class="footer-left">
+				<div class="footer-heading">
+					DC²F
+				</div>
+				<p class="footer-text">The new way of online content creation.</p>
+			</div>
+			<div class="footer-right">
+				<nav>
+					<div class="footer-nav">
+						<a href="{link:imprint.html}">IMPRINT</a>
+					</div>
+				</nav>
+				<div class="clear"></div>
+				<div class="abt-ths-site-footer">
+					<h5><a href="#">ABOUT THIS SITE</a></h5>
+					<p class="footer-text-border">This is demo project to give you a perfect starting point for editing with DC²F.</p>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div><!-- eo .footer -->		
+	</footer>
+	</div><!-- eo .page-wrap-->
+	<p class="footer-link">Copyright &copy; {date:yyyy} | Website Developed By <a href="https://www.perhab.com">Andreas Perhab</a> | Design by <a href="http://designmodo.com/dead-stocker/">Vladimir Kudinov</a></p>
+</body>
+</html>
