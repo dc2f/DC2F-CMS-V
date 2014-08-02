@@ -2,6 +2,15 @@
 
 UI based on vaadin
 
+## BUilding project
+
+This project is build with maven (you need to have maven installed to build it).
+
+To build just execute
+```
+mvn package
+```
+this will generate a war file in dc2f-vaadin/target/ that can be deployed to your tomcat.
 
 ## Setup Development Environment
 
