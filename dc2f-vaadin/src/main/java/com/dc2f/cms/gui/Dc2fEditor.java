@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.mortbay.log.Log;
-
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Node;
