@@ -54,3 +54,9 @@ If you don't have an existing tomcat 8 target runtime please add it:
 
 DC2F now should be available at [localhost:8080](http://localhost:8080/dc2f-vaadin/)
 
+## Skipping integration tests
+
+If you want to trigger a build without integration tests run
+```
+mvn package -pl '!dc2f-integration-tests'
+```

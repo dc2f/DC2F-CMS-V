@@ -1,7 +1,9 @@
 *** Settings ***
-Library         OperatingSystem
-Library         DatabaseLibrary
-
+Library		com.dc2f.tests.integration.KeyWordLibrary
 *** Test Cases ***
 Start DC2F
 	start
+	openBrowser	firefox
+
+Stop DC2F
+	stop
