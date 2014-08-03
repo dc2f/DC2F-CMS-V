@@ -1,0 +1,7 @@
+*** Settings ***
+Library         OperatingSystem
+Library         DatabaseLibrary
+
+*** Test Cases ***
+Start DC2F
+	start

@@ -32,6 +32,7 @@ public class Dc2fUi extends UI {
 		getSession().setConverterFactory(converterFactory);
 		final VerticalLayout layout = new VerticalLayout();
 		setContent(layout);
+		getPage().setTitle("DC2F");
 		layout.setHeight(100, Unit.PERCENTAGE);
 		main = new HorizontalSplitPanel();
 		layout.addComponent(main);
