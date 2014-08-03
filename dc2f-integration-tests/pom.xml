@@ -36,8 +36,9 @@
 				<version>2.8</version>
 				<executions>
 					<execution>
-						<id>copy</id>
-						<phase>package</phase>
+						<id>copy-dc2f-war</id>
+						<!-- we need the war to run the tests, so we fetch it at the beginning -->
+						<phase>validate</phase>
 						<goals>
 							<goal>copy</goal>
 						</goals>
