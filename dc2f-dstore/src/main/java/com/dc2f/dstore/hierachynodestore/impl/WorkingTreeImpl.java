@@ -24,6 +24,7 @@ import com.dc2f.dstore.storage.StorageBackend;
 import com.dc2f.dstore.storage.StorageId;
 import com.dc2f.dstore.storage.StoredCommit;
 import com.dc2f.dstore.storage.StoredFlatNode;
+import com.mchange.util.AssertException;
 
 @Slf4j
 public class WorkingTreeImpl implements WorkingTree {
@@ -88,7 +89,9 @@ public class WorkingTreeImpl implements WorkingTree {
 			if (!node.isNew) {
 				// storedNode must not be null, if this is an existing node.
 				StoredFlatNode tmpStoredNode = node.storedNode;
-				assert tmpStoredNode != null;
+				if (tmpStoredNode == null) {
+					throw new AssertionError("Couldn't find tmp stored node for existing node.");
+				}
 				storedFlatNodeMappings.put(node,
 						new MutableStoredFlatNode(storageBackend.generateStorageId(), tmpStoredNode));
 //				node.createMutableStoredNode(storageBackend.generateStorageId());

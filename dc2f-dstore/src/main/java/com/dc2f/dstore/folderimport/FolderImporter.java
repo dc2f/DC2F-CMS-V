@@ -75,7 +75,9 @@ public class FolderImporter {
 							JSONObject jsonObject = new JSONObject(com.google.common.io.Files.toString(file.toFile(), Charsets.UTF_8));
 							String[] names = JSONObject.getNames(jsonObject);
 							for (String propertyName : names) {
-								assert propertyName != null;
+								if (propertyName == null) {
+									throw new AssertionError("property name should never be null.");
+								}
 								fileNode.setProperty(propertyName, new Property(jsonObject.get(propertyName)));
 							}
 						} catch (JSONException e) {
