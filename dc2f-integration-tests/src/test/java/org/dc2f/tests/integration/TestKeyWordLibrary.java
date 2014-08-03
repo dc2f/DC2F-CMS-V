@@ -28,15 +28,24 @@ public class TestKeyWordLibrary {
 	}
 
 	@Test
-	public void testStartup() throws Exception {
+	public void testLibrary() throws Exception {
 		library.start();
-		WebDriver driver = new FirefoxDriver();
-		try {
-			driver.get(library.getAddress());
-			new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".v-app.dc2f")));
-			assertEquals("did not start DC2F", "DC2F", driver.getTitle());
-		} finally {
-			driver.quit();
-		}
+		library.openBrowser("firefox");
+		library.checkTitle("DC2F");
+		testSettings();
+		testDemo();
+	}
+
+	private void testDemo() {
+		library.openPath("DC²F", "demo");
+		library.assertChildren("Home", "resources", "template.html");
+		library.openPath("DC²F", "demo", "Home", "About");
+		library.assertChildren("imprint.html", "about.html");
+		
+	}
+
+	private void testSettings() {
+		library.openPath("DC²F", "Settings");
+		library.assertChildren();//Settings has no children
 	}
 }

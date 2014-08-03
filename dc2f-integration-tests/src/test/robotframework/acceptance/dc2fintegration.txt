@@ -4,6 +4,7 @@ Library		com.dc2f.tests.integration.KeyWordLibrary
 Start DC2F
 	start
 	openBrowser	firefox
+	checkTitle	DC2F
 
 Stop DC2F
 	stop

@@ -26,6 +26,7 @@ public class Dc2fTree extends Tree {
 	private final Dc2f dc2f;
 
 	public Dc2fTree() {
+		setId(Dc2fUiIds.TREE);
 		dc2f = Dc2fSettings.get().initDc2f();
 		Dc2fTreeItem main = initSystemSettingsNodes();
 		

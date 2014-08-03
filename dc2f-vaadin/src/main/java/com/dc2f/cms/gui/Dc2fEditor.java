@@ -31,6 +31,7 @@ public class Dc2fEditor extends TabSheet {
 	private static final long serialVersionUID = 1L;
 
 	public Dc2fEditor() {
+		setId(Dc2fUiIds.EDITOR);
 		setSizeFull();
 		source = new TextArea();
 		source.setSizeFull();

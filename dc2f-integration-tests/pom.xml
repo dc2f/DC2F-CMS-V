@@ -26,6 +26,8 @@
 					<!-- <extraPathDirectories>
 						<extraPathDirectory>src/main/java</extraPathDirectory>
 					</extraPathDirectories> -->
+					<!-- skip until i figured out how to get absolute path for war -->
+					<skip>true</skip>
 				</configuration>
 				<executions>
 					<execution>
@@ -145,6 +147,11 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
 			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
 		</dependency>
 	</dependencies>
 </project>

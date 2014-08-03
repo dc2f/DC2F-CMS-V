@@ -14,6 +14,7 @@ public class Dc2fFileList extends Table {
 	private static final long serialVersionUID = 1L;
 
 	public Dc2fFileList() {
+		setId(Dc2fUiIds.LIST);
 		setSizeFull();
 		addContainerProperty("Name", String.class, "");
 		addContainerProperty("Type", String.class, "Node");
