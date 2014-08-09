@@ -49,4 +49,16 @@
 			<version>2.4</version>
 		</dependency>
 	</dependencies>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>com.dc2f.snapshots</id>
+			<url>https://www.perhab.com/nexus/content/repositories/com.dc2f.snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>com.dc2f.release</id>
+			<url>https://www.perhab.com/nexus/content/repositories/com.dc2f.release</url>
+		</repository>
+	</distributionManagement>
+	
 </project>
