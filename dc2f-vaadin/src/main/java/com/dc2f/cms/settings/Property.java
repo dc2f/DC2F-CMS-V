@@ -4,11 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
-import com.vaadin.data.Property.ReadOnlyException;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 
+@Slf4j
 public class Property implements ValueChangeListener, com.vaadin.data.Property {
 	@Getter
 	public final String name;
@@ -43,8 +43,7 @@ public class Property implements ValueChangeListener, com.vaadin.data.Property {
 				return getter.invoke(Dc2fSettings.get());
 			} catch (IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Error getting Dc2fSettings setting {}", getter, e);
 			}
 		}
 		return null;
@@ -63,7 +62,7 @@ public class Property implements ValueChangeListener, com.vaadin.data.Property {
 		try {
 			setter.invoke(Dc2fSettings.get(), newValue);
 		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
+			log.error("Error setting Dc2fSettings setting {}", setter, e);
 		}
 	}
 
