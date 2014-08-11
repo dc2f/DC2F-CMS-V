@@ -30,10 +30,14 @@ public class UIHelper {
 				}
 				return converterFactory;
 			} else {
-				throw new UnknownUIError("UI has no session attached.", null);
+				UnknownUIError error = new UnknownUIError("UI has no session attached.", null);
+				log.debug("Cannot get session from UI.", error);
+				throw error;
 			}
 		} else {
-			throw new UnknownUIError("Current thread [" + Thread.currentThread().getName() + "] has no UI attached.", null);
+			UnknownUIError error = new UnknownUIError("Current thread [" + Thread.currentThread().getName() + "] has no UI attached.", null);
+			log.debug("Cannot get UI.", error);
+			throw error;
 		}
 	}
 
