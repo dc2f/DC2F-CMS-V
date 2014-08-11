@@ -37,7 +37,7 @@ public class VaadinSessionHelper {
 				return session;
 			}
 		});
-		log.debug("Attached UI to current thread [].", Thread.currentThread());
+		log.debug("Attached UI to current thread [{}].", Thread.currentThread().getName());
 		session.setConverterFactory(new ConverterFactory());
 	}
 
@@ -46,5 +46,6 @@ public class VaadinSessionHelper {
 	 */
 	public static void cleanupVaadinSession() {
 		UI.setCurrent(null);
+		log.debug("Removed UI from current thread [{}].", Thread.currentThread().getName());
 	}
 }
