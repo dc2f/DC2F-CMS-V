@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.dc2f.cms.vaadin.helper.VaadinSessionHelper;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
@@ -17,26 +18,12 @@ public class StringToArrayConverterTest {
 	
 	@Before
 	public void setup() {
-		final VaadinSession session = new VaadinSession(null) {
-			@Override
-			public boolean hasLock() {
-				return true;
-			}
-		};
-		UI.setCurrent(new UI() {
-			@Override
-			protected void init(VaadinRequest request) {}
-			@Override
-			public VaadinSession getSession() {
-				return session;
-			}
-		});
-		session.setConverterFactory(new ConverterFactory());
+		VaadinSessionHelper.prepareVaadinSession();
 	}
 	
 	@After
 	public void cleanup() {
-		UI.setCurrent(null);
+		VaadinSessionHelper.cleanupVaadinSession();
 	}
 	
 	public void testArray(String string, Object[] array) {

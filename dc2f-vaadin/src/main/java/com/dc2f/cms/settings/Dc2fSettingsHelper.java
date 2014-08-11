@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,15 +17,24 @@ import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.TextField;
 
+/**
+ * Utility class for dc2f settings.
+ * @author bigbear3001
+ *
+ */
 @Slf4j
 public class Dc2fSettingsHelper {
-	public static ArrayList<Property> getProperties() {
-		ArrayList<Property> properties = new ArrayList<Property>();
+	
+	/**
+	 * @return list of properties generated from the setters and getters of dc2f settings.
+	 */
+	public static List<Property> getProperties() {
+		List<Property> properties = new ArrayList<Property>();
 		for (Method method : Dc2fSettings.class.getMethods()) {
 			if (method.getName().startsWith("get") && !"get".equals(method.getName())) {
 				Collection<?> options = getValueSuggestionsForMethod(method);
 				Property property = null;
-				if(options.size() > 0) {
+				if(!options.isEmpty()) {
 					property = new SelectableProperty(method.getName().substring(3), options);
 				} else {
 					property = new Property(method.getName().substring(3));
