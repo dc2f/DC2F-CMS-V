@@ -1,10 +1,13 @@
 package com.dc2f.cms.vaadin.helper;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.dc2f.cms.gui.converter.ConverterFactory;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 
+@Slf4j
 public class VaadinSessionHelper {
 	/**
 	 * prepares a mock vaadin session in the current thread to be able to test classes depending on a vaadin ui /
@@ -34,6 +37,7 @@ public class VaadinSessionHelper {
 				return session;
 			}
 		});
+		log.debug("Attached UI to current thread [].", Thread.currentThread());
 		session.setConverterFactory(new ConverterFactory());
 	}
 

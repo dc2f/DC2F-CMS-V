@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import com.vaadin.data.util.converter.Converter;
 import com.vaadin.data.util.converter.ConverterFactory;
+import com.dc2f.cms.vaadin.UIHelper;
 import com.google.gwt.thirdparty.guava.common.collect.Maps;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -27,9 +28,8 @@ public class SelectableProperty extends Property implements Container {
 	}
 
 	private void addAll(Iterable<?> options) {
-		VaadinSession session = UI.getCurrent().getSession();
-		ConverterFactory converterFactory = session.getConverterFactory();
-		Locale locale = session.getLocale();
+		ConverterFactory converterFactory = UIHelper.getConverterFactory();
+		//Locale locale = session.getLocale();
 		for(Object option : options) {
 			//Converter<String, Object> converter = (Converter<String, Object>) converterFactory.createConverter(String.class, option.getClass());
 			//items.put(converter.convertToPresentation(option, String.class, locale), option);
