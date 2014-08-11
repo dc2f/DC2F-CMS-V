@@ -16,6 +16,8 @@ import com.dc2f.cms.vaadin.helper.VaadinSessionHelper;
 import com.dc2f.dstore.storage.flatjsonfiles.SlowJsonFileStorageBackend;
 import com.dc2f.dstore.storage.map.HashMapStorage;
 import com.dc2f.dstore.storage.pgsql.PgStorageBackend;
+import com.vaadin.ui.UI;
+import com.vaadin.util.CurrentInstance;
 
 public class Dc2fSettingsHelperTest {
 	
@@ -46,10 +48,15 @@ public class Dc2fSettingsHelperTest {
 		assertSame("Storage implementation wasn't changed correctly.", SlowJsonFileStorageBackend.class, Dc2fSettings.get().getStorageImpl());
 	}
 
-	private void assertArrayContainsAll(Class[] classes, Collection<?> itemIds) {
-		assertEquals("Array sizes differ.", classes.length, itemIds.size());
-		for(Class clazz : classes) {
-			assertTrue("Missing item in array.", itemIds.contains(clazz));
+	/**
+	 * Assert length of array is the same as the size of collection and collection contains all items of the array
+	 * @param expected - items that should be contained in result
+	 * @param result - result to compare with expected items
+	 */
+	private void assertArrayContainsAll(Class[] expected, Collection<?> result) {
+		assertEquals("Array sizes differ.", expected.length, result.size());
+		for(Class clazz : expected) {
+			assertTrue("Missing item in array.", result.contains(clazz));
 		}
 		
 	}
