@@ -25,6 +25,9 @@ import com.vaadin.ui.TextField;
 @Slf4j
 public class Dc2fSettingsHelper {
 	
+	/** private constructor to prevent instantiation. */
+	private Dc2fSettingsHelper() {}
+	
 	/**
 	 * @return list of properties generated from the setters and getters of dc2f settings.
 	 */
@@ -56,7 +59,7 @@ public class Dc2fSettingsHelper {
 						Class<?> clazz = Class.forName(typeToExtend.toString().replaceFirst("(interface|class) ", ""));
 						return Lists.newArrayList(ConverterServiceLocator.implementations(clazz));
 					} catch (ClassNotFoundException e) {
-						log.error("Cannot get class for type parameter {}", typeToExtend);
+						log.error("Cannot get class for type parameter {}", typeToExtend, e);
 					}
 				}
 			}
