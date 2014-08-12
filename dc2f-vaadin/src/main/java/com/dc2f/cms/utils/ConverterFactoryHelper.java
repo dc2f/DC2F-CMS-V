@@ -8,7 +8,8 @@ import com.dc2f.cms.gui.converter.ConverterFactory;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class ConverterFactoryHelper {
 
 	public static ConverterFactory get() {

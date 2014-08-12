@@ -14,7 +14,8 @@ import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.dao.Template;
 import com.dc2f.cms.exceptions.Dc2fCmsError;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class DemoProject {
 	/**
 	 * Name of the demo project in the cms.

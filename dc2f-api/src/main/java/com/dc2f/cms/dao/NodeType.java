@@ -14,7 +14,8 @@ import com.dc2f.cms.dao.constants.PropertyNames;
 import com.dc2f.dstore.hierachynodestore.WorkingTreeNode;
 import com.dc2f.dstore.storage.Property;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class NodeType {
 	
 	/**

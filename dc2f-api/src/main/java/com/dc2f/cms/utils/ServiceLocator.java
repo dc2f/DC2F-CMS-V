@@ -24,7 +24,8 @@ import com.dc2f.dstore.storage.pgsql.PgStorageBackend;
  *
  */
 @Slf4j
-@NoArgsConstructor(access=AccessLevel.PROTECTED) //protected constructor to prevent instantiation except for extension
+//protected constructor to prevent instantiation except for extension
+@NoArgsConstructor(access=AccessLevel.PROTECTED)
 public class ServiceLocator {
 
 	public static <T> Iterator<T> providers(Class<T> clazz) {

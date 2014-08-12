@@ -9,7 +9,8 @@ import com.dc2f.dstore.storage.Property;
 import com.dc2f.dstore.storage.StorageId;
 import com.google.common.base.Strings;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class WorkingTreeUtils {
 	private static final String LINE_SEPARATOR = "\n";
 	

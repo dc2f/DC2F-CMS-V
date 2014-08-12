@@ -28,7 +28,8 @@ import com.dc2f.dstore.storage.map.HashMapStorage;
  *
  */
 @Slf4j
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class Dc2fSettings implements Serializable {
 	
 	/**

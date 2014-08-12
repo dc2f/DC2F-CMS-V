@@ -5,7 +5,8 @@ import java.nio.charset.Charset;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class Dc2fConstants {
 	/**
 	 * Charset used by dc2f. Currently utf-8.

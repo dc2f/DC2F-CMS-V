@@ -5,7 +5,8 @@ import javax.annotation.Nonnull;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class NullUtils {
 	public static @Nonnull <T extends Object> T assertNotNull(T obj) {
 		if (obj == null) {

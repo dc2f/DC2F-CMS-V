@@ -15,7 +15,8 @@ import com.vaadin.ui.UI;
  *
  */
 @Slf4j
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class UIHelper {
 
 	/**

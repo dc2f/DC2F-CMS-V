@@ -10,7 +10,8 @@ import com.dc2f.dstore.storage.Property;
  * @author bigbear3001
  *
  */
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class PropertyNames {
 	/**
 	 * Property where the type of the node is stored in.

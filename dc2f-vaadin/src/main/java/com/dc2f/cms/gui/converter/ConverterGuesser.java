@@ -22,7 +22,8 @@ import com.vaadin.data.util.converter.Converter;
  * @author bigbear3001
  *
  */
-@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class ConverterGuesser {
 	
 
