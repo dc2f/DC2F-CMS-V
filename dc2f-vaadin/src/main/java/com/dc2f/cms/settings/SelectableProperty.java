@@ -31,8 +31,6 @@ public class SelectableProperty extends Property implements Container {
 		ConverterFactory converterFactory = UIHelper.getConverterFactory();
 		//Locale locale = session.getLocale();
 		for(Object option : options) {
-			//Converter<String, Object> converter = (Converter<String, Object>) converterFactory.createConverter(String.class, option.getClass());
-			//items.put(converter.convertToPresentation(option, String.class, locale), option);
 			items.put(option, option);
 		}
 		

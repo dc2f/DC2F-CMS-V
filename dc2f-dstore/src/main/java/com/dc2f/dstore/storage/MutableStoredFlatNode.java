@@ -12,12 +12,6 @@ public class MutableStoredFlatNode extends StoredFlatNode {
 		this.storageId = newStorageId;
 	}
 	
-	
-//	public void setStorageId(StorageId storageId) {
-//		this.storageId = storageId;
-//	}
-
-	
 	public void setChildren(StorageId children) {
 		this.children = children;
 	}
