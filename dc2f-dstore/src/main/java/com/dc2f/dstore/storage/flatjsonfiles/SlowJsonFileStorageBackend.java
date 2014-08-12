@@ -214,6 +214,9 @@ public class SlowJsonFileStorageBackend implements StorageBackend {
 				case LONG:
 					tmp.put(entry.getKey(), property.getLong());
 					break;
+				default:
+					logger.error("Unknown property type {}", property.getPropertyType());
+					break;
 				}
 			} catch (JSONException e) {
 				logger.error("Error while storing property", e);

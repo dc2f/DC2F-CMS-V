@@ -52,7 +52,9 @@ public class StringToArrayConverter implements Converter<String, Object[]> {
 		ConverterFactory converterFactory = ConverterFactoryHelper.get();
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < value.length; i++) {
-			if (i != 0) result.append(SEPERATOR);
+			if (i != 0) {
+				result.append(SEPERATOR);
+			}
 			Object object = value[i];
 			@SuppressWarnings("unchecked")
 			Converter<String, Object> converter = (Converter<String, Object>) converterFactory.createConverter(String.class, object.getClass());

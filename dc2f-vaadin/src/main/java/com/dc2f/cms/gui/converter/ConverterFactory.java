@@ -33,7 +33,7 @@ public class ConverterFactory implements com.vaadin.data.util.converter.Converte
 	 * Converters available to this factory. Stored in the Format:
 	 * [PRESENTER => [MODEL => Converter]]
 	 */
-	public Map<Class<?>, Map<Class<?>, Converter<?, ?>>> converters = discoverConverters();
+	private Map<Class<?>, Map<Class<?>, Converter<?, ?>>> converters = discoverConverters();
 
 	@Setter @Getter
 	private boolean registerPathConverters = true;

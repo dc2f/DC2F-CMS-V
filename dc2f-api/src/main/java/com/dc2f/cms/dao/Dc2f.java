@@ -52,10 +52,6 @@ public class Dc2f {
 		}
 	}
 
-	private String getTempBranchName() {
-		return "work-started-at-" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
-	}
-
 	private StorageBackend initStorageBackend(InitializationDefinition<StorageBackend> storageImpl) {
 		try {
 			return InitializationHelper.initialize(storageImpl);
@@ -109,7 +105,7 @@ public class Dc2f {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Node> List<T> getAllChildren(String path, Class<T> nodeType) {
-		ArrayList<T> nodes = new ArrayList<T>();
+		List<T> nodes = new ArrayList<T>();
 		WorkingTreeNode parent = internalGetNodeForPath(path);
 		for(WorkingTreeNode childNode : parent.getChildren()) {
 			Node node = NodeType.getNode(childNode, Node.class, path);

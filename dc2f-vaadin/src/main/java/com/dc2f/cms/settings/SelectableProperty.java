@@ -29,8 +29,6 @@ public class SelectableProperty extends Property implements Container {
 	}
 
 	private void addAll(Iterable<?> options) {
-		ConverterFactory converterFactory = UIHelper.getConverterFactory();
-		//Locale locale = session.getLocale();
 		for(Object option : options) {
 			items.put(option, option);
 		}
