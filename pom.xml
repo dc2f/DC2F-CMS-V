@@ -10,6 +10,7 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.host.url>https://www.perhab.com/sonar</sonar.host.url>
 	</properties>
 	
 	<build>
@@ -20,6 +21,13 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<failOnError>false</failOnError>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -55,4 +63,16 @@
 			<version>1.14.4</version>
 		</dependency>
 	</dependencies>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>com.dc2f.snapshots</id>
+			<url>https://www.perhab.com/nexus/content/repositories/com.dc2f.snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>com.dc2f.release</id>
+			<url>https://www.perhab.com/nexus/content/repositories/com.dc2f.release</url>
+		</repository>
+	</distributionManagement>
+	
 </project>

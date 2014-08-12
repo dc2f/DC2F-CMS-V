@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,18 +17,32 @@ import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.TextField;
 
+/**
+ * Utility class for dc2f settings.
+ * @author bigbear3001
+ *
+ */
 @Slf4j
 public class Dc2fSettingsHelper {
-	public static ArrayList<Property> getProperties() {
-		ArrayList<Property> properties = new ArrayList<Property>();
+	
+	/** private constructor to prevent instantiation. */
+	private Dc2fSettingsHelper() {
+		
+	}
+	
+	/**
+	 * @return list of properties generated from the setters and getters of dc2f settings.
+	 */
+	public static List<Property> getProperties() {
+		List<Property> properties = new ArrayList<Property>();
 		for (Method method : Dc2fSettings.class.getMethods()) {
 			if (method.getName().startsWith("get") && !"get".equals(method.getName())) {
 				Collection<?> options = getValueSuggestionsForMethod(method);
 				Property property = null;
-				if(options.size() > 0) {
-					property = new SelectableProperty(method.getName().substring(3), options);
+				if(!options.isEmpty()) {
+					property = new SelectableProperty(method.getName().substring(3), options, method.getReturnType());
 				} else {
-					property = new Property(method.getName().substring(3));
+					property = new Property(method.getName().substring(3), method.getReturnType());
 				}
 				properties.add(property);
 			}
@@ -46,7 +61,7 @@ public class Dc2fSettingsHelper {
 						Class<?> clazz = Class.forName(typeToExtend.toString().replaceFirst("(interface|class) ", ""));
 						return Lists.newArrayList(ConverterServiceLocator.implementations(clazz));
 					} catch (ClassNotFoundException e) {
-						log.error("Cannot get class for type parameter {}", typeToExtend);
+						log.error("Cannot get class for type parameter {}", typeToExtend, e);
 					}
 				}
 			}

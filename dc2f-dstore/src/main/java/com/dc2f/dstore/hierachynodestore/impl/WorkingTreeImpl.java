@@ -24,7 +24,6 @@ import com.dc2f.dstore.storage.StorageBackend;
 import com.dc2f.dstore.storage.StorageId;
 import com.dc2f.dstore.storage.StoredCommit;
 import com.dc2f.dstore.storage.StoredFlatNode;
-import com.mchange.util.AssertException;
 
 @Slf4j
 public class WorkingTreeImpl implements WorkingTree {
@@ -53,7 +52,6 @@ public class WorkingTreeImpl implements WorkingTree {
 	public @Nonnull WorkingTreeNode getRootNode() {
 		StorageId rootNodeId = headCommit.getRootNode();
 		return getNodeByStorageId(rootNodeId, null);
-//		return new WorkingTreeNodeImpl(this, storageBackend.readNode(rootNodeId));
 	}
 	
 	public @Nonnull WorkingTreeNode getNodeByStorageId(StorageId nodeStorageId, WorkingTreeNodeImpl parentNode) {
@@ -94,8 +92,6 @@ public class WorkingTreeImpl implements WorkingTree {
 				}
 				storedFlatNodeMappings.put(node,
 						new MutableStoredFlatNode(storageBackend.generateStorageId(), tmpStoredNode));
-//				node.createMutableStoredNode(storageBackend.generateStorageId());
-//				node.node.setStorageId();
 			} else {
 				storedFlatNodeMappings.put(node, new MutableStoredFlatNode(storageBackend.generateStorageId()));
 			}
@@ -125,16 +121,6 @@ public class WorkingTreeImpl implements WorkingTree {
 				StorageId nodePropertiesId = storageBackend.writeProperties(nodeProperties);
 				mutableStoredNode.setProperties(nodePropertiesId);
 			}
-//			node.node = new StoredFlatNode(node.mutableStoredNode);
-//			WorkingTreeNodeImpl parent = node.getParent();
-//			// parent must always be mutable right here?!
-//			if (parent != null && parent.mutableStoredNode != null) {
-//				node.mutableStoredNode.setParentId(parent.mutableStoredNode.getStorageId());
-//			}
-//			if (parent != null && parent.mutableStoredNode == null) {
-//				node.mutableStoredNode.setParentId(parent.node.getStorageId());
-////				throw new RuntimeException("we have to recursively change parent id, and mutableStorageNode must therefore never be null." + parent);
-//			}
 			StoredFlatNode oldStoredNode = node.storedNode;
 			if (oldStoredNode != null) {
 				// remove old storage id from cache.
@@ -149,7 +135,6 @@ public class WorkingTreeImpl implements WorkingTree {
 		}
 		if (!changedNodes.isEmpty()) {
 			// i think if nodes are deleted/detached, changedNodes might not get empty..
-//			throw new RuntimeException("changedNodes must be empty after saving everything." + changedNodes);
 			changedNodes.clear();
 		}
 		StoredCommit storedCommit = new StoredCommit(storageBackend.generateStorageId(), new StorageId[]{headCommit.getId()}, oldRootNode.getStorageId());
@@ -163,12 +148,12 @@ public class WorkingTreeImpl implements WorkingTree {
 	}
 
 	private Set<WorkingTreeNodeImpl> findNodesToUpdate() {
-		HashSet<WorkingTreeNodeImpl> toUpdate = new HashSet<>();
+		Set<WorkingTreeNodeImpl> toUpdate = new HashSet<>();
 		
 		// check all changed nodes and make sure their parents
 		// are also updated and attached to root.
 		for (WorkingTreeNodeImpl changedNode : changedNodes) {
-			ArrayList<WorkingTreeNodeImpl> changed = new ArrayList<WorkingTreeNodeImpl>();
+			List<WorkingTreeNodeImpl> changed = new ArrayList<WorkingTreeNodeImpl>();
 			
 			WorkingTreeNodeImpl node = changedNode;
 			boolean first = true;

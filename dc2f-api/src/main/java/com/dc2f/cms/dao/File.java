@@ -3,6 +3,7 @@ package com.dc2f.cms.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.dc2f.cms.dao.constants.MagicPropertyValues;
 
@@ -76,7 +77,7 @@ public class File extends Node {
 		
 		final int chunkSize = 1024;
 
-		ArrayList<int[]> buffer = new ArrayList<int[]>();
+		List<int[]> buffer = new ArrayList<int[]>();
 		
 		public MultiReadInputStreamReader(InputStream content) {
 			originalContent = content;

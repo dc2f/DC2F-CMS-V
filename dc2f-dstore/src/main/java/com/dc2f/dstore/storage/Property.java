@@ -51,10 +51,6 @@ public class Property {
 		return (Long) objValue;
 	}
 	
-//	public void setLong(long value) {
-//		setObjValue(value);
-//	}
-	
 	private void setObjValue(@Nonnull Object value) {
 		for (PropertyType type : PropertyType.values()) {
 			if (type.getValueClass().isAssignableFrom(value.getClass())) {
@@ -80,19 +76,6 @@ public class Property {
 		assertType(PropertyType.BOOLEAN);
 		return ((Boolean) objValue).booleanValue();
 	}
-	
-//	public void setString(String value) {
-//		setObjValue(value);
-//	}
-
-//	/**
-//	 * 
-//	 * @param value value object, must be of one of the types of {@link PropertyType}.
-//	 * @throws IllegalStateException if an invalid type was passed as value.
-//	 */
-//	public void setObjectValue(Object value) throws IllegalStateException {
-//		setObjValue(value);
-//	}
 	
 	/**
 	 * @return the current value as object, is one of the {@link PropertyType}.

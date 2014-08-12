@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,7 +35,7 @@ public class HashMapStorage implements StorageBackend {
 	Map<StorageId, StorageId[]> storedChildren = new HashMap<>();
 	Map<StorageId, Map<String, Property>> storedProperties = new HashMap<>();
 	
-	HashSet<StorageId> generatedStorageIds = new HashSet<>();
+	Set<StorageId> generatedStorageIds = new HashSet<>();
 
 	@Override
 	public @Nonnull StorageId generateStorageId() {

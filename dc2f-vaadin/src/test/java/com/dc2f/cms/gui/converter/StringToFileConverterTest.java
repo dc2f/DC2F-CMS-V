@@ -11,7 +11,8 @@ public class StringToFileConverterTest {
 	StringToFileConverter converter = new StringToFileConverter();
 	@Test
 	public void testWindowsConversion() {
-		testConversion("J:" + File.separator + "SOMEDIR", new File("J:\\SOMEDIR"));
+		//windows paths cannot be converted on linux if they have a drive letter in it
+		testConversion("J:\\SOMEDIR", new File("J:\\SOMEDIR"));
 	}
 	
 	@Test

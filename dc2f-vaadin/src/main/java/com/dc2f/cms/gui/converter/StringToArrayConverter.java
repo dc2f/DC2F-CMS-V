@@ -2,6 +2,7 @@ package com.dc2f.cms.gui.converter;
 
 import java.util.Locale;
 
+import com.dc2f.cms.utils.ConverterFactoryHelper;
 import com.vaadin.data.util.converter.Converter;
 import com.vaadin.ui.UI;
 
@@ -47,10 +48,13 @@ public class StringToArrayConverter implements Converter<String, Object[]> {
 	public String convertToPresentation(Object[] value,
 			Class<? extends String> targetType, Locale locale)
 			throws com.vaadin.data.util.converter.Converter.ConversionException {
-		ConverterFactory converterFactory = (ConverterFactory) UI.getCurrent().getSession().getConverterFactory();
+		
+		ConverterFactory converterFactory = ConverterFactoryHelper.get();
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < value.length; i++) {
-			if (i != 0) result.append(SEPERATOR);
+			if (i != 0) {
+				result.append(SEPERATOR);
+			}
 			Object object = value[i];
 			@SuppressWarnings("unchecked")
 			Converter<String, Object> converter = (Converter<String, Object>) converterFactory.createConverter(String.class, object.getClass());

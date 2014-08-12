@@ -39,9 +39,6 @@ public class WorkingTreeNodeImpl implements WorkingTreeNode {
 			@Nullable StoredFlatNode flatNode, WorkingTreeNodeImpl parentNode) {
 		this.workingTreeImpl = workingTreeImpl;
 		this.parentNode = parentNode;
-//		if (flatNode == null) {
-//			throw new IllegalArgumentException("flatNode must not be null.");
-//		}
 		this.storedNode = flatNode;
 	}
 	
@@ -80,49 +77,7 @@ public class WorkingTreeNodeImpl implements WorkingTreeNode {
 			}
 		}
 		return ret;
-		
-//		return null;
-		
-//		List<WorkingTreeNode> ret = new ArrayList<>();
-//		List<WorkingTreeNode> myChildren = loadChildren();
-//		for (WorkingTreeNode child : myChildren) {
-//			if (child.getName().equals(childName)) {
-//				ret.add(child);
-//			}
-//		}
-//		return ret;
-		
-//		List<WorkingTreeNode> childList = children.get(childName);
-//		if (childList == null) {
-//			StorageId[] storedChildList = getStoredChildren().get(childName);
-//			if (storedChildList != null) {
-//				childList = new ArrayList<>(storedChildList.length);
-//				for (StorageId storedId : storedChildList) {
-//					WorkingTreeNode child = workingTreeImpl.getNodeByStorageId(storedId, this);
-//					childList.add(child);
-//				}
-//			} else {
-//				childList = new ArrayList<>();
-//			}
-//			children.put(childName, childList);
-//		}
-//		return childList;
 	}
-	
-//	@Nonnull
-//	List<WorkingTreeNode> loadChildren() {
-//		List<WorkingTreeNode> ret = loadedChildren;
-//		if (ret == null) {
-//			StorageId[] storedChildrenId = getStoredChildren();
-//			ret = new ArrayList<>(storedChildrenId.length);
-//			for (StorageId childId : storedChildren) {
-//				WorkingTreeNode child = workingTreeImpl.getNodeByStorageId(childId, this);
-//				ret.add(child);
-//			}
-//			loadedChildren = ret;
-//		}
-//		return ret;
-//	}
 	
 	@Override
 	public Iterable<WorkingTreeNode> getChildrenByNodeType(
@@ -178,17 +133,6 @@ public class WorkingTreeNodeImpl implements WorkingTreeNode {
 		return ret;
 	}
 
-//	@Override
-//	public Iterable<String> getChildrenNames() {
-//		List<WorkingTreeNode> myChildren = loadChildren();
-//		Set<String> ret = new HashSet<>(myChildren.size());
-//		for (WorkingTreeNode child : myChildren) {
-//			ret.add(child.getName());
-//		}
-//		
-//		return ret;
-//	}
-	
 	private WorkingTreeNode getChildByStorageId(
 			StorageId storageId) {
 		return workingTreeImpl.getNodeByStorageId(storageId, this);
@@ -239,14 +183,11 @@ public class WorkingTreeNodeImpl implements WorkingTreeNode {
 			return getStoredChildren().length + createdChildren.size();
 		}
 		return getStoredChildren().length;
-//		return loadChildren().size();
 	}
 	
 	@Nullable
 	public Property getProperty(@Nonnull String propertyName) {
 		return loadProperties().get(propertyName);
-//		Map<String, Property> properties = workingTreeImpl.storageBackend.readProperties(storedNode.getProperties());
-//		return properties.get(propertyName);
 	}
 	
 	/**

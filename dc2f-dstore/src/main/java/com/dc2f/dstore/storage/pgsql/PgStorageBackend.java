@@ -204,7 +204,6 @@ public class PgStorageBackend implements StorageBackend {
 					stmt.execute();
 					
 					Long id, rootNode;
-					// String message;
 					List<WrappedStorageId<Long>> parents = new LinkedList<>();
 					
 					try(ResultSet rs = stmt.getResultSet()) {
@@ -214,7 +213,6 @@ public class PgStorageBackend implements StorageBackend {
 						
 						id = rs.getLong("id");
 						rootNode = rs.getLong("rootNodeId");
-						// message = rs.getString("message");
 						do {
 							Long parentId = rs.getLong("parentId");
 							if(parentId != null) {
@@ -419,7 +417,7 @@ public class PgStorageBackend implements StorageBackend {
 				stmt.setLong(1, id(propertiesStorageId));
 				stmt.execute();
 				try(ResultSet rs = stmt.getResultSet()) {
-					HashMap<String, Property> result = new HashMap<>();
+					Map<String, Property> result = new HashMap<>();
 					if(!rs.next()) {
 						return result;
 					}
