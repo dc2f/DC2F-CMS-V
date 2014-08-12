@@ -1,35 +1,28 @@
 package com.dc2f.cms.settings;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import com.vaadin.data.util.converter.Converter;
-import com.vaadin.data.util.converter.ConverterFactory;
-import com.dc2f.cms.vaadin.UIHelper;
 import com.google.gwt.thirdparty.guava.common.collect.Maps;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
-import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.UI;
 
-public class SelectableProperty extends Property implements Container {
+public class SelectableProperty<T> extends Property<T> implements Container {
 
 	/**
 	 * generated unique serialization version id.
 	 */
 	private static final long serialVersionUID = -779141442539369583L;
 	
-	private final Map<Object, Object> items = Maps.newHashMap();
+	private final Map<T, T> items = Maps.newHashMap();
 
-	public SelectableProperty(String propertyName, Iterable<?> options) {
-		super(propertyName);
+	public SelectableProperty(String propertyName, Iterable<T> options, Class<T> type) {
+		super(propertyName, type);
 		addAll(options);
 	}
 
-	private void addAll(Iterable<?> options) {
-		for(Object option : options) {
+	private void addAll(Iterable<T> options) {
+		for(T option : options) {
 			items.put(option, option);
 		}
 		

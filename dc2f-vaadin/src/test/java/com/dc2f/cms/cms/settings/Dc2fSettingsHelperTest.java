@@ -35,7 +35,7 @@ public class Dc2fSettingsHelperTest {
 	
 	@Test
 	public void testGettingProperty() {
-		for(Property property : Dc2fSettingsHelper.getProperties()) {
+		for(Property<?> property : Dc2fSettingsHelper.getProperties()) {
 			Object value = property.getValue();
 			assertNotNull("Property " + property.getName() + " shouldn't have a null value as default", value);
 			switch(property.getName()) {

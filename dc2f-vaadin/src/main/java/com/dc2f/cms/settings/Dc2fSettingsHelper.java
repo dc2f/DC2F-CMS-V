@@ -40,9 +40,9 @@ public class Dc2fSettingsHelper {
 				Collection<?> options = getValueSuggestionsForMethod(method);
 				Property property = null;
 				if(!options.isEmpty()) {
-					property = new SelectableProperty(method.getName().substring(3), options);
+					property = new SelectableProperty(method.getName().substring(3), options, method.getReturnType());
 				} else {
-					property = new Property(method.getName().substring(3));
+					property = new Property(method.getName().substring(3), method.getReturnType());
 				}
 				properties.add(property);
 			}
