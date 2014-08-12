@@ -1,5 +1,8 @@
 package com.dc2f.cms.dao.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import com.dc2f.dstore.storage.Property;
 
 /**
@@ -7,6 +10,7 @@ import com.dc2f.dstore.storage.Property;
  * @author bigbear3001
  *
  */
+@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
 public class PropertyNames {
 	/**
 	 * Property where the type of the node is stored in.

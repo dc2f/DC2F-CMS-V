@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.rendering.Renderer;
@@ -22,6 +24,7 @@ import com.dc2f.dstore.storage.pgsql.PgStorageBackend;
  *
  */
 @Slf4j
+@NoArgsConstructor(access=AccessLevel.PROTECTED) //protected constructor to prevent instantiation except for extension
 public class ServiceLocator {
 
 	public static <T> Iterator<T> providers(Class<T> clazz) {

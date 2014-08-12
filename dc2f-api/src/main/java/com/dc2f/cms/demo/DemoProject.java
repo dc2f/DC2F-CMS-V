@@ -2,6 +2,9 @@ package com.dc2f.cms.demo;
 
 import java.io.InputStream;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import com.dc2f.cms.dao.Dc2f;
 import com.dc2f.cms.dao.File;
 import com.dc2f.cms.dao.Folder;
@@ -11,6 +14,7 @@ import com.dc2f.cms.dao.Project;
 import com.dc2f.cms.dao.Template;
 import com.dc2f.cms.exceptions.Dc2fCmsError;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
 public class DemoProject {
 	/**
 	 * Name of the demo project in the cms.

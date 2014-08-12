@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.gui.converter.StringToArrayConverter;
@@ -28,6 +30,7 @@ import com.vaadin.data.util.converter.StringToLongConverter;
  *
  */
 @Slf4j
+@AllArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
 public class ConverterServiceLocator extends ServiceLocator {
 
 	public static <T> Iterator<T> providers(Class<T> clazz) {

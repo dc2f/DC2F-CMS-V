@@ -6,11 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import com.dc2f.cms.dao.constants.MagicPropertyValues;
 import com.dc2f.cms.dao.constants.PropertyNames;
 import com.dc2f.dstore.hierachynodestore.WorkingTreeNode;
 import com.dc2f.dstore.storage.Property;
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE) //private constructor to prevent instantiation
 public class NodeType {
 	
 	/**
