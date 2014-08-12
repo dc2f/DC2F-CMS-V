@@ -1,6 +1,7 @@
 package com.dc2f.cms.gui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,7 +43,7 @@ public class Dc2fEditor extends TabSheet {
 		properties.setSizeFull();
 	}
 	
-	ArrayList<Tab> tabs;
+	List<Tab> tabs;
 	
 	TextArea source;
 	

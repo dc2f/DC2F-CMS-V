@@ -3,6 +3,7 @@ package com.dc2f.cms.settings;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import com.vaadin.data.util.converter.Converter;
 import com.vaadin.data.util.converter.ConverterFactory;
@@ -20,7 +21,7 @@ public class SelectableProperty extends Property implements Container {
 	 */
 	private static final long serialVersionUID = -779141442539369583L;
 	
-	private final HashMap<Object, Object> items = Maps.newHashMap();
+	private final Map<Object, Object> items = Maps.newHashMap();
 
 	public SelectableProperty(String propertyName, Iterable<?> options) {
 		super(propertyName);

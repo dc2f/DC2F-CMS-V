@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +30,7 @@ public class SimpleDc2fRenderer implements Renderer {
 
 	private final Dc2f dc2f;
 	
-	private HashMap<String, RenderPlugin> plugins = new HashMap<String, RenderPlugin>();
+	private Map<String, RenderPlugin> plugins = new HashMap<String, RenderPlugin>();
 	
 	public SimpleDc2fRenderer(Dc2f dc2fDao) {
 		dc2f = dc2fDao;
@@ -61,7 +63,7 @@ public class SimpleDc2fRenderer implements Renderer {
 	private class RenderableTemplate {
 		
 		
-		private ArrayList<TemplateChunk> chunks = new ArrayList<TemplateChunk>();
+		private List<TemplateChunk> chunks = new ArrayList<TemplateChunk>();
 		
 		private RenderableTemplate(Template template) {
 			try {
@@ -139,7 +141,7 @@ public class SimpleDc2fRenderer implements Renderer {
 			try {
 				return pageProperties.getString(variableName);
 			} catch (JSONException e) {
-				log.debug("Cannot resolve variable \"{}\" for page.", variableName);
+				log.debug("Cannot resolve variable \"{}\" for page.", variableName, e);
 				return "";
 			}
 		}

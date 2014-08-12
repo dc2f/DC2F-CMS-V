@@ -3,6 +3,7 @@ package com.dc2f.cms.gui.converter;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Pattern;
@@ -60,7 +61,7 @@ public class ConverterGuesser {
 	/**
 	 * Map containing the registered patterns and their respective classes.
 	 */
-	private static final HashMap<Class<? extends Object>, List<Hint>> PATTERNS = new HashMap<>();
+	private static final Map<Class<? extends Object>, List<Hint>> PATTERNS = new HashMap<>();
 	static {
 		addPattern(NUMBER_PATTERN, Integer.class);
 		addPattern(NUMBER_PATTERN, Long.class, "l");

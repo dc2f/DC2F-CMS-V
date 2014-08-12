@@ -40,7 +40,7 @@ public class LatestNewsPlugin implements RenderPlugin {
 		String projectPath = template.getParentPath();
 		String startPath = projectPath + "/" + renderDefinition[1];
 		int maxItems = Integer.parseInt(renderDefinition[2]);
-		ArrayList<TemplateChunk> chunks = new ArrayList<>();
+		List<TemplateChunk> chunks = new ArrayList<>();
 		for (Page page : sort(dc2f.getAllChildren(startPath, Page.class))) {
 			chunks.add(new LatestNewsTemplateChunk(linkTemplate, page));
 			if (chunks.size() >= maxItems) {

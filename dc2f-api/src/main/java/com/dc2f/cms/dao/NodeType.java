@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.dc2f.cms.dao.constants.MagicPropertyValues;
 import com.dc2f.cms.dao.constants.PropertyNames;
@@ -15,7 +16,7 @@ public class NodeType {
 	/**
 	 * Lists the known node types for each class
 	 */
-	private static final HashMap<Class<? extends Node>, List<String>> KNOWN_NODE_TYPES = new HashMap<>();
+	private static final Map<Class<? extends Node>, List<String>> KNOWN_NODE_TYPES = new HashMap<>();
 	public static void init() {
 		if (KNOWN_NODE_TYPES.isEmpty()) {
 			synchronized (KNOWN_NODE_TYPES) {

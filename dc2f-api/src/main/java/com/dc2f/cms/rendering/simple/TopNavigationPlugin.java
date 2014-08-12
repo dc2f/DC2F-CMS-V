@@ -1,6 +1,7 @@
 package com.dc2f.cms.rendering.simple;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -30,7 +31,7 @@ public class TopNavigationPlugin implements RenderPlugin {
 		String linkTemplate = renderDefinition[2];
 		String projectPath = template.getParentPath();
 		String homePath = projectPath + "/" + renderDefinition[1];
-		ArrayList<TemplateChunk> chunks = new ArrayList<>();
+		List<TemplateChunk> chunks = new ArrayList<>();
 		for(Folder folder : dc2f.getChildren(homePath, Folder.class)) {
 			chunks.add(new NavigationTemplateChunk(linkTemplate, folder));
 		}

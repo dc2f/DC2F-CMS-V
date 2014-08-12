@@ -417,7 +417,7 @@ public class PgStorageBackend implements StorageBackend {
 				stmt.setLong(1, id(propertiesStorageId));
 				stmt.execute();
 				try(ResultSet rs = stmt.getResultSet()) {
-					HashMap<String, Property> result = new HashMap<>();
+					Map<String, Property> result = new HashMap<>();
 					if(!rs.next()) {
 						return result;
 					}

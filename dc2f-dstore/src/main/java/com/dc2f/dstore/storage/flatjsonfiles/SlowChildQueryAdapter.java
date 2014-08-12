@@ -1,6 +1,7 @@
 package com.dc2f.dstore.storage.flatjsonfiles;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.dc2f.dstore.hierachynodestore.ChildQueryAdapter;
@@ -25,7 +26,7 @@ public class SlowChildQueryAdapter implements ChildQueryAdapter {
 			throw new IllegalArgumentException("Unable to find parent node by id {" + parent + "}");
 		}
 		StorageId[] children = storageBackend.readChildren(parentNode.getChildren());
-		ArrayList<StorageId> ret = new ArrayList<StorageId>();
+		List<StorageId> ret = new ArrayList<StorageId>();
 		if (children == null) {
 			return ret;
 		}

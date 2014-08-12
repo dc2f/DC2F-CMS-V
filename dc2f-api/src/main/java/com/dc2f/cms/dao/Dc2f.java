@@ -64,8 +64,11 @@ public class Dc2f {
 		}
 	}
 
+	/**
+	 * @return all projects from the repository.
+	 */
 	public List<Project> getProjects() {
-		ArrayList<Project> projects = new ArrayList<Project>();
+		List<Project> projects = new ArrayList<Project>();
 		WorkingTreeNode root = workingTree.getRootNode();
 		for (WorkingTreeNode projectNode : root.getChildren()) {
 			Project project = NodeType.getNode(projectNode, Project.class);
@@ -87,7 +90,7 @@ public class Dc2f {
 	 * @return list of children from the given node
 	 */
 	public <T extends Node> List<T> getChildren(String path, Class<T> nodeType) {
-		ArrayList<T> nodes = new ArrayList<T>();
+		List<T> nodes = new ArrayList<T>();
 		WorkingTreeNode parent = internalGetNodeForPath(path);
 		for(WorkingTreeNode childNode : parent.getChildren()) {
 			T node = NodeType.getNode(childNode, nodeType, path);
@@ -127,6 +130,7 @@ public class Dc2f {
 			getNodeForPath(path);
 			return true;
 		} catch(Dc2fNotExistingPathError e) {
+			log.trace("Path '{}' doesn't exits in repository", path, e);
 			return false;
 		}
 	}
@@ -213,6 +217,7 @@ public class Dc2f {
 		try {
 			return internalGetNodeForPath(node.getPath());
 		} catch(Dc2fNotExistingPathError e) {
+			log.debug("Creating node {}", node);
 			WorkingTreeNode parent = internalGetNodeForPath(node.getParentPath());
 			return parent.addChild(node.getName());
 		}

@@ -146,12 +146,12 @@ public class WorkingTreeImpl implements WorkingTree {
 	}
 
 	private Set<WorkingTreeNodeImpl> findNodesToUpdate() {
-		HashSet<WorkingTreeNodeImpl> toUpdate = new HashSet<>();
+		Set<WorkingTreeNodeImpl> toUpdate = new HashSet<>();
 		
 		// check all changed nodes and make sure their parents
 		// are also updated and attached to root.
 		for (WorkingTreeNodeImpl changedNode : changedNodes) {
-			ArrayList<WorkingTreeNodeImpl> changed = new ArrayList<WorkingTreeNodeImpl>();
+			List<WorkingTreeNodeImpl> changed = new ArrayList<WorkingTreeNodeImpl>();
 			
 			WorkingTreeNodeImpl node = changedNode;
 			boolean first = true;
