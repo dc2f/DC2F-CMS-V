@@ -16,6 +16,8 @@ import com.dc2f.cms.vaadin.helper.VaadinSessionHelper;
 import com.dc2f.dstore.storage.flatjsonfiles.SlowJsonFileStorageBackend;
 import com.dc2f.dstore.storage.map.HashMapStorage;
 import com.dc2f.dstore.storage.pgsql.PgStorageBackend;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 
@@ -41,6 +43,15 @@ public class Dc2fSettingsHelperTest {
 					assertTrue("StorageImpl should hold a list of possible values.", property instanceof SelectableProperty);
 					assertArrayContainsAll(new Class[]{PgStorageBackend.class, HashMapStorage.class, SlowJsonFileStorageBackend.class}, ((SelectableProperty) property).getItemIds());
 					property.setValue(SlowJsonFileStorageBackend.class);
+					AbstractField<?> field = Dc2fSettingsHelper.getFieldForProperty(property);
+					assertTrue("field was not a select although property was a SelectableProperty", field instanceof AbstractSelect);
+					break;
+				case "StorageImplArgs":
+					assertFalse("StorageImplArgs should not hold a list of possible values.", property instanceof SelectableProperty);
+					property.setValue(new Object[]{"argument1"});
+					assertArrayEquals("property value was not pushed to Dc2fSettings", new Object[]{"argument1"}, Dc2fSettings.get().getStorageImplArgs());
+					AbstractField<?> singleField = Dc2fSettingsHelper.getFieldForProperty(property);
+					assertFalse("field shouldn't be a select for a property that is not a SelectableProperty", singleField instanceof AbstractSelect);
 					break;
 			}
 		}

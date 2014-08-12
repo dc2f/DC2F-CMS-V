@@ -26,7 +26,9 @@ import com.vaadin.ui.TextField;
 public class Dc2fSettingsHelper {
 	
 	/** private constructor to prevent instantiation. */
-	private Dc2fSettingsHelper() {}
+	private Dc2fSettingsHelper() {
+		
+	}
 	
 	/**
 	 * @return list of properties generated from the setters and getters of dc2f settings.
