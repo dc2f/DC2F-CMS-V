@@ -68,30 +68,65 @@ public class RenderServlet extends HttpServlet {
 		TemplateEnvironment.init(baseURL, path);
 		Node node = dc2f.getNodeForPath(path);
 		if (node instanceof Page) {
-			resp.setHeader("Content-Type", ((Page) node).getMimetype() + "; charset=" + Dc2fConstants.CHARSET.displayName());
-			InputStream renderedPageStream = dc2f.getRenderer().render((Page) node);
-			IOUtils.copy(renderedPageStream, resp.getOutputStream());
+			renderPage(resp, (Page) node);
 		} else if (node instanceof File) {
-			String mimetype = ((File) node).getMimetype();
-			if (mimetype.startsWith("text/*")) {
-				mimetype += "; charset=" + Dc2fConstants.CHARSET.displayName();
-			}
-			resp.setHeader("Content-Type", mimetype);
-			IOUtils.copy(((File) node).getContent(false), resp.getOutputStream());
+			renderFile(resp, (File) node);
 		} else if (node instanceof Folder) {
-			Page startpage = null;
-			for (Page page : dc2f.getChildren(node.getPath(), Page.class)) {
-				if ("index.html".equals(page.getName())) {
-					startpage = page;
-					break;
-				} else if(startpage == null) {
-					startpage = page;
-				}
-			}
-			if (startpage != null) {
-				resp.sendRedirect(baseURL + "/" + startpage.getPath());
+			renderFolder(resp, baseURL, (Folder) node);
+		}
+	}
+
+	/**
+	 * Try rendering folder by fetching startpage and sending redirect.
+	 * @param resp - servlet response to use to send redirect
+	 * @param baseURL - base url of the request
+	 * @param folder - folder to render
+	 * @throws IOException - if redirect cannot be sent
+	 */
+	private void renderFolder(HttpServletResponse resp, String baseURL,
+			Folder folder) throws IOException {
+		Page startpage = null;
+		for (Page page : dc2f.getChildren(folder.getPath(), Page.class)) {
+			if ("index.html".equals(page.getName())) {
+				startpage = page;
+				break;
+			} else if(startpage == null) {
+				startpage = page;
 			}
 		}
+		if (startpage != null) {
+			resp.sendRedirect(baseURL + "/" + startpage.getPath());
+		}
+	}
+
+	/**
+	 * Render the file into the response. This is currently just copying the file to the output stream 1:1. Except for
+	 * for text files where the correct encoding is set.
+	 * @param resp - response to render the file
+	 * @param file - file to render
+	 * @throws IOException - in case we get an error pushing the file contents to the response
+	 */
+	private void renderFile(HttpServletResponse resp, File file)
+			throws IOException {
+		String mimetype = file.getMimetype();
+		if (mimetype.startsWith("text/*")) {
+			mimetype += "; charset=" + Dc2fConstants.CHARSET.displayName();
+		}
+		resp.setHeader("Content-Type", mimetype);
+		IOUtils.copy(file.getContent(false), resp.getOutputStream());
+	}
+	
+	/**
+	 * Render the page with the help of the renderer into the output stream.
+	 * @param resp - response to render the page to
+	 * @param page - page to render
+	 * @throws IOException - in case we get an error writing the output stream of the response
+	 */
+	private void renderPage(HttpServletResponse resp, Page page)
+			throws IOException {
+		resp.setHeader("Content-Type", ((Page) page).getMimetype() + "; charset=" + Dc2fConstants.CHARSET.displayName());
+		InputStream renderedPageStream = dc2f.getRenderer().render((Page) page);
+		IOUtils.copy(renderedPageStream, resp.getOutputStream());
 	}
 	
 }
