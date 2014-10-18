@@ -40,7 +40,7 @@ If you don't have an existing tomcat 8 target runtime please add it:
 6. Finish adding the target runtime by closing the dialogs with "OK"
 
 
-### Tomcat 7 Server
+### Tomcat 8 Server
 * Open the server view with Window > Show View > Other ...
     * Select Server > Server
 * Create a new Tomcat 8 server
