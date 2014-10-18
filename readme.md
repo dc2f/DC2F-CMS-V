@@ -54,6 +54,5 @@ If you don't have an existing tomcat 8 target runtime please add it:
 
 DC2F now should be available at [localhost:8080](http://localhost:8080/dc2f-vaadin/)
 
-## Codeship
-Build Status 
+## BUild Status
 [ ![Codeship Status for dc2f/DC2F-CMS-V](https://codeship.io/projects/2bf33010-3909-0132-ffeb-4eb13bd0ee77/status)](https://codeship.io/projects/42138)
