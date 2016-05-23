@@ -30,7 +30,7 @@ public class TestKeyWordLibrary {
 	@Test
 	public void testLibrary() throws Exception {
 		library.start();
-		library.openBrowser("firefox");
+		library.openBrowser("chrome");
 		library.checkTitle("DC2F");
 		testSettings();
 		testDemo();
