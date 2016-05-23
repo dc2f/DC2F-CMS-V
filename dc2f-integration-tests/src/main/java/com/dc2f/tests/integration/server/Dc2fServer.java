@@ -12,7 +12,7 @@ public class Dc2fServer {
 	private Server server;
 
 	public Dc2fServer() {
-		this(8080, null);
+		this(10888, null);
 	}
 
 	public void start() throws Exception {
