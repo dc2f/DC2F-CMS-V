@@ -3,7 +3,7 @@ Library		com.dc2f.tests.integration.KeyWordLibrary
 *** Test Cases ***
 Start DC2F
 	start
-	openBrowser	firefox
+	openBrowser	chrome
 	checkTitle	DC2F
 
 Stop DC2F
