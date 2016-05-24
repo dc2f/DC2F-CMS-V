@@ -1,18 +1,11 @@
 package org.dc2f.tests.integration;
 
-import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.dc2f.tests.integration.KeyWordLibrary;
-import com.google.common.collect.FluentIterable;
 
 public class TestKeyWordLibrary {
 	private static KeyWordLibrary library;
@@ -30,7 +23,7 @@ public class TestKeyWordLibrary {
 	@Test
 	public void testLibrary() throws Exception {
 		library.start();
-		library.openBrowser("chrome");
+		library.openBrowser("firefox");
 		library.checkTitle("DC2F");
 		testSettings();
 		testDemo();
