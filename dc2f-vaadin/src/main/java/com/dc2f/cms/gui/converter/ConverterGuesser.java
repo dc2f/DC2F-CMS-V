@@ -8,8 +8,10 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Pattern;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -20,6 +22,8 @@ import com.vaadin.data.util.converter.Converter;
  * @author bigbear3001
  *
  */
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class ConverterGuesser {
 	
 

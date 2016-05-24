@@ -1,5 +1,7 @@
 package com.dc2f.cms.vaadin;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.dc2f.cms.exceptions.UnknownUIError;
@@ -13,6 +15,8 @@ import com.vaadin.ui.UI;
  *
  */
 @Slf4j
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class UIHelper {
 
 	/**

@@ -2,10 +2,15 @@ package com.dc2f.dstore.hierachynodestore;
 
 import java.util.Map;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import com.dc2f.dstore.storage.Property;
 import com.dc2f.dstore.storage.StorageId;
 import com.google.common.base.Strings;
 
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class WorkingTreeUtils {
 	private static final String LINE_SEPARATOR = "\n";
 	

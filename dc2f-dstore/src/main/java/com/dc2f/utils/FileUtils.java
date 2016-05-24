@@ -7,6 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class FileUtils {
 
 	/**

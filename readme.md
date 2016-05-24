@@ -40,7 +40,7 @@ If you don't have an existing tomcat 8 target runtime please add it:
 6. Finish adding the target runtime by closing the dialogs with "OK"
 
 
-### Tomcat 7 Server
+### Tomcat 8 Server
 * Open the server view with Window > Show View > Other ...
     * Select Server > Server
 * Create a new Tomcat 8 server
@@ -60,3 +60,6 @@ If you want to trigger a build without integration tests run
 ```
 mvn package -pl '!dc2f-integration-tests'
 ```
+
+## Build Status
+[ ![Codeship Status for dc2f/DC2F-CMS-V](https://codeship.io/projects/2bf33010-3909-0132-ffeb-4eb13bd0ee77/status)](https://codeship.io/projects/42138)

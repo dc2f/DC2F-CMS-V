@@ -1,12 +1,19 @@
 package com.dc2f.cms.dao.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import com.dc2f.dstore.storage.Property;
+
 
 /**
  * Class that shows all property names in use by the DC2F GUI
  * @author bigbear3001
- *
  */
+<<<<<<< HEAD
+=======
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class PropertyNames {
 	/**
 	 * Property where the type of the node is stored in.

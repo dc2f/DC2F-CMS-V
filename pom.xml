@@ -10,7 +10,6 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sonar.host.url>https://www.perhab.com/sonar</sonar.host.url>
 	</properties>
 	
 	<build>
@@ -67,11 +66,11 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>com.dc2f.snapshots</id>
-			<url>https://www.perhab.com/nexus/content/repositories/com.dc2f.snapshots</url>
+			<url>https://www.perhab.com/nexus/repository/com.dc2f.snapshots</url>
 		</snapshotRepository>
 		<repository>
 			<id>com.dc2f.release</id>
-			<url>https://www.perhab.com/nexus/content/repositories/com.dc2f.release</url>
+			<url>https://www.perhab.com/nexus/repository/com.dc2f.release</url>
 		</repository>
 	</distributionManagement>
 	

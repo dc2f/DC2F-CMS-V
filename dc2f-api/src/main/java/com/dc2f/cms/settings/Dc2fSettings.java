@@ -6,8 +6,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +28,8 @@ import com.dc2f.dstore.storage.map.HashMapStorage;
  *
  */
 @Slf4j
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class Dc2fSettings implements Serializable {
 	
 	/**
@@ -35,11 +39,6 @@ public class Dc2fSettings implements Serializable {
 
 	private static final String SETTINGS_FILENAME = "settings.bin";
 
-	/**
-	 * private constructor to prevent direct initialization.
-	 */
-	private Dc2fSettings() { }
-	
 	/**
 	 * defines if the demo project should be reset when dc2f is initialized.
 	 */

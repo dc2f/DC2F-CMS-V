@@ -3,8 +3,12 @@ package com.dc2f.cms.utils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+//private constructor to prevent instantiation
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class InitializationHelper {
 	public static <T> T initialize(InitializationDefinition<T> definition) throws InstantiationException {
 		try {
